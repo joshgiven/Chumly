@@ -1,10 +1,13 @@
 package entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Profile {
@@ -24,7 +27,13 @@ public class Profile {
 	@Column(name="image_url")
 	private String imageURL;
 	
+	@OneToOne
+	@JoinColumn(name="location_id")
 	private Location location;
+	
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	public Profile() { }
 
@@ -87,6 +96,14 @@ public class Profile {
 
 	public int getId() {
 		return id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

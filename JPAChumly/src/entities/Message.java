@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Message {
@@ -21,6 +23,8 @@ public class Message {
 	@Column(name="timestamp")
 	private Date timeStamp;
 	
+	@ManyToOne
+	@JoinColumn(name="sender_id")
 	private User sender;
 	
 //	private List<User> recipients;

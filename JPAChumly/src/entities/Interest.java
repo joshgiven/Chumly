@@ -1,9 +1,14 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Interest {
@@ -14,7 +19,12 @@ public class Interest {
 	
 	private String name;
 	
+	@ManyToOne
+	@JoinColumn(name="category_id")
 	private InterestCategory category;
+	
+	@ManyToMany(mappedBy="interests")
+	private List<User> users;
 	
 	public Interest() { }
 
@@ -49,6 +59,14 @@ public class Interest {
 
 	public int getId() {
 		return id;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 	
 }
