@@ -9,7 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +31,11 @@ public class Message {
 	@ManyToOne
 	@JoinColumn(name="sender_id")
 	private User sender;
-
+	
+	@OneToMany
+	@JoinTable(name="message_chum",
+	joinColumns=@JoinColumn(name="message_id"),
+	inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> recipients;
 
 	public List<User> getRecipients() {

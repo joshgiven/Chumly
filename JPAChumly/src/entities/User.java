@@ -51,14 +51,14 @@ public class User {
 	inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> connections;
 
-	@OneToMany
-	@JoinTable(name="message_chum",
-	joinColumns=@JoinColumn(name="message_id"),
-	inverseJoinColumns=@JoinColumn(name="chum_id"))
-	private List<Message> chumMessages;
-
-	@OneToMany(mappedBy="sender")
-	private List<Message> userMessages;
+//	@OneToMany
+//	@JoinTable(name="message_chum",
+//	joinColumns=@JoinColumn(name="message_id"),
+//	inverseJoinColumns=@JoinColumn(name="chum_id"))
+//	private List<Message> chumMessages;
+//
+	@OneToMany(mappedBy="recipients")
+	private List<Message> messages;
 
 
 //	private List<Group> groups;
@@ -131,20 +131,20 @@ public class User {
 		this.connections = connections;
 	}
 
-	public List<Message> getChumMessages() {
-		return chumMessages;
+//	public List<Message> getChumMessages() {
+//		return chumMessages;
+//	}
+//
+//	public void setChumMessages(List<Message> chumMessages) {
+//		this.chumMessages = chumMessages;
+//	}
+//
+	public List<Message> getMessages() {
+		return messages;
 	}
 
-	public void setChumMessages(List<Message> chumMessages) {
-		this.chumMessages = chumMessages;
-	}
-
-	public List<Message> getUserMessages() {
-		return userMessages;
-	}
-
-	public void setUserMessages(List<Message> userMessages) {
-		this.userMessages = userMessages;
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
 	}
 
 	public List<Interest> getInterests() {
