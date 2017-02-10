@@ -7,16 +7,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="availability")
 public class Availability {
-	
-	public enum DayOfWeek { 
-		MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY 
+
+	public enum DayOfWeek {
+		MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -24,13 +25,17 @@ public class Availability {
 	@Enumerated(EnumType.STRING)
 	@Column(name="day")
 	private DayOfWeek dayOfWeek;
-	
+
 	@Column(name="am")
 	private boolean freeAM;
-	
+
 	@Column(name="pm")
 	private boolean freePM;
-	
+
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+
 	public Availability() { }
 
 	@Override
@@ -75,5 +80,13 @@ public class Availability {
 	public int getId() {
 		return id;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

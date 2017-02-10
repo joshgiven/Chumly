@@ -9,24 +9,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name="category")
 public class InterestCategory {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String name;
-	
-	public InterestCategory() { }
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("InterestCategory [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append("]");
-		return builder.toString();
-	}
 
 	public String getName() {
 		return name;
@@ -38,5 +26,10 @@ public class InterestCategory {
 
 	public int getId() {
 		return id;
+	}
+	
+	@Override
+	public String toString() {
+		return "InterestCategory [id=" + id + ", name=" + name + "]";
 	}
 }
