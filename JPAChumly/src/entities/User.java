@@ -46,7 +46,7 @@ public class User {
 	private Profile profile;
 
 	@OneToMany
-	@JoinTable(name="connections",
+	@JoinTable(name="connection",
 	joinColumns=@JoinColumn(name="user_id"),
 	inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> connections;

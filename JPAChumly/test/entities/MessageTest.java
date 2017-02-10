@@ -62,8 +62,8 @@ public class MessageTest {
 		Message msg = em.find(Message.class, id);
 		assertNotNull(msg);
 
-		//List<User> recips = msg.getRecipients();
-		List<User> recips = null;
+		List<User> recips = msg.getRecipients();
+		//List<User> recips = null;
 		assertNotNull(recips);
 		assertEquals(1, recips.size());
 		
