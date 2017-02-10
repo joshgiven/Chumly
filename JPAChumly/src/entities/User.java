@@ -43,7 +43,7 @@ public class User {
 	@OneToMany
 	@JoinTable(name="message_chum",
 	joinColumns=@JoinColumn(name="message_id"),
-	inverseJoinColumns=@JoinColumn(name="interest_id"))
+	inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<Message> chumMessages;
 	
 	@OneToMany(mappedBy="sender")
