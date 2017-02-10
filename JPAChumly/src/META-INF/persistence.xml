@@ -5,13 +5,15 @@
              
 	<persistence-unit name="JPAChumly">
 	
+		<class>entities.Availability</class>
+		<!-- <class>entities.Event</class> -->
+		<!-- <class>entities.Group</class> -->
 		<class>entities.Interest</class>
+		<class>entities.InterestCategory</class>
 		<class>entities.Location</class>
 		<class>entities.Message</class>
 		<class>entities.Profile</class>
 		<class>entities.User</class>
-		<!-- <class>entities.Event</class> -->
-		<!-- <class>entities.Group</class> -->
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sdvid" />

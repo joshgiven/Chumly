@@ -15,12 +15,59 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(name="message")
 	private String text;
+	
+	@Column(name="timestamp")
+	private Date timeStamp;
 	
 	private User sender;
 	
-	@Column(name="time_stamp")
-	private Date timeStamp;
+//	private List<User> recipients;
 	
 	public Message() { }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Message [id=");
+		builder.append(id);
+		builder.append(", sender=");
+		builder.append(sender);
+		builder.append(", timeStamp=");
+		builder.append(timeStamp);
+		builder.append(", text=");
+		builder.append(text.substring(0,20));
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public int getId() {
+		return id;
+	}
+	
 }
