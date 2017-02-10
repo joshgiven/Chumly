@@ -7,8 +7,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="availability")
 public class Availability {
 	
 	public enum DayOfWeek { 
@@ -21,7 +23,7 @@ public class Availability {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="day")
-	private String dayOfWeek;
+	private DayOfWeek dayOfWeek;
 	
 	@Column(name="am")
 	private boolean freeAM;
@@ -46,11 +48,11 @@ public class Availability {
 		return builder.toString();
 	}
 
-	public String getDayOfWeek() {
+	public DayOfWeek getDayOfWeek() {
 		return dayOfWeek;
 	}
 
-	public void setDayOfWeek(String dayOfWeek) {
+	public void setDayOfWeek(DayOfWeek dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
 	}
 

@@ -1,14 +1,17 @@
 package entities;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="message")
 public class Message {
 
 	@Id
@@ -23,8 +26,16 @@ public class Message {
 	
 	private User sender;
 	
-//	private List<User> recipients;
+	private List<User> recipients;
 	
+	public List<User> getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(List<User> recipients) {
+		this.recipients = recipients;
+	}
+
 	public Message() { }
 
 	@Override

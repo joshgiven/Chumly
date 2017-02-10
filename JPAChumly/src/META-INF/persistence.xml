@@ -5,7 +5,7 @@
              
 	<persistence-unit name="JPAChumly">
 	
-		<class>entities.Availability</class>
+ 		<class>entities.Availability</class>
 		<!-- <class>entities.Event</class> -->
 		<!-- <class>entities.Group</class> -->
 		<class>entities.Interest</class>
@@ -16,9 +16,9 @@
 		<class>entities.User</class>
 		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sdvid" />
-			<property name="javax.persistence.jdbc.user" value="student" />
-			<property name="javax.persistence.jdbc.password" value="student" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/chumdb" />
+			<property name="javax.persistence.jdbc.user" value="chum" />
+			<property name="javax.persistence.jdbc.password" value="chum" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
