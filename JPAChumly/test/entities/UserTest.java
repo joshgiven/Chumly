@@ -54,20 +54,13 @@ public class UserTest {
 
 	}
 
-	
-//	private List<User> connections;
-//	private List<Group> groups;
-//	private List<Interest> interests;
-//	private List<Availability> availabilities;
-
 	@Test
 	public void test_interests_mapping() {
 		int id = 1;
 		User user = em.find(User.class, id);
 		assertNotNull(user);
 
-		List<Interest> interests = null;
-		//List<Interest> interests = user.getInterests();
+		List<Interest> interests = user.getInterests();
 		assertNotNull(interests);
 		assertEquals(2, interests.size());
 		
@@ -79,12 +72,32 @@ public class UserTest {
 	
 	@Test
 	public void test_availabilities_mapping() {
-		fail();
+		int id = 1;
+		User user = em.find(User.class, id);
+		assertNotNull(user);
+
+		List<Availability> avails = user.getAvailabilities();
+		assertNotNull(avails);
+		assertEquals(7, avails.size());
+		
+		Availability a = avails.get(0);
+		assertNotNull(a);
+		assertEquals(Availability.DayOfWeek.MONDAY, a.getDayOfWeek());
 	}
 	
 	@Test
 	public void test_connections_mapping() {
-		fail();
+		int id = 1;
+		User user = em.find(User.class, id);
+		assertNotNull(user);
+
+		List<User> chums = user.getConnections();
+		assertNotNull(chums);
+		assertEquals(2, chums.size());
+		
+		User chum = chums.get(0);
+		assertNotNull(chum);
+		assertEquals("Matt", chum.getUsername());
 	}
 	
 	@Test

@@ -53,7 +53,7 @@ public class ProfileTest {
 		assertEquals("Geoff", profile.getFirstName());
 		assertEquals("Edwards", profile.getLastName());
 		assertEquals("I am the best", profile.getDescription());
-		assertEquals("", profile.getImageURL());
+		assertEquals(null, profile.getImageURL());
 	}
 
 }

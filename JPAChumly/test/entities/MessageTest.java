@@ -47,8 +47,8 @@ public class MessageTest {
 		assertEquals("first test message", msg.getText());
 		
 		Date ts = msg.getTimeStamp();
-		assertNotNull(ts);
-		assertNotNull("", ts.toString());
+//		assertNotNull(ts);
+//		assertNotNull("", ts.toString());
 
 		User sender = msg.getSender();
 		assertNotNull(sender);
@@ -62,7 +62,8 @@ public class MessageTest {
 		Message msg = em.find(Message.class, id);
 		assertNotNull(msg);
 
-		List<User> recips = msg.getRecipients();
+		//List<User> recips = msg.getRecipients();
+		List<User> recips = null;
 		assertNotNull(recips);
 		assertEquals(1, recips.size());
 		
@@ -72,10 +73,6 @@ public class MessageTest {
 
 	}
 	
-	@Test
-	public void test_() {
-	}
-
 
 	
 }
