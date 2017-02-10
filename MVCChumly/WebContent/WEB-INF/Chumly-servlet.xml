@@ -1,1 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+  <context:component-scan base-package="controllers" />
+
+ <!--  <bean id="dao" class="data.UserDAOImpl" />
+  <bean id="filmdao" class="data.Impl" /> -->
+
+  <bean id="myEntityManagerFactory"
+    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="persistenceUnitName" value="JPAChumly" />
+  </bean>
+
+  <bean id="myTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <!-- this property references (ref="") an existing bean -->
+    <property name="entityManagerFactory" ref="myEntityManagerFactory" />
+  </bean>
+
+  <tx:annotation-driven transaction-manager="myTransactionManager" /> 
+  <mvc:annotation-driven />
+
+</beans>
