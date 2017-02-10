@@ -1,0 +1,3 @@
+
+rootProject.name = 'MVCChumly'
+includeFlat 'JPAChumly'

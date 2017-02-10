@@ -1,0 +1,12 @@
+.metadata
+.recommenders
+JPAChumly/.gradle
+JPAChumly/bin
+JPAChumly/build
+JPAChumly/target
+MVCChumly/.gradle
+MVCChumly/bin
+MVCChumly/build
+MVCChumly/target
+RemoteSystemsTempFiles
+Servers
