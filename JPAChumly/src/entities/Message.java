@@ -1,24 +1,26 @@
 package entities;
 
+import java.sql.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import java.util.List;
-
 @Entity
-public class User {
+public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	private String text;
 	
+	private User sender;
 	
-	private List<User> chums;
-	private List<Interest> interests;
-	private List<Availability> availabilities;
+	@Column(name="time_stamp")
+	private Date timeStamp;
 	
-	public User() { }
+	public Message() { }
 }

@@ -5,20 +5,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import java.util.List;
-
 @Entity
-public class User {
-
+public class Availability {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	private String dayOfWeek;
+	
+	private boolean freeAM;
+	
+	private boolean freePM;
+
 	
 	
-	private List<User> chums;
-	private List<Interest> interests;
-	private List<Availability> availabilities;
-	
-	public User() { }
+	public Availability() { }
 }
