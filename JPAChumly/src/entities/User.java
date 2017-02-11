@@ -105,6 +105,7 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -166,14 +167,6 @@ public class User {
 
 	public void setAvailabilities(List<Availability> availabilities) {
 		this.availabilities = availabilities;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }
