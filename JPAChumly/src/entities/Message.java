@@ -38,14 +38,6 @@ public class Message {
 	inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> recipients;
 
-	public List<User> getRecipients() {
-		return recipients;
-	}
-
-	public void setRecipients(List<User> recipients) {
-		this.recipients = recipients;
-	}
-
 	public Message() { }
 
 	@Override
@@ -90,5 +82,14 @@ public class Message {
 	public int getId() {
 		return id;
 	}
+
+	public List<User> getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(List<User> recipients) {
+		this.recipients = recipients;
+	}
+
 
 }
