@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,7 +43,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne(mappedBy="user")
+	// cascade={CascadeType.PERSIST,CascadeType.REMOVE}
+	@OneToOne(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private Profile profile;
 
 	@OneToMany

@@ -1,5 +1,3 @@
--- MySQL Workbench Forward Engineering
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
@@ -8,12 +6,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema chumdb
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `chumdb` ;
-
--- -----------------------------------------------------
--- Schema chumdb
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `chumdb` ;
--- SHOW WARNINGS;
 USE `chumdb` ;
 
 -- -----------------------------------------------------
@@ -21,7 +14,6 @@ USE `chumdb` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `user` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `user` (
   `username` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NULL,
@@ -33,36 +25,32 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `location`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `location` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `location` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `city` VARCHAR(45) NULL,
   `state` CHAR(2) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `profile`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `profile` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `profile` (
   `user_Id` INT NULL,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
   `description` VARCHAR(256) NULL,
   `location_id` INT NULL,
-  `image_url` VARCHAR(45) NULL,
+  `image_url` VARCHAR(128) NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   INDEX `fk_profile_location_idx` (`location_id` ASC),
@@ -78,28 +66,24 @@ CREATE TABLE IF NOT EXISTS `profile` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `category` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `category` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `interest`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `interest` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `interest` (
   `id` INT NOT NULL,
   `category_id` INT NULL,
@@ -113,14 +97,12 @@ CREATE TABLE IF NOT EXISTS `interest` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `user_interest`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `user_interest` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `user_interest` (
   `user_id` INT NOT NULL,
   `interest_id` INT NOT NULL,
@@ -138,14 +120,12 @@ CREATE TABLE IF NOT EXISTS `user_interest` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `availability`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `availability` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `availability` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `day` ENUM('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY') NULL,
@@ -161,28 +141,24 @@ CREATE TABLE IF NOT EXISTS `availability` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `user_group`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `user_group` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `user_group` (
   `user_id` INT NULL,
   `group_id` INT NULL,
@@ -200,14 +176,12 @@ CREATE TABLE IF NOT EXISTS `user_group` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `connection`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `connection` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `connection` (
   `user_id` INT NOT NULL,
   `chum_id` INT NOT NULL,
@@ -225,14 +199,12 @@ CREATE TABLE IF NOT EXISTS `connection` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `message`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `message` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `message` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `message` VARCHAR(256) NOT NULL,
@@ -247,14 +219,12 @@ CREATE TABLE IF NOT EXISTS `message` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `message_chum`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `message_chum` ;
 
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `message_chum` (
   `message_id` INT NOT NULL,
   `chum_id` INT NOT NULL,
@@ -272,17 +242,14 @@ CREATE TABLE IF NOT EXISTS `message_chum` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO chum@localhost;
  DROP USER chum@localhost;
 SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-SHOW WARNINGS;
 CREATE USER 'chum'@'localhost' IDENTIFIED BY 'chum';
 
 GRANT SELECT, INSERT, TRIGGER ON TABLE * TO 'chum'@'localhost';
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'chum'@'localhost';
-SHOW WARNINGS;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -309,7 +276,8 @@ USE `chumdb`;
 INSERT INTO `location` (`id`, `city`, `state`) VALUES (1, 'Chicago', 'IL');
 INSERT INTO `location` (`id`, `city`, `state`) VALUES (2, 'Green Bay', 'WI');
 INSERT INTO `location` (`id`, `city`, `state`) VALUES (3, 'Denver', 'CO');
-INSERT INTO `location` (`id`, `city`, `state`) VALUES (DEFAULT, NULL, NULL);
+INSERT INTO `location` (`id`, `city`, `state`) VALUES (4, 'San Francisco', 'CA');
+INSERT INTO `location` (`id`, `city`, `state`) VALUES (5, 'Boca Raton', 'FL');
 
 COMMIT;
 
@@ -319,10 +287,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `chumdb`;
-INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (1, 'Geoff', 'Edwards', 'I am the best', 1, NULL, DEFAULT);
-INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (2, 'Matt', 'Jump', 'I am second best', 2, NULL, DEFAULT);
-INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (3, 'Josh', 'Given', 'I know more than Matt and Geoff combined', 3, NULL, DEFAULT);
-INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (4, 'Admin', 'Admin', 'Admin', 3, NULL, DEFAULT);
+INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (1, 'Geoff', 'Edwards', 'I am the best', 1, NULL, NULL);
+INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (2, 'Matt', 'Jump', 'I am second best', 2, NULL, NULL);
+INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (3, 'Josh', 'Given', 'I know more than Matt and Geoff combined', 3, NULL, NULL);
+INSERT INTO `profile` (`user_Id`, `first_name`, `last_name`, `description`, `location_id`, `image_url`, `id`) VALUES (4, 'Admin', 'Admin', 'Admin', 3, NULL, NULL);
 
 COMMIT;
 
