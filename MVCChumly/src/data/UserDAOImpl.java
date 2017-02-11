@@ -1,0 +1,215 @@
+package data;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import entities.Availability;
+import entities.Interest;
+import entities.InterestCategory;
+import entities.Location;
+import entities.Profile;
+import entities.User;
+import entities.User.Role;
+
+@Transactional
+@Repository
+public class UserDAOImpl implements UserDAO {
+
+	@PersistenceContext
+	private EntityManager em;
+
+	@Override
+	public User show(int id) {
+		User user = em.find(User.class, id);
+		return user;
+	}
+
+	@Override
+	public User create(User user) {
+		em.persist(user);
+		em.flush();
+		return user;
+	}
+
+	@Override
+	public User updateUser(int id, User user) {
+		User u = em.find(User.class, id);
+
+		u.setEmail(user.getEmail());
+		u.setPassword(user.getPassword());
+
+		return u;
+	}
+
+	@Override
+	public User updateUserProfile(int id, User user) {
+		User u = em.find(User.class, id);
+		Profile p = u.getProfile();
+
+		p.setDescription(user.getProfile().getDescription());
+		p.setFirstName(user.getProfile().getFirstName());
+		p.setImageURL(user.getProfile().getImageURL());
+		p.setLastName(user.getProfile().getLastName());
+		p.setLocation(user.getProfile().getLocation());
+
+		return u;
+	}
+
+	@Override
+	public boolean destroy(int id) {
+		User user = em.find(User.class, id);
+		try {
+			em.remove(user);
+			em.flush();
+			return true;
+		} catch (Exception e) {
+			return false;
+
+		}
+	}
+
+	@Override
+	public List<User> index() {
+		List<User> results = null;
+		try {
+			String queryString = "SELECT u FROM User u";
+			results = em.createQuery(queryString, User.class).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+
+	@Override
+	public List<User> indexByRole(Role role) {
+		List<User> results = null;
+		try {
+			String queryString = "SELECT u FROM User u WHERE u.role = :role";
+			results = em.createQuery(queryString, User.class).setParameter("role", role).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+
+	@Override
+	public List<User> indexByLocation(Location location) {
+		List<User> results = null;
+		try {
+			String queryString = "SELECT u FROM User u WHERE u.profile.location.id = :id";
+			results = em.createQuery(queryString, User.class).setParameter("id", location.getId()).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+
+	@Override
+	public List<User> indexByInterest(Interest interest) {
+		// List<User> results = interest.getUsers();
+		// return results;
+
+		List<User> results = null;
+		try {
+			String queryString = "SELECT i FROM Interest i JOIN FETCH i.users WHERE i.id = :id";
+			Interest i = em.createQuery(queryString, Interest.class).setParameter("id", interest.getId())
+					.getSingleResult();
+			results = i.getUsers();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+
+	// ICEBOXED
+	@Override
+	public List<User> indexByInterestCategory(InterestCategory category) {
+		List<User> results = null;
+		try {
+			String queryString = "SELECT u FROM User u WHERE u.interest.category.id = :id";
+			results = em.createQuery(queryString, User.class).setParameter("id", category.getId()).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+
+	@Override
+	public List<User> indexByAvailability(Availability availability) {
+		List<User> results = null;
+		try {
+			String queryString = "SELECT u FROM User u JOIN u.availabilities a " + "WHERE a.dayOfWeek = :day ";
+			if (availability.isFreeAM()) {
+				queryString += "AND a.am = true ";
+			}
+			if (availability.isFreePM()) {
+				queryString += "AND a.pm = true ";
+			}
+			results = em.createQuery(queryString, User.class).setParameter("day", availability.getDayOfWeek())
+					.getResultList();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+
+	}
+
+	@Override
+	public List<User> indexBy(Predicate<User> filter) {
+		List<User> results = new ArrayList<>();
+		for (User user : index()) {
+			if (filter.test(user)) {
+				results.add(user);
+			}
+		}
+		return results;
+	}
+
+	// ICEBOXED suggested connections
+	@Override
+	public List<Availability> commonAvailability(User user, User other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	// ICEBOXED suggested connections
+	@Override
+	public List<Interest> commonInterests(User user, User other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// ICEBOXED suggested connections
+	@Override
+	public List<InterestCategory> commonInterestCategories(User user, User other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> indexByConnection(User connection) {
+		List<User> results = null;
+		try {
+			String queryString = "SELECT u.connections FROM User u JOIN FETCH u.connections WHERE u.id = :id";
+			results = em.createQuery(queryString, User.class).setParameter("id", connection.getId()).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+}

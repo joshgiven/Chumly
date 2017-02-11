@@ -12,8 +12,9 @@ import entities.User.Role;
 
 public interface UserDAO {
 	public User show(int id);
-	public User create(User film);
-	public User update(int id, User film);
+	public User create(User user);
+	public User updateUser(int id, User user);
+	public User updateUserProfile(int id, User user);
 	public boolean destroy(int id);
 
 	public List<User> index();
@@ -23,13 +24,10 @@ public interface UserDAO {
 	public List<User> indexByInterest(Interest interest);
 	public List<User> indexByInterestCategory(InterestCategory category);
 	public List<User> indexByAvailability(Availability availability);
-	public <T> List<User> indexBy(Predicate<T> filter);
+	public List<User> indexBy(Predicate<User> filter);
 	
 	
 	public List<Availability> commonAvailability(User user, User other);
 	public List<Interest> commonInterests(User user, User other);
-	public List<InterestCategory> commonInterestCategories(User user, User other);
-
-	public <T,R> List<R> commonBy(Predicate<T> test, User user, User other);
-	
+	public List<InterestCategory> commonInterestCategories(User user, User other);	
 }

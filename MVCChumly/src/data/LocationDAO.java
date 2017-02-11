@@ -7,10 +7,10 @@ import entities.Location;
 
 public interface LocationDAO {
 	public Location show(int id);
-	public Location create(Location film);
-	public Location update(int id, Location film);
+	public Location create(Location location);
+	public Location update(int id, Location location);
 	public boolean destroy(int id);
 
 	public List<Location> index();
-	public <T> List<Location> indexBy(Predicate<T> filter);
+	public List<Location> indexBy(Predicate<Location> filter);
 }
