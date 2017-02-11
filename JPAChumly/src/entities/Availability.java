@@ -1,5 +1,6 @@
 package entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -33,7 +34,7 @@ public class Availability {
 	@Column(name="pm")
 	private boolean freePM;
 
-	@ManyToOne
+	@ManyToOne( cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
 	@JoinColumn(name="user_id")
 	private User user;
 
