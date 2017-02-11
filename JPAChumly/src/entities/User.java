@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,13 +35,15 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne(mappedBy="user")
+	@OneToOne( mappedBy="user"
+			, cascade={CascadeType.PERSIST, CascadeType.REMOVE} 
+	)
 	private Profile profile;
 
-	@OneToMany
-	@JoinTable(name="connection",
-	joinColumns=@JoinColumn(name="user_id"),
-	inverseJoinColumns=@JoinColumn(name="chum_id"))
+	@OneToMany( /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@JoinTable( name="connection",
+	            joinColumns=@JoinColumn(name="user_id"),
+	            inverseJoinColumns=@JoinColumn(name="chum_id") )
 	private List<User> connections;
 
 //	@OneToMany
@@ -55,13 +58,13 @@ public class User {
 
 //	private List<Group> groups;
 
-	@ManyToMany
-	@JoinTable(name="user_interest",
-	joinColumns=@JoinColumn(name="user_id"),
-	inverseJoinColumns=@JoinColumn(name="interest_id"))
+	@ManyToMany( /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@JoinTable( name="user_interest",
+	            joinColumns=@JoinColumn(name="user_id"),
+	            inverseJoinColumns=@JoinColumn(name="interest_id") )
 	private List<Interest> interests;
 
-	@OneToMany(mappedBy="user")
+	@OneToMany( mappedBy="user" , cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
 	private List<Availability> availabilities;
 
 	public User() { }
@@ -102,6 +105,7 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -116,6 +120,9 @@ public class User {
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+		
+		if(profile != null)
+			profile.setUser(this);
 	}
 
 	public int getId() {
