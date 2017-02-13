@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name="user")
@@ -26,17 +29,20 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Size(min=6, max=20, message="Size.user.username")
 	private String username;
-
+	
+	@Size(min=6, max=20, message="Size.user.password")
 	private String password;
 
+	@Email(message="Email.user.email")
 	private String email;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne( mappedBy="user"
-			, cascade={CascadeType.PERSIST, CascadeType.REMOVE} 
+	@OneToOne( mappedBy="user", 
+			   cascade={CascadeType.PERSIST, CascadeType.REMOVE} 
 	)
 	private Profile profile;
 
