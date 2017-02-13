@@ -68,34 +68,34 @@ public class UserController {
 		if (u != null){
 			if(u.getPassword().equals(user.getPassword())){
 				model.addAttribute("sessionUser", u);
-				return "profile.jsp";
+				return "profile";
 			}
 			else{
-				return "index.jsp";
+				return "index";
 			}
 		}
 		else{
-			return "index.jsp";
+			return "index";
 		}
 
 //		if (u.getUsername() == user.getUsername() && u.getPassword() == user.getPassword() && u.getRole() == Role.ADMIN) {
 //			model.addAttribute("sessionUser", u);
 //			
 //			//need to insert admin page
-//			return "profile.jsp";
+//			return "profile";
 //		} 
 //		else if(u.getUsername() == user.getUsername() && u.getPassword() == user.getPassword()) {
 //			model.addAttribute("sessionUser", u);
-//			return "profile.jsp";
+//			return "profile";
 //		}
 //		else {
-//			return "index.jsp";
+//			return "index";
 //		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "getUpdateProfile.do")
 	public String getUpdateProfile(Model model) {
-		return "updateProfile.jsp";
+		return "updateProfile";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getUsersByInterest.do")
@@ -106,7 +106,7 @@ public class UserController {
 
 		model.addAttribute("users", users);
 
-		return "results.jsp";
+		return "results";
 	}
 	
 	
@@ -114,14 +114,14 @@ public class UserController {
 	public String deleteProfile(Model model) {
 		User sessionUser = (User) model.asMap().get("sessionUser");
 		udao.destroy(sessionUser.getId());
-		return "index.jsp";
+		return "index";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")
 	public String getUpdateProfile(Integer id, Model model) {
 		User user = udao.show(id);
 		model.addAttribute("user", user);
-		return "otherUser.jsp";
+		return "otherUser";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "userMessage.do")
@@ -136,14 +136,7 @@ public class UserController {
 		model.addAttribute("recipient", recipient);
 		model.addAttribute("messages", messages);
 
-		return "message.jsp";
+		return "message";
 	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "home.do")
-	public String home() {
-		return "index.jsp";
-	}
-	
-	
 
 }
