@@ -6,13 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Profile<!--${sessionUser.username}--></title>
+<title>Profile</title>
 </head>
 <body>
 	<form method=GET action="getUsersByInterest.do">
 	<select name="interest">
 	<c:forEach var="i" items="${sessionUser.interests}">
-		<option value="${i.id}">${i.name}</option>
+		<option value="${i.name}">${i.name}</option>
 	</c:forEach>
   	</select>
 	<input type="submit" value="Search"/>

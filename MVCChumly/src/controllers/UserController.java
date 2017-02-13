@@ -19,26 +19,29 @@ import data.MessageDAO;
 import data.UserDAO;
 import entities.Message;
 import entities.User;
+import entities.User.Role;
+
 
 
 @Controller
 @SessionAttributes(names={"sessionUser"})
 public class UserController {
-	
-	@Autowired
-	UserDAO UDAO;
-	
-	@Autowired
-	MessageDAO MDAO;
-	
-	@Autowired
-	InterestDAO IDAO;
 
 	@Autowired
-	LocationDAO LDAO;
-	
-//	how to get session scope user
-//	User sessionUser = (User)model.asMap().get("sessionUser");
+	UserDAO udao;
+
+	@Autowired
+	MessageDAO mdao;
+
+	@Autowired
+	InterestDAO idao;
+
+	@Autowired
+	LocationDAO ldao;
+
+	// how to get session scope user
+	// User sessionUser = (User)model.asMap().get("sessionUser");
+
 	
 	//@ModelAttribute(name="sessionUser")
 	@ModelAttribute(name="command")
@@ -53,71 +56,94 @@ public class UserController {
 	
 	@RequestMapping (method=RequestMethod.POST, path="login.do")
 	public String login(@Valid User user, Errors errors, Model model){
-		
-		if(errors.getErrorCount()>0){
+		if(errors.hasErrors()) {
 			return "index";
 		}
-				
-		User u = UDAO.getUserByUsername(user.getUsername());	
 		
-		if( u != null && 
-			u.getUsername().equals(user.getUsername()) && 
-			u.getPassword().equals(user.getPassword())) {
-			
-			model.addAttribute("sessionUser", u);
-			return "profile";
+		User u = udao.getUserByUsername(user.getUsername());
+		
+//		System.out.println("User: " + user  + " pw: "+ user.getPassword());
+//		System.out.println("U from DB: " + u  + " pw: "+ u.getPassword());
+		
+		if (u != null){
+			if(u.getPassword().equals(user.getPassword())){
+				model.addAttribute("sessionUser", u);
+				return "profile.jsp";
+			}
+			else{
+				return "index.jsp";
+			}
 		}
 		else{
-			return "index";	
+			return "index.jsp";
 		}
+
+//		if (u.getUsername() == user.getUsername() && u.getPassword() == user.getPassword() && u.getRole() == Role.ADMIN) {
+//			model.addAttribute("sessionUser", u);
+//			
+//			//need to insert admin page
+//			return "profile.jsp";
+//		} 
+//		else if(u.getUsername() == user.getUsername() && u.getPassword() == user.getPassword()) {
+//			model.addAttribute("sessionUser", u);
+//			return "profile.jsp";
+//		}
+//		else {
+//			return "index.jsp";
+//		}
 	}
-	
-	@RequestMapping (method=RequestMethod.POST, path="getUpdateProfile.do")
-	public String getUpdateProfile(Model model){
-		return "updateProfile";
+
+	@RequestMapping(method = RequestMethod.POST, path = "getUpdateProfile.do")
+	public String getUpdateProfile(Model model) {
+		return "updateProfile.jsp";
 	}
-	
-	@RequestMapping (method=RequestMethod.GET, path="getUsersByInterest.do")
-	public String searchByInterest(String interestName, Model model){
-		
-		List<User> users = UDAO.indexByInterest(interestName);
-		
+
+	@RequestMapping(method = RequestMethod.GET, path = "getUsersByInterest.do")
+	public String searchByInterest(String interestName, Model model) {
+
+		List<User> users = udao.indexByInterest(interestName);
+		System.out.println(users);
+
 		model.addAttribute("users", users);
-		
-		return "results";
+
+		return "results.jsp";
 	}
 	
-	@RequestMapping (method=RequestMethod.GET, path="getOtherUserProfileInformation.do")
-	public String getUpdateProfile(Integer id, Model model){
-		User user = UDAO.show(id);
+	
+	@RequestMapping(method = RequestMethod.POST, path = "deleteProfile.do")
+	public String deleteProfile(Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+		udao.destroy(sessionUser.getId());
+		return "index.jsp";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")
+	public String getUpdateProfile(Integer id, Model model) {
+		User user = udao.show(id);
 		model.addAttribute("user", user);
-		return "otherUser";
+		return "otherUser.jsp";
 	}
-	
-	@RequestMapping (method=RequestMethod.GET, path="userMessage.do")
-	public String getUserMessage(Integer id, Model model){
-		User recipient = UDAO.show(id);
-		User sessionUser = (User)model.asMap().get("sessionUser");
-		
+
+	@RequestMapping(method = RequestMethod.GET, path = "userMessage.do")
+	public String getUserMessage(Integer id, Model model) {
+		User recipient = udao.show(id);
+		User sessionUser = (User) model.asMap().get("sessionUser");
+
 		List<Message> messages = null;
-		messages = MDAO.indexByConversation(recipient, sessionUser);
-		
+		messages = mdao.indexByConversation(recipient, sessionUser);
+
 		model.addAttribute("sender", sessionUser);
 		model.addAttribute("recipient", recipient);
-		model.addAttribute("messages",messages);
-		
-		return "message";
+		model.addAttribute("messages", messages);
+
+		return "message.jsp";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "home.do")
+	public String home() {
+		return "index.jsp";
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
