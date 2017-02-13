@@ -5,8 +5,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -19,7 +21,7 @@ import entities.Message;
 import entities.User;
 
 
-
+@Controller
 @SessionAttributes(names={"sessionUser"})
 public class UserController {
 	
@@ -38,7 +40,17 @@ public class UserController {
 //	how to get session scope user
 //	User sessionUser = (User)model.asMap().get("sessionUser");
 	
+	//@ModelAttribute(name="sessionUser")
+	@ModelAttribute(name="command")
+	public User sessionUserFactory() {
+		return new User();
+	}
 
+	@RequestMapping(path="home.do", method=RequestMethod.GET)
+	public String welcome() {
+		return "index";
+	}
+	
 	@RequestMapping (method=RequestMethod.POST, path="login.do")
 	public String login(@Valid User user, Errors errors, Model model){
 		
@@ -48,7 +60,10 @@ public class UserController {
 				
 		User u = UDAO.getUserByUsername(user.getUsername());	
 		
-		if(u.getUsername() == user.getUsername() && u.getPassword() == user.getPassword()){
+		if( u != null && 
+			u.getUsername().equals(user.getUsername()) && 
+			u.getPassword().equals(user.getPassword())) {
+			
 			model.addAttribute("sessionUser", u);
 			return "profile";
 		}
