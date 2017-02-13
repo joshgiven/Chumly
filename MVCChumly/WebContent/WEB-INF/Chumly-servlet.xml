@@ -9,8 +9,10 @@
 
   <context:component-scan base-package="controllers" />
 
- <!--  <bean id="dao" class="data.UserDAOImpl" />
-  <bean id="filmdao" class="data.Impl" /> -->
+  <bean id="messageDAO"  class="data.MessageDAOImpl" />
+  <bean id="interestDAO" class="data.InterestDAOImpl" />
+  <bean id="locationDAO" class="data.LocationDAOImpl" />
+  <bean id="userDAO"     class="data.UserDAOImpl" />
 
   <bean id="myEntityManagerFactory"
     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
