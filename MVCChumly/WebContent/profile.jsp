@@ -6,15 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Profile<!--${sessionUser.name}--></title>
+<title>Profile<!--${sessionUser.username}--></title>
 </head>
 <body>
 	<form method=GET action="getUsersByInterest.do">
-	<c:forEach var="i" items="sessionUser.interests">
 	<select name="interest">
-		<option value="${i.name}">${i.name}</option>
-  	</select>
+	<c:forEach var="i" items="${sessionUser.interests}">
+		<option value="${i.id}">${i.name}</option>
 	</c:forEach>
+  	</select>
 	<input type="submit" value="Search"/>
 	</form>
 	<a href="getUpdateProfile.do">Update Profile</a>

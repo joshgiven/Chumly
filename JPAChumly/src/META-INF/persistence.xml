@@ -10,13 +10,13 @@
 		<class>entities.Event</class>
 		<class>entities.Group</class>
 -->		
- 		<class>entities.Availability</class>
-		<class>entities.Message</class>
-		<class>entities.Profile</class>
-		<class>entities.User</class>
-		<class>entities.Interest</class>
-		<class>entities.InterestCategory</class>
-		<class>entities.Location</class>
+	<class>entities.Availability</class>
+	<class>entities.Message</class>
+	<class>entities.Profile</class>
+	<class>entities.User</class>
+	<class>entities.Interest</class>
+	<class>entities.InterestCategory</class>
+	<class>entities.Location</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/chumdb" />
