@@ -6,20 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Welcome</title>
+<title>${user.profile.firstName}</title>
 </head>
 <body>
-<h1>Welcome</h1>
-	<form:form action="login.do" method="POST" modelAttribute="sessionUser">
-		<form:label path="username">UserName:</form:label>
-		<form:input path="username" />
-		<form:errors path="username" />
-		<br />
-		<form:label path="password">Password:</form:label>
-		<form:input path="password" />
-		<form:errors path="password" /><br/>
-		<input type="submit" value="Login" />
-	</form:form>
-
+	<a href="connectToUser.do">Connect</a>
+	<a href="messageUser.do?id=user.id">Message</a>
 </body>
 </html>
