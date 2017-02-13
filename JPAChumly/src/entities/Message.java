@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="message")
@@ -23,9 +25,11 @@ public class Message {
 	private int id;
 
 	@Column(name="message")
+	@Size(max=256, message="Size.message.text")
 	private String text;
 
 	@Column(name="timestamp")
+	@Past(message="Past.message.timeStamp")
 	private Date timeStamp;
 
 	@ManyToOne

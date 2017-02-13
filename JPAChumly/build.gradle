@@ -62,6 +62,9 @@ dependencies {
   compile "org.hibernate:hibernate-core:$hibernateVersion"
   compile "org.hibernate:hibernate-c3p0:$hibernateVersion"
   
+  // https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
+  compile group: 'org.hibernate', name: 'hibernate-validator', version: "$hibernateVersion"
+  
   
   testCompile 'junit:junit:4.12'
   testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'

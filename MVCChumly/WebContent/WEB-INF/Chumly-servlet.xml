@@ -25,4 +25,8 @@
   <tx:annotation-driven transaction-manager="myTransactionManager" /> 
   <mvc:annotation-driven />
 
+  <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <property name="basename" value="/WEB-INF/ValidationMessages" />
+  </bean>
+
 </beans>
