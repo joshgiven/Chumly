@@ -6,9 +6,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Profile<!--${profile.name}--></title>
+<title>Profile<!--${sessionUser.name}--></title>
 </head>
 <body>
-
+	<form method=GET action="getUsersByInterest.do">
+	<c:forEach var="i" items="sessionUser.interests">
+	<select name="interest">
+		<option value="${i.name}">${i.name}</option>
+  	</select>
+	</c:forEach>
+	<input type="submit" value="Search"/>
+	</form>
+	<a href="getUpdateProfile.do">Update Profile</a>
 </body>
 </html>

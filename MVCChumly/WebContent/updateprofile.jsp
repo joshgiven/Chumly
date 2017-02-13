@@ -9,6 +9,15 @@
 <title>Update</title>
 </head>
 <body>
-
+		<form:form action="updateProfile.do" method="POST" modelAttribute="sessionUser">
+		<form:label path="">UserName:</form:label>
+		<form:input path="username" />
+		<form:errors path="username" />
+		<br />
+		<form:label path="password">Password:</form:label>
+		<form:input path="password" />
+		<form:errors path="password" /><br/>
+		<input type="submit" value="Login" />
+	</form:form>
 </body>
 </html>
