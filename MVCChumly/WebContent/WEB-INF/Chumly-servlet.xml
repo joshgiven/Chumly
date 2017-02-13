@@ -10,10 +10,16 @@
 
  <context:component-scan base-package="controllers" />
 
- <bean id="messageDAO"  class="data.MessageDAOImpl" />
- <bean id="interestDAO" class="data.InterestDAOImpl" />
- <bean id="locationDAO" class="data.LocationDAOImpl" />
- <bean id="userDAO"     class="data.UserDAOImpl" />
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- <property name="prefix" value="/" /> -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+  <bean id="messageDAO"  class="data.MessageDAOImpl" />
+  <bean id="interestDAO" class="data.InterestDAOImpl" />
+  <bean id="locationDAO" class="data.LocationDAOImpl" />
+  <bean id="userDAO"     class="data.UserDAOImpl" />
 
  <bean id="myEntityManagerFactory"
    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

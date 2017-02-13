@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -20,8 +21,10 @@ import entities.Message;
 import entities.User;
 import entities.User.Role;
 
+
+
 @Controller
-@SessionAttributes(names = { "sessionUser" })
+@SessionAttributes(names={"sessionUser"})
 public class UserController {
 
 	@Autowired
@@ -39,15 +42,25 @@ public class UserController {
 	// how to get session scope user
 	// User sessionUser = (User)model.asMap().get("sessionUser");
 
-	@RequestMapping(method = RequestMethod.POST, path = "login.do")
-	public String login(User user, Errors errors, Model model) {
+	
+	//@ModelAttribute(name="sessionUser")
+	@ModelAttribute(name="command")
+	public User sessionUserFactory() {
+		return new User();
+	}
 
-//		if (errors.getErrorCount() > 0) {
-//			return "index.jsp";
-//		}
-
-		User u = udao.getUserByUsername(user.getUsername());
+	@RequestMapping(path="home.do", method=RequestMethod.GET)
+	public String welcome() {
+		return "index";
+	}
+	
+	@RequestMapping (method=RequestMethod.POST, path="login.do")
+	public String login(@Valid User user, Errors errors, Model model){
+		if(errors.hasErrors()) {
+			return "index";
+		}
 		
+		User u = udao.getUserByUsername(user.getUsername());
 		
 //		System.out.println("User: " + user  + " pw: "+ user.getPassword());
 //		System.out.println("U from DB: " + u  + " pw: "+ u.getPassword());
