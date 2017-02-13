@@ -115,14 +115,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> indexByInterest(Interest interest) {
+	public List<User> indexByInterest(String interestName) {
 		// List<User> results = interest.getUsers();
 		// return results;
 
 		List<User> results = null;
 		try {
-			String queryString = "SELECT i FROM Interest i JOIN FETCH i.users WHERE i.id = :id";
-			Interest i = em.createQuery(queryString, Interest.class).setParameter("id", interest.getId())
+			String queryString = "SELECT i FROM Interest i JOIN FETCH i.users WHERE i.name = :name";
+			Interest i = em.createQuery(queryString, Interest.class).setParameter("name", interestName)
 					.getSingleResult();
 			results = i.getUsers();
 		} catch (Exception e) {
@@ -211,5 +211,18 @@ public class UserDAOImpl implements UserDAO {
 			return results;
 		}
 		return results;
+	}
+	
+	public User getUserByUsername(String username){
+		User result = null;
+		try {
+			String queryString = "SELECT u FROM User u WHERE u.username = :username";
+			result = em.createQuery(queryString, User.class).setParameter("username", username)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return result;
+		}		
+		return result;
 	}
 }

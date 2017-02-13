@@ -91,6 +91,22 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 
 	@Override
+	public List<Message> indexByConversation(User recipient, User sender) {
+		List<Message> results = null;
+		try {
+			String queryString = "SELECT m FROM Messages m JOIN FETCH m.recipients r "
+					+ "WHERE m.sender = :senderId AND r.id = :recipientId "
+					+ "OR m.sender = :id AND r.id = :sender ORDER BY m.id";
+			results = em.createQuery(queryString, Message.class).setParameter("senderId", sender.getId())
+					.setParameter("recpientId", recipient.getId()).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
+	
+	@Override
 	public List<Message> indexByDateRange(Date beginDate, Date endDate) {
 		List<Message> results = null;
 		try {

@@ -15,13 +15,14 @@ public interface UserDAO {
 	public User create(User user);
 	public User updateUser(int id, User user);
 	public User updateUserProfile(int id, User user);
+	public User getUserByUsername(String username);
 	public boolean destroy(int id);
 
 	public List<User> index();
 	public List<User> indexByRole(Role role);
 	public List<User> indexByLocation(Location location);
 	public List<User> indexByConnection(User connection);
-	public List<User> indexByInterest(Interest interest);
+	public List<User> indexByInterest(String interestName);
 	public List<User> indexByInterestCategory(InterestCategory category);
 	public List<User> indexByAvailability(Availability availability);
 	public List<User> indexBy(Predicate<User> filter);
