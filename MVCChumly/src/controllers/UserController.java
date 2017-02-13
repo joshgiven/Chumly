@@ -4,16 +4,17 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import data.InterestDAO;
+import data.LocationDAO;
 import data.MessageDAO;
-import data.MessageDAOImpl;
 import data.UserDAO;
-import data.UserDAOImpl;
 import entities.Message;
 import entities.User;
 
@@ -22,8 +23,17 @@ import entities.User;
 @SessionAttributes(names={"sessionUser"})
 public class UserController {
 	
-	UserDAO UDAO = new UserDAOImpl();
-	MessageDAO MDAO = new MessageDAOImpl();
+	@Autowired
+	UserDAO UDAO;
+	
+	@Autowired
+	MessageDAO MDAO;
+	
+	@Autowired
+	InterestDAO IDAO;
+
+	@Autowired
+	LocationDAO LDAO;
 	
 //	how to get session scope user
 //	User sessionUser = (User)model.asMap().get("sessionUser");
