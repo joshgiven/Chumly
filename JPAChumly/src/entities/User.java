@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,7 +65,7 @@ public class User {
 
 //	private List<Group> groups;
 
-	@ManyToMany( /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@ManyToMany(fetch=FetchType.EAGER /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
 	@JoinTable( name="user_interest",
 	            joinColumns=@JoinColumn(name="user_id"),
 	            inverseJoinColumns=@JoinColumn(name="interest_id") )

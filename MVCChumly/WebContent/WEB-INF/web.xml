@@ -4,16 +4,18 @@
          xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
        http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-       
+     
+    <display-name>MVCChumly</display-name>
+
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>home.do</welcome-file>
 	</welcome-file-list>
-  
+
     <servlet>
         <servlet-name>Chumly</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     </servlet>
-    
+     
     <servlet-mapping>
         <servlet-name>Chumly</servlet-name>
         <url-pattern>*.do</url-pattern>

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,16 +10,24 @@
 </head>
 <body>
 <h1>Welcome</h1>
-	<form:form action="login.do" method="POST">
-		<form:label path="username">UserName:</form:label>
+<%-- 	<form:form action="login.do" method="POST">
+		form:label path="username">UserName:</form:label>
 		<form:input path="username" />
 		<form:errors path="username" />
 		<br />
-		<form:label path="password">Password:</form:label>
+		<!-- <form:label path="password">Password:</form:label> -->
 		<form:input path="password" />
 		<form:errors path="password" /><br/>
 		<input type="submit" value="Login" />
-	</form:form>
+	</form:form> --%>
+	
+	<form action="login.do" method="POST">
+	Username: <input type="text" name="username">
+	<br>
+	Password: <input type="password" name="password">
+	<br>
+	<input type="submit" value="Login" />
+	</form>
 
 </body>
 </html>
