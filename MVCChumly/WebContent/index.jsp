@@ -10,7 +10,7 @@
 <body>
 
 <h1>Welcome</h1>
-	<form:form action="login.do" method="POST">
+	<form:form action="login.do" method="POST" modelAttribute="user">
 		<form:label path="username">UserName:</form:label>
 		<form:input path="username" />
 		<form:errors path="username" />

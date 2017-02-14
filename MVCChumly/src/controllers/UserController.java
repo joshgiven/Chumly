@@ -47,7 +47,7 @@ public class UserController {
 		return new User();
 	}
 
-	@ModelAttribute(name = "command")
+	@ModelAttribute(name = "user")
 	public User defaultUserFactory() {
 		return new User();
 	}
@@ -221,7 +221,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, path = "createUser.do")
 	public String createUser(Model model) {
 
-		model.addAttributes("location", ldao.mapByState);
+		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("", idao.mapByCategory());
 
 		return "newuser";
