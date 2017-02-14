@@ -12,6 +12,9 @@
 <!-- 	<context:component-scan base-package="controllers" />
  -->	
 	<bean id="udao" class="data.UserDAOImpl" />
+	<bean id="ldao" class="data.LocationDAOImpl" />
+	<bean id="mdao" class="data.MessageDAOImpl" />
+	<bean id="idao" class="data.InterestDAOImpl" />
 	
 	
 <!-- 	<bean id="myEntityManagerFactory" -->
