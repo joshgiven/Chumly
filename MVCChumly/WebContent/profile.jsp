@@ -23,6 +23,21 @@
 	<li> ${c.profile.firstName} ${c.profile.lastName}</li>
 	</c:forEach>
 	</ul>
+	<form action="searchInterest.do" method=GET>
+	<input type="text" name="name" placeholder="Interest Keyword">
+	<input type="submit" value="Search for Interest">
+	</form>
+	<form action="addInterest.do" method=POST>
+	<select name="name">
+	<c:forEach var="interest" items="${interests}">
+		<option value="${interest.name}">${interest.name}</option>
+	<input type="hidden" value="${interest.id}" name="id">
+	</c:forEach>
+  	</select>
+	<input type="hidden" value="${sessionUser.id}" name="userId">
+	<input type="submit" value="Add Interest">
+	
+	</form>
 	
 </body>
 </html>

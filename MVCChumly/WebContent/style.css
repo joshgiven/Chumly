@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+#category2 option{
+    display:none;
+}
+
+#category2 option.label{
+    display:block;
+}

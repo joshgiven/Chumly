@@ -10,7 +10,7 @@
 <body>
 
 <h1>Welcome</h1>
-	<form:form action="login.do" method="POST">
+	<form:form action="login.do" method="POST" modelAttribute="user">
 		<form:label path="username">UserName:</form:label>
 		<form:input path="username" />
 		<form:errors path="username" />
@@ -20,6 +20,7 @@
 		<form:errors path="password" /><br/>
 		<input type="submit" value="Login" />
 	</form:form> 
+	<a href="createUser.do">Create User</a>
 
 
 </body>
