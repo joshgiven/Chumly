@@ -19,11 +19,11 @@ public class Profile {
 	private int id;
 
 	@Column(name="first_name")
-	@Size(min=6, max=20, message="Size.profile.firstName")
+	@Size(min=2, max=20, message="Size.profile.firstName")
 	private String firstName;
 
 	@Column(name="last_name")
-	@Size(min=6, max=20, message="Size.profile.lastName")
+	@Size(min=2, max=20, message="Size.profile.lastName")
 	private String lastName;
 
 	@Size(max=256, message="Size.profile.description")

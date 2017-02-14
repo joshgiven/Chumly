@@ -25,6 +25,12 @@ public class UserDAOImpl implements UserDAO {
 	@PersistenceContext
 	private EntityManager em;
 
+//	public UserDAOImpl(EntityManager em) {
+//		this.em = em;
+//	}
+	
+	public UserDAOImpl () { }
+	
 	@Override
 	public User show(int id) {
 		User user = em.find(User.class, id);
@@ -105,8 +111,18 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> indexByLocation(Location location) {
 		List<User> results = null;
 		try {
-			String queryString = "SELECT u FROM User u WHERE u.profile.location.id = :id";
-			results = em.createQuery(queryString, User.class).setParameter("id", location.getId()).getResultList();
+			//String queryString = "SELECT u FROM User u WHERE u.profile.location.id = :id";
+			String queryString = 
+					"SELECT u "+
+			        "FROM User u "+
+			        "WHERE u.profile.location.city = :city AND u.profile.location.state = :state";
+			
+			results = em.createQuery(queryString, User.class)
+			            //.setParameter("id", location.getId())
+			            .setParameter("city",  location.getCity())
+			            .setParameter("state", location.getState())
+			            .getResultList();
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return results;

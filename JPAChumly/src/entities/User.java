@@ -30,10 +30,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Size(min=6, max=20, message="Size.user.username")
+	@Size(min=2, max=20, message="Size.user.username")
 	private String username;
 	
-	@Size(min=6, max=20, message="Size.user.password")
+	@Size(min=2, max=20, message="Size.user.password")
 	private String password;
 
 	@Email(message="Email.user.email")
