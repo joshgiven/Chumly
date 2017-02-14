@@ -20,7 +20,7 @@ public class Interest {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Size(min=6, max=256, message="Size.interest.name")
+	@Size(min=2, max=256, message="Size.interest.name")
 	private String name;
 
 	@ManyToOne

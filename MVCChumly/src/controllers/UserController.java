@@ -185,13 +185,6 @@ public class UserController {
 		return "message";
 	}
 
-	// NEED TO WRITE
-	@RequestMapping(method = RequestMethod.POST, path = "updateInterest.do")
-	public String addInterest(String interest, Model model) {
-		User sessionUser = (User) model.asMap().get("sessionUser");
-
-		return "profile";
-	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "connectToUser.do")
 	public String addInterest(Integer userId, Integer sessionId, Model model) {
@@ -227,6 +220,7 @@ public class UserController {
 
 		return "newuser";
 	}
+	
 	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
 	public String makeUser(User user, Profile profile, Model model) {
 		
@@ -234,6 +228,27 @@ public class UserController {
 		sessionUser.setProfile(profile);		
 		sessionUser= udao.updateUserProfile(sessionUser.getId(), sessionUser);
 				
+		model.addAttribute("sessionUser", sessionUser);
+		
+		return "profile";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path = "searchInterest.do")
+	public String searchInterest(String name, Model model) {
+				
+		List<Interest> interests = idao.indexByContainsText(name);	
+		model.addAttribute("interests", interests);
+		
+		return "profile";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
+	public String addInterest(Integer interestId, Model model, Integer id) {
+		
+		User sessionUser = udao.show(id);
+		Interest interest = idao.show(interestId);
+		sessionUser.getInterests().add(interest);		
+		sessionUser = udao.updateInterest(id, sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
 		
 		return "profile";
