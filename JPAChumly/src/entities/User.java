@@ -18,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 
 @Entity
@@ -47,7 +49,8 @@ public class User {
 	)
 	private Profile profile;
 
-	@OneToMany( /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@OneToMany(/*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable( name="connection",
 	            joinColumns=@JoinColumn(name="user_id"),
 	            inverseJoinColumns=@JoinColumn(name="chum_id") )
@@ -174,6 +177,11 @@ public class User {
 
 	public void setAvailabilities(List<Availability> availabilities) {
 		this.availabilities = availabilities;
+	}
+	
+	public Boolean hasConnection(Integer id){
+		
+		return true;
 	}
 
 }
