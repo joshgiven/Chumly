@@ -52,6 +52,10 @@ public class UserController {
 	public User defaultUserFactory() {
 		return new User();
 	}
+	@ModelAttribute(name = "profile")
+	public Profile defaultProfileFactory() {
+		return new Profile();
+	}
 
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
 	public String welcome() {
@@ -230,8 +234,22 @@ public class UserController {
 				
 		model.addAttribute("sessionUser", sessionUser);
 		
+		return "createprofile";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
+	public String updateProfile(Integer id, Profile profile, Model model) {
+		
+		User sessionUser = udao.show(id);				
+		sessionUser.setProfile(profile);		
+		sessionUser= udao.updateUserProfile(sessionUser.getId(), sessionUser);
+		
+		model.addAttribute("sessionUser", sessionUser);
+		
 		return "profile";
 	}
+	
+	
 	
 	@RequestMapping(method = RequestMethod.GET, path = "searchInterest.do")
 	public String searchInterest(String name, Model model) {
@@ -243,15 +261,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
-	public String addInterest(Integer interestId, Model model, Integer id) {
-		
-		User sessionUser = udao.show(id);
-		Interest interest = idao.show(interestId);
-		sessionUser.getInterests().add(interest);		
-		sessionUser = udao.updateInterest(id, sessionUser);
-		model.addAttribute("sessionUser", sessionUser);
-		
-		return "profile";
-	}
+    public String addInterest(Integer id, Model model, Integer userId) {
+        System.out.println(id);
+        User sessionUser = udao.show(userId);
+        Interest interest = idao.show(id);
+        sessionUser.getInterests().add(interest);        
+        sessionUser = udao.updateInterest(userId, sessionUser);
+        model.addAttribute("sessionUser", sessionUser);
+        
+        return "profile";
+    }
 
 }
