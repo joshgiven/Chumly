@@ -55,11 +55,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public User updateConnection(int id, User user) {
+		
 		User u = em.find(User.class, id);
-		
 		u.setConnections(user.getConnections());
+			
+		return u;
+	}
+	@Override
+	public User updateInterest(int id, User user) {
 		
-		
+		User u = em.find(User.class, id);
+		u.setInterests(user.getInterests());
 		
 		return u;
 	}

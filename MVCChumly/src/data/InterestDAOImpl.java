@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import entities.Interest;
 import entities.InterestCategory;
+import entities.Message;
 
 @Transactional
 @Repository
@@ -163,5 +164,18 @@ public class InterestDAOImpl implements InterestDAO {
 		}
 		return results;
 	}
-
+	
+	@Override
+	public List<Interest> indexByContainsText(String text) {
+		List<Interest> results = null;
+		try {
+			String queryString = "SELECT i FROM Interest i WHERE i.name LIKE :text";
+			results = em.createQuery(queryString, Interest.class).setParameter("text", ("%"+text+"%"))
+					.getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return results;
+		}
+		return results;
+	}
 }
