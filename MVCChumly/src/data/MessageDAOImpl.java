@@ -93,12 +93,15 @@ public class MessageDAOImpl implements MessageDAO {
 	@Override
 	public List<Message> indexByConversation(User recipient, User sender) {
 		List<Message> results = null;
+		System.out.println("r id: " + recipient.getId());
+		System.out.println("s id: " + sender.getId());
 		try {
-			String queryString = "SELECT m FROM Messages m JOIN FETCH m.recipients r "
-					+ "WHERE m.sender = :senderId AND r.id = :recipientId "
-					+ "OR m.sender = :id AND r.id = :sender ORDER BY m.id";
+			String queryString = "SELECT m FROM Message m JOIN m.recipients r "
+					+ "WHERE (m.sender.id = :senderId AND r.id = :recipientId) "
+					+ "OR (m.sender.id = :recipientId AND r.id = :senderId) "
+					+ "ORDER BY m.id";
 			results = em.createQuery(queryString, Message.class).setParameter("senderId", sender.getId())
-					.setParameter("recpientId", recipient.getId()).getResultList();
+					.setParameter("recipientId", recipient.getId()).getResultList();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return results;

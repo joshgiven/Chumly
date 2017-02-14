@@ -7,6 +7,7 @@ import entities.Availability;
 import entities.Interest;
 import entities.InterestCategory;
 import entities.Location;
+import entities.Profile;
 import entities.User;
 import entities.User.Role;
 
@@ -16,6 +17,7 @@ public interface UserDAO {
 	public User updateUser(int id, User user);
 	public User updateUserProfile(int id, User user);
 	public User getUserByUsername(String username);
+	public User updateUserProfileDescription(String description, Integer id);
 	public boolean destroy(int id);
 
 	public List<User> index();

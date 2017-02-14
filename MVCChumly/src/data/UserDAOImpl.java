@@ -67,6 +67,16 @@ public class UserDAOImpl implements UserDAO {
 
 		return u;
 	}
+	
+	@Override
+	public User updateUserProfileDescription(String description, Integer id) {
+		User user = em.find(User.class, id);		
+		user.getProfile().setDescription(description);	
+		return user;
+	}
+	
+	
+	
 
 	@Override
 	public boolean destroy(int id) {

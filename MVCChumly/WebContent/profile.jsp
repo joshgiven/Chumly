@@ -18,5 +18,6 @@
 	<input type="submit" value="Search"/>
 	</form>
 	<a href="getUpdateProfile.do">Update Profile</a>
+	
 </body>
 </html>
