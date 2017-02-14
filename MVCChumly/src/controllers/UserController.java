@@ -53,6 +53,11 @@ public class UserController {
 		return new User();
 	}
 
+	@ModelAttribute(name = "profile")
+	public Profile defaultProfileFactory() {
+		return new Profile();
+	}
+
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
 	public String welcome() {
 		return "index";
@@ -185,7 +190,6 @@ public class UserController {
 		return "message";
 	}
 
-
 	@RequestMapping(method = RequestMethod.GET, path = "connectToUser.do")
 	public String addInterest(Integer userId, Integer sessionId, Model model) {
 		// User sessionUser = (User) model.asMap().get("sessionUser");
@@ -220,37 +224,49 @@ public class UserController {
 
 		return "newuser";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
 	public String makeUser(User user, Profile profile, Model model) {
 		System.out.println(profile.getFirstName());
-		User sessionUser = udao.create(user);				
-		sessionUser.setProfile(profile);		
-		sessionUser= udao.updateUserProfile(sessionUser.getId(), sessionUser);
-				
+		User sessionUser = udao.create(user);
+		sessionUser.setProfile(profile);
+		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
+
 		model.addAttribute("sessionUser", sessionUser);
-		
+
+		return "createprofile";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
+	public String updateProfile(Integer id, Profile profile, Model model) {
+
+		User sessionUser = udao.show(id);
+		sessionUser.setProfile(profile);
+		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
+
+		model.addAttribute("sessionUser", sessionUser);
+
 		return "profile";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, path = "searchInterest.do")
 	public String searchInterest(String name, Model model) {
-				
-		List<Interest> interests = idao.indexByContainsText(name);	
+
+		List<Interest> interests = idao.indexByContainsText(name);
 		model.addAttribute("interests", interests);
-		
+
 		return "profile";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
 	public String addInterest(Integer id, Model model, Integer userId) {
 		System.out.println(id);
 		User sessionUser = udao.show(userId);
 		Interest interest = idao.show(id);
-		sessionUser.getInterests().add(interest);		
+		sessionUser.getInterests().add(interest);
 		sessionUser = udao.updateInterest(userId, sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
-		
+
 		return "profile";
 	}
 
