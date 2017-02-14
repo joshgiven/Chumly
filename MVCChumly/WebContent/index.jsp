@@ -18,7 +18,7 @@
 		<form:input path="username" />
 		<form:errors path="username" />
 		<br />
-		<!-- <form:label path="password">Password:</form:label> -->
+		<form:label path="password">Password:</form:label>
 		<form:input path="password" />
 		<form:errors path="password" /><br/>
 		<input type="submit" value="Login" />
