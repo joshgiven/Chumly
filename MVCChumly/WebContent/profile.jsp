@@ -18,6 +18,11 @@
 	<input type="submit" value="Search"/>
 	</form>
 	<a href="getUpdateProfile.do">Update Profile</a>
+	<ul>
+	<c:forEach var="c" items="${sessionUser.connections}">
+	<li> ${c.profile.firstName} ${c.profile.lastName}</li>
+	</c:forEach>
+	</ul>
 	
 </body>
 </html>

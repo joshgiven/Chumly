@@ -1,6 +1,8 @@
 package entities;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -72,8 +74,8 @@ public class Message {
 		return timeStamp;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setTimeStamp(Date localDate) {
+		this.timeStamp = localDate;
 	}
 
 	public User getSender() {

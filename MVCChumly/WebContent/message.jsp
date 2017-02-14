@@ -18,7 +18,7 @@
 	</form>
 	<ul>
 	<c:forEach var="m" items="${messages}">
-	<li><img src="${m.sender.profile.imageURL}"> ${m.text} ${m.timestamp}</li>
+	<li><img src="${m.sender.profile.imageURL}">${m.text} ${m.timeStamp.toGMTString()}</li>
 	</c:forEach>
 	</ul>
 </body>
