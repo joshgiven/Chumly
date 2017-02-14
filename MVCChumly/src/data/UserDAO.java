@@ -32,5 +32,6 @@ public interface UserDAO {
 	
 	public List<Availability> commonAvailability(User user, User other);
 	public List<Interest> commonInterests(User user, User other);
-	public List<InterestCategory> commonInterestCategories(User user, User other);	
+	public List<InterestCategory> commonInterestCategories(User user, User other);
+	User updateConnection(int id, User user);	
 }

@@ -47,6 +47,16 @@ public class UserDAOImpl implements UserDAO {
 
 		return u;
 	}
+	@Override
+	public User updateConnection(int id, User user) {
+		User u = em.find(User.class, id);
+		
+		u.setConnections(user.getConnections());
+		
+		
+		
+		return u;
+	}
 
 	@Override
 	public User updateUserProfile(int id, User user) {
@@ -214,7 +224,7 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> indexByConnection(User connection) {
 		List<User> results = null;
 		try {
-			String queryString = "SELECT u.connections FROM User u JOIN FETCH u.connections WHERE u.id = :id";
+			String queryString = "SELECT u.connections FROM User u JOIN u.connections WHERE u.id = :id";
 			results = em.createQuery(queryString, User.class).setParameter("id", connection.getId()).getResultList();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

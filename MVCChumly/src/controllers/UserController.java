@@ -1,5 +1,6 @@
 package controllers;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,24 +163,31 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST, path = "addMessage.do")
 	public String addMessage(Integer sessionId, Integer recipientId, String message, Model model) {
-		User sessionUser = udao.show(sessionId);
-		User recipient = udao.show(recipientId);
-		
-		Message newMessage = new Message();
-		
-		if(newMessage.getRecipients() == null){
-			List<User> recipients = new ArrayList<>();
-			newMessage.setRecipients(recipients);
-		}
-		
-		newMessage.getRecipients().add(recipient);
-		newMessage.setSender(sessionUser);
-		newMessage.setText(message);
-		
-		newMessage = mdao.create(newMessage);
-		
-		
-		return "message";
+	  User sessionUser = udao.show(sessionId);
+	  User recipient = udao.show(recipientId);
+	  
+	  Message newMessage = new Message();
+	  
+	  if(newMessage.getRecipients() == null){
+	    List<User> recipients = new ArrayList<>();
+	    newMessage.setRecipients(recipients);
+	  }
+	 
+	  newMessage.getRecipients().add(recipient);
+	  newMessage.setSender(sessionUser);
+	  newMessage.setText(message);
+	  newMessage.setTimeStamp(new Date(new java.util.Date().toInstant().toEpochMilli()));
+	  
+	  
+	  newMessage = mdao.create(newMessage);
+	  
+	  List<Message> messages = mdao.indexByConversation(recipient, sessionUser);
+	  
+	  model.addAttribute("sender", sessionUser);
+	  model.addAttribute("recipient", recipient);
+	  model.addAttribute("messages", messages);    
+	  
+	  return "message";
 	}
 	
 	
@@ -190,6 +198,32 @@ public class UserController {
 
 		
 		return "profile";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path = "connectToUser.do")
+	public String addInterest(Integer userId, Integer sessionId, Model model) {
+	 // User sessionUser = (User) model.asMap().get("sessionUser");
+		User sessionUser = udao.show(sessionId);
+		
+	  System.out.println(sessionUser.getId());
+	  User friend = udao.show(userId);
+	  List<User> connections = null;
+	  System.out.println(sessionUser.getConnections().size());
+	  
+	  if(sessionUser.getConnections().isEmpty()){
+	    connections = new ArrayList<>();
+	    sessionUser.setConnections(connections);
+	  }
+	  
+	  sessionUser.getConnections().add(friend);
+	  friend.getConnections().add(sessionUser);
+	  udao.updateConnection(sessionId, sessionUser);
+	  udao.updateConnection(userId, friend);
+	  System.out.println(sessionUser.getConnections().size());
+	  
+	  model.addAttribute("user", friend);
+	  
+	  return "otheruser";
 	}
 
 	
