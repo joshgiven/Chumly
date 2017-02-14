@@ -223,7 +223,7 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
 	public String makeUser(User user, Profile profile, Model model) {
-		
+		System.out.println(profile.getFirstName());
 		User sessionUser = udao.create(user);				
 		sessionUser.setProfile(profile);		
 		sessionUser= udao.updateUserProfile(sessionUser.getId(), sessionUser);
@@ -243,12 +243,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
-	public String addInterest(Integer interestId, Model model, Integer id) {
-		
-		User sessionUser = udao.show(id);
-		Interest interest = idao.show(interestId);
+	public String addInterest(Integer id, Model model, Integer userId) {
+		System.out.println(id);
+		User sessionUser = udao.show(userId);
+		Interest interest = idao.show(id);
 		sessionUser.getInterests().add(interest);		
-		sessionUser = udao.updateInterest(id, sessionUser);
+		sessionUser = udao.updateInterest(userId, sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
 		
 		return "profile";

@@ -7,24 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New User</title>
-<script type="text/javascript">
-	$(function() {
 
-		var $cat = $("#state"), $subcat = $("#city");
-
-		$cat.on("change", function() {
-			var _rel = $(this).val();
-			$subcat.find("option").attr("style", "");
-			$subcat.val("");
-			if (!_rel)
-				return $subcat.prop("disabled", false);
-			$subcat.find("[rel=" + _rel + "]").show();
-			$subcat.prop("disabled", false);
-		});
-
-	});
-</script>
-<link rel="styleSheet" type="text/css" href="/style.css">
 </head>
 <body>
 	<form:form action="makeUser.do" method="POST" modelAttribute="user">
@@ -40,21 +23,21 @@
 		<form:input path="password" />
 		<form:errors path="password" />
 		<br />
-		<form:label path="profile.firstName">First Name:</form:label>
-		<form:input path="profile.firstName" />
-		<form:errors path="profile.firstName" />
+		<%-- <form:label path="user.profile.firstName">First Name:</form:label>
+		<form:input path="user.profile.firstName" />
+		<form:errors path="user.profile.firstName" />
 		<br />
-		<form:label path="profile.lastName">Last Name:</form:label>
-		<form:input path="profile.lastName" />
-		<form:errors path="profile.lastName" />
+		<form:label path="user.profile.lastName">Last Name:</form:label>
+		<form:input path="user.profile.lastName" />
+		<form:errors path="user.profile.lastName" />
 		<br />
-		<form:label path="profile.description">Description:</form:label>
-		<form:input path="profile.description" />
-		<form:errors path="profile.description" />
+		<form:label path="user.profile.description">Description:</form:label>
+		<form:input path="user.profile.description" />
+		<form:errors path="user.profile.description" />
 		<br />
-		<form:label path="profile.imageURL">Image URL:</form:label>
-		<form:input path="profile.imageURL" />
-		<form:errors path="profile.imageURL" />
+		<form:label path="user.profile.imageURL">Image URL:</form:label>
+		<form:input path="user.profile.imageURL" />
+		<form:errors path="user.profile.imageURL" />
 		<br />
 		<select name="state" id="state">
 			<option value="">Select State</option>
@@ -70,8 +53,8 @@
 				<option rel="${c.key}" value="${loc.id}">${loc.city}</option>
 			</c:forEach>
 			</c:forEach>
-		</select>
-		<input type="submit" value="Login" />
+		</select> --%>
+		<input type="submit" value="Create User" />
 	</form:form>
 </body>
 </html>
