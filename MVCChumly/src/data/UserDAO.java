@@ -16,6 +16,7 @@ public interface UserDAO {
 	public User updateUser(int id, User user);
 	public User updateUserProfile(int id, User user);
 	public User getUserByUsername(String username);
+	public User updateUserProfileDescription(String description, Integer id);
 	public boolean destroy(int id);
 
 	public List<User> index();

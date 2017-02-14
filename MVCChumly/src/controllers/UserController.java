@@ -17,6 +17,7 @@ import data.InterestDAO;
 import data.LocationDAO;
 import data.MessageDAO;
 import data.UserDAO;
+import entities.Interest;
 import entities.Message;
 import entities.User;
 import entities.User.Role;
@@ -43,9 +44,13 @@ public class UserController {
 	// User sessionUser = (User)model.asMap().get("sessionUser");
 
 	
-	//@ModelAttribute(name="sessionUser")
-	@ModelAttribute(name="command")
+	@ModelAttribute(name="sessionUser")
 	public User sessionUserFactory() {
+		return new User();
+	}
+	
+	@ModelAttribute(name="command")
+	public User defaultUserFactory() {
 		return new User();
 	}
 
@@ -93,16 +98,19 @@ public class UserController {
 //		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "getUpdateProfile.do")
+	@RequestMapping(method = RequestMethod.GET, path = "getUpdateProfile.do")
 	public String getUpdateProfile(Model model) {
-		return "updateProfile";
+		List<Interest> interests = idao.index();
+		model.addAttribute("interests", interests);
+//		User sessionUser = (User)model.asMap().get("sessionUser");
+//		model.addAttribute("user", sessionUser);
+		return "updateprofile";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getUsersByInterest.do")
-	public String searchByInterest(String interestName, Model model) {
+	public String searchByInterest(String interest, Model model) {
 
-		List<User> users = udao.indexByInterest(interestName);
-		System.out.println(users);
+		List<User> users = udao.indexByInterest(interest);
 
 		model.addAttribute("users", users);
 
@@ -119,18 +127,22 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")
 	public String getUpdateProfile(Integer id, Model model) {
+
 		User user = udao.show(id);
 		model.addAttribute("user", user);
-		return "otherUser";
+		return "otheruser";
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "userMessage.do")
+	@RequestMapping(method = RequestMethod.GET, path = "messageUser.do")
 	public String getUserMessage(Integer id, Model model) {
+
 		User recipient = udao.show(id);
+				
 		User sessionUser = (User) model.asMap().get("sessionUser");
 
 		List<Message> messages = null;
 		messages = mdao.indexByConversation(recipient, sessionUser);
+		
 
 		model.addAttribute("sender", sessionUser);
 		model.addAttribute("recipient", recipient);
@@ -139,4 +151,24 @@ public class UserController {
 		return "message";
 	}
 
+
+	@RequestMapping(method = RequestMethod.POST, path = "updateProfileDescription.do")
+	public String updateProfileDescription(String description, Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+		sessionUser = udao.updateUserProfileDescription(description, sessionUser.getId());
+		model.addAttribute("sessionUser", sessionUser);
+
+		return "profile";
+	}
+	
+	//NEED TO WRITE
+	@RequestMapping(method = RequestMethod.POST, path = "updateInterest.do")
+	public String addInterest(String interest, Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+
+		
+		return "profile";
+	}
+
+	
 }

@@ -9,18 +9,25 @@
 <title>Update</title>
 </head>
 <body>
-	<form:form action="updateProfile.do" method="POST"
-		modelAttribute="sessionUser">
-		<form:label path="">Description</form:label>
-		<form:input path="description" />
-		<form:errors path="description" />
-		<br />
-		<select name="interests">
+
+	<form action="updateProfileDescription.do" method="POST">
+		<textarea rows="4" cols="50" name="description">${sessionUser.profile.description}
+        </textarea>
+		<br /> <input type="submit" value="Update description" />
+	</form>
+	<br />
+	<form action="updateProfileDescription.do" method="POST">
+		<input type="text"name="description" value="${sessionUser.profile.description}">
+		<br /> <input type="submit" value="Update description" />
+	</form>
+	<br />
+	<form action="updateInterest.do" method="POST">
+		<select name="interest">
 			<c:forEach var="i" items="${interests}">
-				<option value="${i.name}">${i.name}</option>
+				<option value="${i.id}">${i.name}</option>
 			</c:forEach>
-		</select><br>
-		<input type="submit" value="Update" />
-	</form:form>
+		</select><br> <input type="submit" value="Add Interest" />
+	</form>
+
 </body>
 </html>

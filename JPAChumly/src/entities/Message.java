@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,11 +33,11 @@ public class Message {
 	@Past(message="Past.message.timeStamp")
 	private Date timeStamp;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="sender_id")
 	private User sender;
 	
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="message_chum",
 	joinColumns=@JoinColumn(name="message_id"),
 	inverseJoinColumns=@JoinColumn(name="chum_id"))

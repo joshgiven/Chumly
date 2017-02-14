@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user.profile.firstName}</title>
+<title></title>
 </head>
 <body>
 	<a href="connectToUser.do">Connect</a>
-	<a href="messageUser.do?id=user.id">Message</a>
+	<a href="messageUser.do?id=${user.id}">Message</a>
 </body>
 </html>

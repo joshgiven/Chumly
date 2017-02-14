@@ -9,12 +9,9 @@
 </head>
 <body>
 
-
-	
-
-<h1>Welcome</h1> 	<form:form action="login.do" method="POST">
+<h1>Welcome</h1>
+	<form:form action="login.do" method="POST">
 		<form:label path="username">UserName:</form:label>
-
 		<form:input path="username" />
 		<form:errors path="username" />
 		<br />
