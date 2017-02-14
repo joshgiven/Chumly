@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,7 +21,6 @@ import data.UserDAO;
 import entities.Interest;
 import entities.Message;
 import entities.User;
-import entities.User.Role;
 
 
 
@@ -159,6 +159,29 @@ public class UserController {
 
 		return "profile";
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "addMessage.do")
+	public String addMessage(Integer sessionId, Integer recipientId, String message, Model model) {
+		User sessionUser = udao.show(sessionId);
+		User recipient = udao.show(recipientId);
+		
+		Message newMessage = new Message();
+		
+		if(newMessage.getRecipients() == null){
+			List<User> recipients = new ArrayList<>();
+			newMessage.setRecipients(recipients);
+		}
+		
+		newMessage.getRecipients().add(recipient);
+		newMessage.setSender(sessionUser);
+		newMessage.setText(message);
+		
+		newMessage = mdao.create(newMessage);
+		
+		
+		return "message";
+	}
+	
 	
 	//NEED TO WRITE
 	@RequestMapping(method = RequestMethod.POST, path = "updateInterest.do")
