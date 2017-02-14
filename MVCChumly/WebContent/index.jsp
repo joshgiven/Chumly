@@ -20,6 +20,7 @@
 		<form:errors path="password" /><br/>
 		<input type="submit" value="Login" />
 	</form:form> 
+	<a href="createUser.do">Create User</a>
 
 
 </body>
