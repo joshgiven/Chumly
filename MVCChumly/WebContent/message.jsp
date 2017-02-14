@@ -9,7 +9,13 @@
 <title>Message</title>
 </head>
 <body>
-	<
+	<form action="addMessage.do" method="POST">
+		<textarea rows="4" cols="50" name="message">
+        </textarea>
+        <input type="hidden" value="${sender.id}" name="sessionId">
+        <input type="hidden" value="${recipient.id}" name="recipientId">
+		<br /> <input type="submit" value="Send Message" />
+	</form>
 	<ul>
 	<c:forEach var="m" items="${messages}">
 	<li><img src="${m.sender.profile.imageURL}"> ${m.text} ${m.timestamp}</li>
