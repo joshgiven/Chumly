@@ -25,10 +25,6 @@ public class UserDAOImpl implements UserDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-//	public UserDAOImpl(EntityManager em) {
-//		this.em = em;
-//	}
-	
 	public UserDAOImpl () { }
 	
 	@Override
@@ -59,8 +55,6 @@ public class UserDAOImpl implements UserDAO {
 		
 		u.setConnections(user.getConnections());
 		
-		
-		
 		return u;
 	}
 
@@ -84,9 +78,6 @@ public class UserDAOImpl implements UserDAO {
 		user.getProfile().setDescription(description);	
 		return user;
 	}
-	
-	
-	
 
 	@Override
 	public boolean destroy(int id) {
@@ -172,13 +163,27 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> indexByInterestCategory(InterestCategory category) {
 		List<User> results = null;
+		
+		if(category == null || category.getId() < 1)
+			throw new IllegalArgumentException();
+		
 		try {
-			String queryString = "SELECT u FROM User u WHERE u.interest.category.id = :id";
-			results = em.createQuery(queryString, User.class).setParameter("id", category.getId()).getResultList();
-		} catch (Exception e) {
+			
+			String queryString = 
+					"SELECT u "+
+			        "FROM User u JOIN u.interests i "+
+			        "WHERE i.category.id = :id";
+			
+			results = em.createQuery(queryString, User.class)
+			            .setParameter("id", category.getId())
+			            .getResultList();
+			
+		} 
+		catch (Exception e) {
 			System.out.println(e.getMessage());
 			return results;
 		}
+		
 		return results;
 	}
 

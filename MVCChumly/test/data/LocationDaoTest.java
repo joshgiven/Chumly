@@ -3,6 +3,7 @@ package data;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -131,4 +132,26 @@ public class LocationDaoTest {
 		assertArrayEquals(new String[]{"Aurora","Colorado Springs","Denver"}, cities);
 	}
 
+	@Test
+	public void test_mapByState() {
+		Map<String, List<Location>> map = dao.mapByState();
+		
+		assertNotNull(map);
+		assertEquals(34, map.keySet().size());
+		assertEquals("AK", map.keySet().stream().findFirst().get());
+		
+		List<Location> coLocations = map.get("CO");
+		assertNotNull(coLocations);
+		assertEquals(3, coLocations.size());
+		
+		String[] cities = 
+			coLocations.stream()
+                       .map(Location::getCity)
+                       .sorted()
+                       .collect(Collectors.toList())
+                       .toArray(new String[0]);
+
+		assertArrayEquals(new String[]{"Aurora","Colorado Springs","Denver"}, cities);
+
+	}
 }

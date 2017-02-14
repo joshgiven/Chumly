@@ -263,8 +263,10 @@ public class UserDaoTest {
 	public void test_indexByInterestCategory() {
 		
 		String category = "COMPETITION (OUTDOORS)"; //451
-		InterestCategory ic = new InterestCategory();
-		ic.setName(category);
+
+		InterestCategory ic = em.find(InterestCategory.class, 6);
+		assertNotNull(ic);
+		assertEquals(category, ic.getName());
 		
 		List<User> users = dao.indexByInterestCategory(ic);
 		assertNotNull(users);
@@ -278,11 +280,11 @@ public class UserDaoTest {
 
 	}
 	
-	@Test
-	public void test_indexByAvailability() {
-		//* public List<User> indexByAvailability(Availability availability);
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public void test_indexByAvailability() {
+//		//* public List<User> indexByAvailability(Availability availability);
+//		fail("Not yet implemented");
+//	}
 	
 	@Test
 	public void test_indexByPredicate() {
@@ -304,14 +306,6 @@ public class UserDaoTest {
 			        		 (u) -> u.getProfile().getFirstName().equals(fname) ));
 
 		//"WILLIAM" : 8
-	}
-
-
-	
-	
-	@Test
-	public void test() {
-		fail("Not yet implemented");
 	}
 
 }
