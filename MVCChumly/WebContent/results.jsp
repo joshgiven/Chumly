@@ -12,7 +12,7 @@
 	<table>
 	<c:forEach var="u" items="${users}">
 	<tr>
-	<td><a href ="getOtherUserProfileInformation.do?id=${u.id}">${u.profile.imageURL}pic</a></td>
+	<td><a href ="getOtherUserProfileInformation.do?id=${u.id}"><img src="${u.profile.imageURL}" alt="Profile Picture"></a></td>
 	<td>${u.profile.firstName} ${u.profile.lastName}</td>
 	</tr>
 	</c:forEach>

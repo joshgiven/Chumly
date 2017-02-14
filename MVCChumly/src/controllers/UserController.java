@@ -142,7 +142,7 @@ public class UserController {
 
 		List<Message> messages = null;
 		messages = mdao.indexByConversation(recipient, sessionUser);
-		
+		System.out.println(messages.size());
 
 		model.addAttribute("sender", sessionUser);
 		model.addAttribute("recipient", recipient);
@@ -153,9 +153,8 @@ public class UserController {
 
 
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfileDescription.do")
-	public String updateProfileDescription(String description, Model model) {
-		User sessionUser = (User) model.asMap().get("sessionUser");
-		sessionUser = udao.updateUserProfileDescription(description, sessionUser.getId());
+	public String updateProfileDescription(String description, Integer id,  Model model) {
+		User sessionUser = udao.updateUserProfileDescription(description, id);
 		model.addAttribute("sessionUser", sessionUser);
 
 		return "profile";

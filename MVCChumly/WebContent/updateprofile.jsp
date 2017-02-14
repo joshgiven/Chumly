@@ -13,11 +13,7 @@
 	<form action="updateProfileDescription.do" method="POST">
 		<textarea rows="4" cols="50" name="description">${sessionUser.profile.description}
         </textarea>
-		<br /> <input type="submit" value="Update description" />
-	</form>
-	<br />
-	<form action="updateProfileDescription.do" method="POST">
-		<input type="text"name="description" value="${sessionUser.profile.description}">
+        <input type="hidden" value="${sessionUser.id}" name="id">
 		<br /> <input type="submit" value="Update description" />
 	</form>
 	<br />

@@ -9,6 +9,11 @@
 <title>Message</title>
 </head>
 <body>
-
+	<
+	<ul>
+	<c:forEach var="m" items="${messages}">
+	<li><img src="${m.sender.profile.imageURL}"> ${m.text} ${m.timestamp}</li>
+	</c:forEach>
+	</ul>
 </body>
 </html>

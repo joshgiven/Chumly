@@ -7,6 +7,7 @@ import entities.Availability;
 import entities.Interest;
 import entities.InterestCategory;
 import entities.Location;
+import entities.Profile;
 import entities.User;
 import entities.User.Role;
 
