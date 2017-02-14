@@ -1,8 +1,11 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -85,6 +88,28 @@ public class LocationDAOImpl implements LocationDAO {
 			}
 		}
 		return results;
+	}
+
+	@Override
+	public Map<String, List<Location>> mapByState() {
+		Map<String, List<Location>> locMap = new HashMap<>();
+		
+		List<Location> sortList = 
+				index().stream()
+				       .sorted( (a,b) -> a.getCity().compareTo(b.getCity()) )
+				       .sorted( (a,b) -> a.getState().compareTo(b.getState()) )
+				       .collect(Collectors.toList());
+		
+		for(Location loc : sortList) {
+			String state = loc.getState();
+			if(locMap.get(state) == null) {
+				locMap.put(state, new ArrayList<Location>());
+			}
+			
+			locMap.get(state).add(loc);
+		}
+		
+		return locMap;
 	}
 
 }

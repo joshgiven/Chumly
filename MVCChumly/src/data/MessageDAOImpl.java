@@ -46,7 +46,7 @@ public class MessageDAOImpl implements MessageDAO {
 		
 		em.flush();
 			
-		return null;
+		return m;
 	}
 
 	@Override
