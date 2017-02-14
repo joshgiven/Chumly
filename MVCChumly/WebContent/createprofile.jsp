@@ -29,7 +29,7 @@
 <body>
 <form:form action="updateProfile.do" method="POST" modelAttribute="profile">
 	<form:label path="firstName">First Name:</form:label>
-		<form:input value="${sessionUser.profile.firstName}" path="firstName" />
+		<form:input path="firstName" />
 		<form:errors path="firstName" />
 		<br />
 		<form:label path="lastName">Last Name:</form:label>
@@ -59,6 +59,7 @@
 			</c:forEach>
 			</c:forEach>
 		</select>
+		<input type="hidden" value="${sessionUser.id}" name="id">
 		<input type="submit" value="Create Profile" />
 	</form:form>
 

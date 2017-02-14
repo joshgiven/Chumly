@@ -25,12 +25,13 @@ public class UserDAOImpl implements UserDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-//	public UserDAOImpl(EntityManager em) {
-//		this.em = em;
-//	}
-	
-	public UserDAOImpl () { }
-	
+	// public UserDAOImpl(EntityManager em) {
+	// this.em = em;
+	// }
+
+	public UserDAOImpl() {
+	}
+
 	@Override
 	public User show(int id) {
 		User user = em.find(User.class, id);
@@ -53,46 +54,47 @@ public class UserDAOImpl implements UserDAO {
 
 		return u;
 	}
+
 	@Override
 	public User updateConnection(int id, User user) {
-		
+
 		User u = em.find(User.class, id);
 		u.setConnections(user.getConnections());
-			
+
 		return u;
 	}
+
 	@Override
 	public User updateInterest(int id, User user) {
-		
+
 		User u = em.find(User.class, id);
 		u.setInterests(user.getInterests());
-		
+
 		return u;
 	}
 
 	@Override
 	public User updateUserProfile(int id, User user) {
 		User u = em.find(User.class, id);
-		Profile p = u.getProfile();
-
-		p.setDescription(user.getProfile().getDescription());
-		p.setFirstName(user.getProfile().getFirstName());
-		p.setImageURL(user.getProfile().getImageURL());
-		p.setLastName(user.getProfile().getLastName());
-		p.setLocation(user.getProfile().getLocation());
+		
+		Profile p = user.getProfile();
+		System.out.println(user.getProfile().getFirstName());
+		u.setProfile(p);
+//		.setDescription(user.getProfile().getDescription());
+//		p.setFirstName(user.getProfile().getFirstName());
+//		p.setImageURL(user.getProfile().getImageURL());
+//		p.setLastName(user.getProfile().getLastName());
+//		p.setLocation(user.getProfile().getLocation());
 
 		return u;
 	}
-	
+
 	@Override
 	public User updateUserProfileDescription(String description, Integer id) {
-		User user = em.find(User.class, id);		
-		user.getProfile().setDescription(description);	
+		User user = em.find(User.class, id);
+		user.getProfile().setDescription(description);
 		return user;
 	}
-	
-	
-	
 
 	@Override
 	public boolean destroy(int id) {
@@ -137,18 +139,16 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> indexByLocation(Location location) {
 		List<User> results = null;
 		try {
-			//String queryString = "SELECT u FROM User u WHERE u.profile.location.id = :id";
-			String queryString = 
-					"SELECT u "+
-			        "FROM User u "+
-			        "WHERE u.profile.location.city = :city AND u.profile.location.state = :state";
-			
+			// String queryString = "SELECT u FROM User u WHERE
+			// u.profile.location.id = :id";
+			String queryString = "SELECT u " + "FROM User u "
+					+ "WHERE u.profile.location.city = :city AND u.profile.location.state = :state";
+
 			results = em.createQuery(queryString, User.class)
-			            //.setParameter("id", location.getId())
-			            .setParameter("city",  location.getCity())
-			            .setParameter("state", location.getState())
-			            .getResultList();
-			
+					// .setParameter("id", location.getId())
+					.setParameter("city", location.getCity()).setParameter("state", location.getState())
+					.getResultList();
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return results;
@@ -227,7 +227,7 @@ public class UserDAOImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	// ICEBOXED suggested connections
 	@Override
 	public List<Interest> commonInterests(User user, User other) {
@@ -254,17 +254,16 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return results;
 	}
-	
-	public User getUserByUsername(String username){
+
+	public User getUserByUsername(String username) {
 		User result = null;
 		try {
 			String queryString = "SELECT u FROM User u WHERE u.username = :username";
-			result = em.createQuery(queryString, User.class).setParameter("username", username)
-					.getSingleResult();
+			result = em.createQuery(queryString, User.class).setParameter("username", username).getSingleResult();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return result;
-		}		
+		}
 		return result;
 	}
 }

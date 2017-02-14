@@ -219,19 +219,19 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, path = "createUser.do")
 	public String createUser(Model model) {
 
-		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("", idao.mapByCategory());
 
 		return "newuser";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
-	public String makeUser(User user, Profile profile, Model model) {
-		System.out.println(profile.getFirstName());
+	public String makeUser(User user, Model model) {
+		Profile profile = new Profile();
 		User sessionUser = udao.create(user);
 		sessionUser.setProfile(profile);
-		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
+		//sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
 
+		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
 
 		return "createprofile";
@@ -242,6 +242,7 @@ public class UserController {
 
 		User sessionUser = udao.show(id);
 		sessionUser.setProfile(profile);
+		System.out.println(profile.getFirstName());
 		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
 
 		model.addAttribute("sessionUser", sessionUser);
