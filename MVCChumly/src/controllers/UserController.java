@@ -21,6 +21,7 @@ import data.MessageDAO;
 import data.UserDAO;
 import entities.Interest;
 import entities.Message;
+import entities.Profile;
 import entities.User;
 
 @Controller
@@ -221,10 +222,21 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, path = "createUser.do")
 	public String createUser(Model model) {
 
-		model.addAttributes("location", ldao.mapByState);
+		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("", idao.mapByCategory());
 
 		return "newuser";
+	}
+	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
+	public String makeUser(User user, Profile profile, Model model) {
+		
+		User sessionUser = udao.create(user);				
+		sessionUser.setProfile(profile);		
+		sessionUser= udao.updateUserProfile(sessionUser.getId(), sessionUser);
+				
+		model.addAttribute("sessionUser", sessionUser);
+		
+		return "profile";
 	}
 
 }
