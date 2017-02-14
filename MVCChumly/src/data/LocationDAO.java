@@ -1,6 +1,7 @@
 package data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import entities.Location;
@@ -13,4 +14,6 @@ public interface LocationDAO {
 
 	public List<Location> index();
 	public List<Location> indexBy(Predicate<Location> filter);
+	
+	public Map<String, List<Location>> mapByState();
 }
