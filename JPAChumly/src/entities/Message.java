@@ -1,10 +1,9 @@
 package entities;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +34,7 @@ public class Message {
 	@Past(message="Past.message.timeStamp")
 	private Date timeStamp;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE})
 	@JoinColumn(name="sender_id")
 	private User sender;
 	

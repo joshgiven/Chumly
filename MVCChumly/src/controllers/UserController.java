@@ -271,4 +271,14 @@ public class UserController {
 		return "profile";
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "deleteUser.do")
+	public String deleteUser(Integer id) {
+		
+		System.out.println(id);
+		if(udao.destroy(id)){
+			System.out.println("deleted");
+		}
+		
+		return "index";
+	}
 }

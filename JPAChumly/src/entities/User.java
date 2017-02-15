@@ -49,7 +49,7 @@ public class User {
 	)
 	private Profile profile;
 
-	@OneToMany(/*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable( name="connection",
 	            joinColumns=@JoinColumn(name="user_id"),
@@ -62,19 +62,19 @@ public class User {
 //	inverseJoinColumns=@JoinColumn(name="chum_id"))
 //	private List<Message> chumMessages;
 //
-	@OneToMany(mappedBy="recipients")
+	@OneToMany(mappedBy="recipients" , cascade={CascadeType.REMOVE})
 	private List<Message> messages;
 
 
 //	private List<Group> groups;
 
-	@ManyToMany( fetch=FetchType.EAGER /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@ManyToMany( fetch=FetchType.EAGER, cascade={CascadeType.REMOVE} )
 	@JoinTable( name="user_interest",
 	joinColumns=@JoinColumn(name="user_id"),
 	inverseJoinColumns=@JoinColumn(name="interest_id") )
 	private List<Interest> interests;
 
-	@OneToMany( mappedBy="user" , cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
+	@OneToMany( mappedBy="user" , cascade={CascadeType.REMOVE} )
 	private List<Availability> availabilities;
 
 	public User() { }
