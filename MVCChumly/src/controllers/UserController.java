@@ -61,10 +61,28 @@ public class UserController {
 	}
 
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
-	public String welcome() {
+	public String welcome(Model model) {
+		
+		if(model.containsAttribute("sessionUser")) {
+			User u = (User) model.asMap().get("sessionUser");
+			if(u != null && u.getUsername() != null) {
+				System.out.println(u);
+				return "profile";
+			}
+		}
+		
 		return "index";
 	}
 
+	
+	
+	@RequestMapping(method = RequestMethod.GET, path = "logout.do")
+	public String logout(Model model) {
+		model.asMap().remove("sessionUser");
+		return "index";
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.POST, path = "login.do")
 	public String login(@Valid User user, Errors errors, Model model) {
 		if (errors.hasErrors()) {

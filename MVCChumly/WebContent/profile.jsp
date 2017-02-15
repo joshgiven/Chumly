@@ -36,13 +36,18 @@
   	</select>
 	<input type="hidden" value="${sessionUser.id}" name="userId">
 	<input type="submit" value="Add Interest">
-	
 	</form>
 	
 	<form action="deleteUser.do" method=POST>	
 	<input type="hidden" value="${sessionUser.id}" name="id">
 	<input type="submit" value="Delete User">
 	</form>
+	
+	
+	<ul>
+	<li><a href="/MVCChumly/">home</a></li>
+	<li><a href="/MVCChumly/logout.do">logout</a></li>
+	</ul>
 	
 </body>
 </html>

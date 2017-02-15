@@ -31,8 +31,11 @@
 		<input type="hidden" value="${user.id}" name="id"> <br />
 		<input type="hidden" value="${sessionUser.id}" name="sessionId"> <br />
 		<input type="submit" value="Delete" />
-	</form>
-	
-	</c:if>
+	</form>	
+	</c:if>	
+	<ul>
+	<li><a href="/MVCChumly/">home</a></li>
+	<li><a href="/MVCChumly/logout.do">logout</a></li>
+	</ul>
 </body>
 </html>
