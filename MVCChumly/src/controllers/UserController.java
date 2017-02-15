@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import data.LocationDAO;
 import data.MessageDAO;
 import data.UserDAO;
 import entities.Interest;
+import entities.Location;
 import entities.Message;
 import entities.Profile;
 import entities.User;
@@ -41,10 +41,6 @@ public class UserController {
 
 	@Autowired
 	LocationDAO ldao;
-
-	// how to get session scope user
-	// User sessionUser = (User)model.asMap().get("sessionUser");
-
 
 	/*
 	private static String VIEW_ADMIN_HOME     = "adminhome";
@@ -89,22 +85,24 @@ public class UserController {
 		if(model.containsAttribute("sessionUser")) {
 			User u = (User) model.asMap().get("sessionUser");
 			if(u != null && u.getUsername() != null) {
-				System.out.println(u);
 				return VIEW_PROFILE;
 			}
 		}
-
 		return VIEW_INDEX;
 	}
-
-
 
 	@RequestMapping(method = RequestMethod.GET, path = "logout.do")
 	public String logout(Model model) {
 		model.asMap().remove("sessionUser");
 		return VIEW_INDEX;
 	}
-
+	@RequestMapping(method = RequestMethod.GET, path = "admin.do")
+	public String adminHome(Model model) {
+		model.addAttribute("categories", idao.indexCategories());
+		model.addAttribute("users", udao.index());
+		
+		return VIEW_ADMIN_HOME;
+	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "login.do")
 	public String login(@Valid User user, Errors errors, Model model) {
@@ -113,10 +111,6 @@ public class UserController {
 		}
 
 		User u = udao.getUserByUsername(user.getUsername());
-
-		// System.out.println("User: " + user + " pw: "+ user.getPassword());
-		// System.out.println("U from DB: " + u + " pw: "+ u.getPassword());
-
 		if (u != null) {
 			if (u.getPassword().equals(user.getPassword())) {
 				if (u.getRole() == Role.ADMIN) {
@@ -130,8 +124,7 @@ public class UserController {
 			} else {
 				errors.rejectValue("password", "error.password",
 						"Invalid password");
-
-				// bad passwd
+				// bad password
 				return VIEW_INDEX;
 			}
 		}
@@ -141,30 +134,12 @@ public class UserController {
 					"The username you entered is not associated with an account, please try another");
 			return VIEW_INDEX;
 		}
-
-		// if (u.getUsername() == user.getUsername() && u.getPassword() ==
-		// user.getPassword() && u.getRole() == Role.ADMIN) {
-		// model.addAttribute("sessionUser", u);
-		//
-		// //need to insert admin page
-		// return "profile";
-		// }
-		// else if(u.getUsername() == user.getUsername() && u.getPassword() ==
-		// user.getPassword()) {
-		// model.addAttribute("sessionUser", u);
-		// return "profile";
-		// }
-		// else {
-		// return "index";
-		// }
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getUpdateProfile.do")
 	public String getUpdateProfile(Model model) {
 		List<Interest> interests = idao.index();
 		model.addAttribute("interests", interests);
-		// User sessionUser = (User)model.asMap().get("sessionUser");
-		// model.addAttribute("user", sessionUser);
 		return VIEW_UPDATE_PROFILE;
 	}
 
@@ -188,7 +163,6 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")
 	public String getUpdateProfile(Integer id, Model model) {
-
 		User user = udao.show(id);
 		model.addAttribute("user", user);
 		return VIEW_OTHER_USER;
@@ -198,12 +172,10 @@ public class UserController {
 	public String getUserMessage(Integer id, Model model) {
 
 		User recipient = udao.show(id);
-
 		User sessionUser = (User) model.asMap().get("sessionUser");
 
 		List<Message> messages = null;
 		messages = mdao.indexByConversation(recipient, sessionUser);
-		System.out.println(messages.size());
 
 		model.addAttribute("sender", sessionUser);
 		model.addAttribute("recipient", recipient);
@@ -250,13 +222,9 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "connectToUser.do")
 	public String addInterest(Integer userId, Integer sessionId, Model model) {
-		// User sessionUser = (User) model.asMap().get("sessionUser");
 		User sessionUser = udao.show(sessionId);
-
-		System.out.println(sessionUser.getId());
 		User friend = udao.show(userId);
 		List<User> connections = null;
-		System.out.println(sessionUser.getConnections().size());
 
 		if (sessionUser.getConnections().isEmpty()) {
 			connections = new ArrayList<>();
@@ -267,7 +235,6 @@ public class UserController {
 		friend.getConnections().add(sessionUser);
 		udao.updateConnection(sessionId, sessionUser);
 		udao.updateConnection(userId, friend);
-		System.out.println(sessionUser.getConnections().size());
 
 		model.addAttribute("user", friend);
 
@@ -276,9 +243,6 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "createUser.do")
 	public String createUser(Model model) {
-
-		model.addAttribute("", idao.mapByCategory());
-
 		return VIEW_NEW_USER;
 	}
 
@@ -287,9 +251,8 @@ public class UserController {
 		Profile profile = new Profile();
 		User sessionUser = udao.create(user);
 		sessionUser.setProfile(profile);
-		// sessionUser = udao.updateUserProfile(sessionUser.getId(),
-		// sessionUser);
-
+		
+		model.addAttribute("states", ldao.index());
 		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
 
@@ -297,11 +260,14 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
-	public String updateProfile(Integer id, Profile profile, Model model) {
-
+	public String updateProfile(Integer id, Profile profile, Model model, Location location) {
+		System.out.println("location city" + location.getCity());
+		System.out.println("location state" + location.getState());
+		System.out.println("location id" + location.getId());
+		
+		profile.setLocation(location);
 		User sessionUser = udao.show(id);
 		sessionUser.setProfile(profile);
-		System.out.println(profile.getFirstName());
 		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
 
 		model.addAttribute("sessionUser", sessionUser);
@@ -320,7 +286,6 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
 	public String addInterest(Integer id, Model model, Integer userId) {
-		System.out.println(id);
 		User sessionUser = udao.show(userId);
 		Interest interest = idao.show(id);
 		sessionUser.getInterests().add(interest);
@@ -332,11 +297,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "deleteUser.do")
 	public String deleteUser(Integer id, Integer sessionId, Model model) {
-		System.out.println("sessoion id in delete user: " + sessionId);
-		if (udao.destroy(id)) {
-			System.out.println("deleted");
-		}
-
+		udao.destroy(id);
 		if (sessionId != null) {
 			model.addAttribute("categories", idao.indexCategories());
 			model.addAttribute("users", udao.index());
