@@ -70,11 +70,12 @@ public class User {
 
 	@ManyToMany( fetch=FetchType.EAGER /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
 	@JoinTable( name="user_interest",
-	joinColumns=@JoinColumn(name="user_id"),
-	inverseJoinColumns=@JoinColumn(name="interest_id") )
+	            joinColumns=@JoinColumn(name="user_id"),
+	            inverseJoinColumns=@JoinColumn(name="interest_id") )
 	private List<Interest> interests;
 
-	@OneToMany( mappedBy="user" , cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
+	@OneToMany( mappedBy="user", 
+	            cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
 	private List<Availability> availabilities;
 
 	public User() { }

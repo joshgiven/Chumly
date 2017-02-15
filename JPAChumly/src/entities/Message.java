@@ -40,9 +40,9 @@ public class Message {
 	private User sender;
 	
 	@OneToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="message_chum",
-	joinColumns=@JoinColumn(name="message_id"),
-	inverseJoinColumns=@JoinColumn(name="chum_id"))
+	@JoinTable( name="message_chum",
+	            joinColumns=@JoinColumn(name="message_id"),
+	            inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> recipients;
 
 	public Message() { }

@@ -22,8 +22,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import entities.Availability;
+import entities.Interest;
 import entities.InterestCategory;
 import entities.Location;
+import entities.Message;
 import entities.Profile;
 import entities.User;
 import entities.User.Role;
@@ -86,6 +89,35 @@ public class UserDaoTest {
 		dao.destroy(2);
 		user = dao.show(2);
 		assertNull(user);
+	}
+	
+	@Test
+	public void test_destroy_cascade() {
+		User user = dao.show(2);
+		assertNotNull(user);
+		//assertEquals("wryan", user.getUsername());
+		
+		Profile profile = user.getProfile();
+		List<Availability> availabilities = user.getAvailabilities();
+		List<User>         connections    = user.getConnections();
+		List<Interest>     interests      = user.getInterests();
+		List<Message>      messages       = user.getMessages();
+
+		int profileID = profile.getId();
+		int availID   = availabilities.get(0).getId();
+		int intID     = interests.get(0).getId();
+		int msgID     = messages.get(0).getId();
+		//int connID    = connections.get(0).getId();
+
+		dao.destroy(2);
+		user = dao.show(2);
+		assertNull(user);
+		
+		assertNull(em.find(Profile.class,      profileID));
+		assertNull(em.find(Message.class,      msgID));
+		assertNull(em.find(Interest.class,     intID));
+		assertNull(em.find(Availability.class, availID));
+		//assertNull(em.find(User.class,         connID));
 	}
 
 	@Test
