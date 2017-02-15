@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.log4j.Category;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +30,14 @@ public class InterestDAOImpl implements InterestDAO {
 	}
 
 	@Override
-	public Interest create(Interest interest) {
-		em.persist(interest);
+	public Interest create(Integer id, String interest) {
+		Interest newInterest = new Interest();
+		InterestCategory category = em.find(InterestCategory.class, id);
+		newInterest.setName(interest);
+		newInterest.setCategory(category);
+		em.persist(newInterest);
 		em.flush();
-		return interest;
+		return newInterest;
 	}
 
 	@Override
@@ -40,7 +45,7 @@ public class InterestDAOImpl implements InterestDAO {
 		Interest i =em.find(Interest.class, id);
 		i.setCategory(interest.getCategory());
 		i.setName(interest.getName());
-		i.setUsers(interest.getUsers());
+		//i.setUsers(interest.getUsers());
 
 		return i;
 	}

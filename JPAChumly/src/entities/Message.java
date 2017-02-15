@@ -31,17 +31,16 @@ public class Message {
 	private String text;
 
 	@Column(name="timestamp")
-	@Past(message="Past.message.timeStamp")
+	//@Past(message="Past.message.timeStamp")
 	private Date timeStamp;
-
 	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE})
 	@JoinColumn(name="sender_id")
 	private User sender;
 	
 	@OneToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="message_chum",
-	joinColumns=@JoinColumn(name="message_id"),
-	inverseJoinColumns=@JoinColumn(name="chum_id"))
+	@JoinTable( name="message_chum",
+	            joinColumns=@JoinColumn(name="message_id"),
+	            inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> recipients;
 
 	public Message() { }
