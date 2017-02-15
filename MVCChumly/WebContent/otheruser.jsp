@@ -6,10 +6,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
 <head>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/styles.min.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 </head>
 <body>
+<jsp:include page="header.jsp" /> 
 	<%--<c:forEach var ="c" items="${sessionUser.connections}">
 	<c:set var="name" value="${c.username}"/>
 	<c:if test="${!fn:contains(name, '${user.username}'">--%>
