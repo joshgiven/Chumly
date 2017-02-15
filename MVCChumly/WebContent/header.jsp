@@ -24,9 +24,3 @@
             </div>
         </nav>
     </div>
-    
-		<form action="deleteUser.do" method="POST">
-			<input type="hidden" value="${user.id}" name="id"> <br /> <input
-				type="hidden" value="${sessionUser.id}" name="sessionId"> <br />
-			<input type="submit" value="Delete" />
-		</form>
