@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="location")
@@ -14,8 +15,10 @@ public class Location {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Size(min=2, max=45, message="Size.location.city")
 	private String city;
 	
+	@Size(min=2, max=2, message="Size.location.state")
 	private String state;
 	
 	public Location() { }

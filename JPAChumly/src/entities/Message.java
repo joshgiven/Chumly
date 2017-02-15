@@ -3,8 +3,10 @@ package entities;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="message")
@@ -23,19 +27,21 @@ public class Message {
 	private int id;
 
 	@Column(name="message")
+	@Size(max=256, message="Size.message.text")
 	private String text;
 
 	@Column(name="timestamp")
+	//@Past(message="Past.message.timeStamp")
 	private Date timeStamp;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE})
 	@JoinColumn(name="sender_id")
 	private User sender;
 	
-	@OneToMany
-	@JoinTable(name="message_chum",
-	joinColumns=@JoinColumn(name="message_id"),
-	inverseJoinColumns=@JoinColumn(name="chum_id"))
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinTable( name="message_chum",
+	            joinColumns=@JoinColumn(name="message_id"),
+	            inverseJoinColumns=@JoinColumn(name="chum_id"))
 	private List<User> recipients;
 
 	public Message() { }
@@ -67,8 +73,8 @@ public class Message {
 		return timeStamp;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setTimeStamp(Date localDate) {
+		this.timeStamp = localDate;
 	}
 
 	public User getSender() {

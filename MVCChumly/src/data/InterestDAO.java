@@ -9,22 +9,23 @@ import entities.InterestCategory;
 
 public interface InterestDAO {
 	public Interest show(int id);
-	public Interest create(Interest film);
-	public Interest update(int id, Interest film);
+	public Interest create(Interest interest);
+	public Interest update(int id, Interest interest);
 	public boolean destroy(int id);
 
 	public List<Interest> index();
-	public List<Interest> indexByCategory(InterestCategory category);
-	public <T> List<Interest> indexBy(Predicate<T> filter);
+	public List<Interest> indexByCategory(InterestCategory InterestCategory);
+	public List<Interest> indexBy(Predicate<Interest> filter);
+	public List<Interest> indexByContainsText(String text);
 
-	public Map<InterestCategory, Interest> mapByCategory();
+	public Map<String, List<Interest>> mapByCategory();
 	
 	// category-specific
 	public InterestCategory showCategory(int id);
-	public InterestCategory createCategory(InterestCategory film);
-	public InterestCategory updateCategory(int id, InterestCategory film);
+	public InterestCategory createCategory(InterestCategory interestCategory);
+	public InterestCategory updateCategory(int id, InterestCategory interestCategory);
 	public boolean destroyCategory(int id);
 	
 	public List<InterestCategory> indexCategories();
-	public <T> List<InterestCategory> indexCategoriesBy(Predicate<T> filter);
+	public List<InterestCategory> indexCategoriesBy(Predicate<InterestCategory> filter);
 }

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="profile")
@@ -18,23 +19,27 @@ public class Profile {
 	private int id;
 
 	@Column(name="first_name")
+	@Size(min=2, max=20, message="Size.profile.firstName")
 	private String firstName;
 
 	@Column(name="last_name")
+	@Size(min=2, max=20, message="Size.profile.lastName")
 	private String lastName;
 
+	@Size(max=256, message="Size.profile.description")
 	private String description;
 
 	@Column(name="image_url")
+	@Size(max=128, message="Size.profile.imageURL")
 	private String imageURL;
 
 	@OneToOne
 	@JoinColumn(name="location_id")
 	private Location location;
 
-	@OneToOne
-	@JoinColumn(name="user_id")
-	private User user;
+//	@OneToOne
+//	@JoinColumn(name="user_id")
+//	private User user;
 
 	public Profile() { }
 
@@ -99,12 +104,12 @@ public class Profile {
 		return id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 }

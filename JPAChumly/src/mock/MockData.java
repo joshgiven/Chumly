@@ -193,7 +193,7 @@ public class MockData {
 				}
 				user.setAvailabilities(generateAvailabilities(user));
 				user.setProfile(profile);
-				user.getProfile().setUser(user); // WTF?
+				//user.getProfile().setUser(user); // WTF?
 
 				mockUsers.add(user);
 			}
@@ -209,7 +209,7 @@ public class MockData {
 		for(Availability.DayOfWeek day : Availability.DayOfWeek.values()) {
 			Availability a = new Availability();
 			
-			a.setUser(user); // WTF?
+			//a.setUser(user); // WTF?
 			a.setDayOfWeek(day);
 			a.setFreeAM(Math.random() > 0.5);
 			a.setFreePM(Math.random() > 0.5);
@@ -331,6 +331,20 @@ public class MockData {
 				
 				User sender = em.find(User.class, (int)(Math.random()*mockUsers.size()) + 1);
 				User recip  = em.find(User.class, (int)(Math.random()*mockUsers.size()) + 1);
+				
+				//add connections
+				List<User> conn = sender.getConnections();
+				if(!conn.contains(recip)) {
+					conn.add(recip);
+				}
+				em.persist(sender);
+				
+				conn = recip.getConnections();
+				if(!conn.contains(sender)) {
+					conn.add(sender);
+				}
+				em.persist(recip);
+				//end add connections
 				
 				msg.setRecipients(Arrays.asList(recip));
 				msg.setSender(sender);

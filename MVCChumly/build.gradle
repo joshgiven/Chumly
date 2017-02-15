@@ -4,7 +4,7 @@ apply plugin: 'eclipse-wtp'
 
 project.webAppDirName = 'WebContent'
 
-group = 'com.videostore'
+group = 'com.chumly'
 version = '0.0.1-SNAPSHOT'
 
 ext {
@@ -54,4 +54,6 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+    
+    providedCompile group: 'javax.servlet.jsp', name: 'jsp-api', version:'2.1'
 }

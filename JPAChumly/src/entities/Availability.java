@@ -34,9 +34,9 @@ public class Availability {
 	@Column(name="pm")
 	private boolean freePM;
 
-	@ManyToOne( cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
-	@JoinColumn(name="user_id")
-	private User user;
+//	@ManyToOne( cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
+//	@JoinColumn(name="user_id")
+//	private User user;
 
 	public Availability() { }
 
@@ -83,12 +83,12 @@ public class Availability {
 		return id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 }
