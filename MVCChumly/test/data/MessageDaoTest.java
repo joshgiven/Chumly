@@ -1,11 +1,6 @@
 package data;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,43 +161,76 @@ public class MessageDaoTest {
 	@Test
 	public void test_indexByConversation() {
 		User sender = em.find(User.class, 2);
-		List<Message> messages = dao.indexBySender(sender);
+		User recip = em.find(User.class, 479);
+		List<Message> messages = dao.indexByConversation(sender, recip);
+		assertNotNull(messages);
+		assertEquals(1, messages.size());
 		
-		fail("Not yet implemented");
+		Message message = messages.get(0);
+		assertNotNull(message);
+		assertEquals(2, message.getSender().getId());
+		
+		List<User> recips = message.getRecipients();
+		assertNotNull(recips);
+		assertEquals(1, recips.size());
+		
+		recip = recips.get(0);
+		assertNotNull(recip);
+		assertEquals(479, recip.getId());
+		
 	}
 	 
 	@Test
 	public void test_indexBySender() {
-		User user = em.find(User.class, 2);
+		int id = 3;
+		User user = em.find(User.class, id);
 		List<Message> messages = dao.indexBySender(user);
+		assertNotNull(messages);
+		assertEquals(2, messages.size());
+		assertTrue( messages.stream()
+		                    .allMatch( m -> m.getSender().getId() == id ) );
 
-		fail("Not yet implemented");
 	}
 
 	@Test
 	public void test_indexByRecipient() {
-		User recip = em.find(User.class, 2);
+		User recip = em.find(User.class, 5);
 		List<Message> messages = dao.indexByRecipient(recip);
-		
-		fail("Not yet implemented");
+		assertNotNull(messages);
+		assertEquals(2, messages.size());
+		assertTrue( messages.stream()
+		                    .allMatch( m -> m.getRecipients()
+		                    	                 .stream()
+		                    	                 .allMatch( r -> r.getId() == 5 )) );
+
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void test_indexByDateRange() {
 		java.sql.Date d1, d2;
-		d1 = d2 = null;
+
+		d1 = new java.sql.Date(2016, 3, 22);
+		d2 = new java.sql.Date(2016, 3, 23);
 		
 		List<Message> messages = dao.indexByDateRange(d1, d2);
-		
-		fail("Not yet implemented");
+		assertNotNull(messages);
+		assertEquals(6, messages.size());
+		assertTrue( messages.stream()
+		                    .allMatch( m -> m.getTimeStamp().toString().equals("2016-03-22") ));
+
 	}
 	
 	@Test
 	public void test_indexByContainsText() {
-		List<Message> messages = dao.indexByContainsText("");
+		String text = "ipsum";
+		List<Message> messages = dao.indexByContainsText(text);
 		
+		assertNotNull(messages);
+		assertEquals(202, messages.size());
+		assertTrue( messages.stream()
+		                    .allMatch( m -> m.getText().toLowerCase().contains(text) ) );
 
-		fail("Not yet implemented");
 	}
 	
 }

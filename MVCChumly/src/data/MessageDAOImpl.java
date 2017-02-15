@@ -70,8 +70,9 @@ public class MessageDAOImpl implements MessageDAO {
 		try {
 			String queryString = "SELECT m FROM Message m WHERE m.sender.id = :sender";
 			results = em.createQuery(queryString, Message.class).setParameter("sender", sender.getId()).getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} 
+		catch (Exception e) {
+			e.printStackTrace(System.err);
 			return results;
 		}
 		return results;
@@ -81,10 +82,20 @@ public class MessageDAOImpl implements MessageDAO {
 	public List<Message> indexByRecipient(User recipient) {
 		List<Message> results = null;
 		try {
-			String queryString = "SELECT u.messages FROM User u JOIN FETCH u.messages WHERE u.id = :sender";
-			results = em.createQuery(queryString, Message.class).setParameter("sender", recipient.getId()).getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+			String queryString = 
+					"SELECT m "+
+					"FROM Message m JOIN FETCH m.recipients r "+
+					"WHERE r.id = :recipient"
+					;
+			
+			results = em.createQuery(queryString, Message.class)
+			            .setParameter("recipient", recipient.getId())
+			            .getResultList();
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace(System.err);
 			return results;
 		}
 		return results;
@@ -93,19 +104,27 @@ public class MessageDAOImpl implements MessageDAO {
 	@Override
 	public List<Message> indexByConversation(User recipient, User sender) {
 		List<Message> results = null;
-		System.out.println("r id: " + recipient.getId());
-		System.out.println("s id: " + sender.getId());
+
 		try {
-			String queryString = "SELECT m FROM Message m JOIN m.recipients r "
-					+ "WHERE (m.sender.id = :senderId AND r.id = :recipientId) "
-					+ "OR (m.sender.id = :recipientId AND r.id = :senderId) "
-					+ "ORDER BY m.id";
-			results = em.createQuery(queryString, Message.class).setParameter("senderId", sender.getId())
-					.setParameter("recipientId", recipient.getId()).getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+			String queryString = 
+					"SELECT m "+
+			        "FROM Message m JOIN m.recipients r " +
+			        "WHERE (m.sender.id = :senderId    AND r.id = :recipientId) " +
+					"   OR (m.sender.id = :recipientId AND r.id = :senderId) " +
+					"ORDER BY m.id";
+			
+			results = em.createQuery(queryString, Message.class)
+			            .setParameter("senderId", sender.getId())
+			            .setParameter("recipientId", recipient.getId())
+			            .getResultList();
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace(System.err);
 			return results;
 		}
+		
 		return results;
 	}
 	
@@ -113,13 +132,23 @@ public class MessageDAOImpl implements MessageDAO {
 	public List<Message> indexByDateRange(Date beginDate, Date endDate) {
 		List<Message> results = null;
 		try {
-			String queryString = "SELECT m FROM Message m WHERE m.timestamp BETWEEN :begin AND :end";
-			results = em.createQuery(queryString, Message.class).setParameter("begin", beginDate)
-					.setParameter("end", endDate).getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+			String queryString = 
+					"SELECT m "+
+			        "FROM Message m "+
+			        "WHERE m.timeStamp BETWEEN :begin AND :end";
+			
+			results = em.createQuery(queryString, Message.class)
+			            .setParameter("begin", beginDate)
+			            .setParameter("end", endDate)
+			            .getResultList();
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace(System.err);
 			return results;
 		}
+		
 		return results;
 	}
 
@@ -130,8 +159,9 @@ public class MessageDAOImpl implements MessageDAO {
 			String queryString = "SELECT m FROM Message m WHERE m.text LIKE :text";
 			results = em.createQuery(queryString, Message.class).setParameter("text", ("%"+text+"%"))
 					.getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} 
+		catch (Exception e) {
+			e.printStackTrace(System.err);
 			return results;
 		}
 		return results;

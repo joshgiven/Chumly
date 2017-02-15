@@ -1,9 +1,12 @@
 package data;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import entities.Location;
+import entities.Interest;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -89,6 +92,21 @@ public class InterestDaoTest {
 	@Test
 	public void test_indexByPredicate() {
 		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void test_mapByCategory() {
+		Map<String, List<Interest>> map = dao.mapByCategory();
+		assertNotNull(map);
+		
+		List<String> cats = new ArrayList<>(map.keySet());
+		assertNotNull(cats);
+		assertEquals(8, cats.size());
+		
+		List<Interest> interests = map.get("COMPETITION (OUTDOORS)");
+		assertNotNull(interests);
+		assertEquals(46, interests.size());
+		assertEquals("AMERICAN FOOTBALL", interests.get(0).getName());
 	}
 
 }

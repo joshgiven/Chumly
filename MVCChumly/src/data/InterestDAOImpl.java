@@ -3,6 +3,7 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Predicate;
 
 import javax.persistence.EntityManager;
@@ -13,12 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import entities.Interest;
 import entities.InterestCategory;
-import entities.Message;
 
 @Transactional
 @Repository
 public class InterestDAOImpl implements InterestDAO {
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -41,14 +41,14 @@ public class InterestDAOImpl implements InterestDAO {
 		i.setCategory(interest.getCategory());
 		i.setName(interest.getName());
 		i.setUsers(interest.getUsers());
-		
+
 		return i;
 	}
 
 	@Override
 	public boolean destroy(int id) {
 		Interest i = (em.find(Interest.class, id));
-		
+
 		try{
 			em.remove(i);
 			em.flush();
@@ -56,7 +56,7 @@ public class InterestDAOImpl implements InterestDAO {
 		}
 		catch(Exception e){
 			return false;
-			
+
 		}
 	}
 
@@ -99,9 +99,22 @@ public class InterestDAOImpl implements InterestDAO {
 	}
 
 	@Override
-	public Map<InterestCategory, Interest> mapByCategory() {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, List<Interest>> mapByCategory() {
+		Map<String, List<Interest>> map = new TreeMap<>();
+
+		List<Interest> interests = index();
+		interests.sort( (a,b) -> a.getName().compareToIgnoreCase(b.getName()) );
+
+		for(Interest i : interests) {
+			String cat = i.getCategory().getName();
+			if(map.get(cat) == null) {
+				map.put(cat, new ArrayList<Interest>());
+			}
+
+			map.get(cat).add(i);
+		}
+
+		return map;
 	}
 
 	@Override
@@ -120,16 +133,16 @@ public class InterestDAOImpl implements InterestDAO {
 	@Override
 	public InterestCategory updateCategory(int id, InterestCategory interestCategory) {
 		InterestCategory iC = em.find(InterestCategory.class, id);
-		
+
 		iC.setName(interestCategory.getName());
-		
+
 		return iC;
 	}
 
 	@Override
 	public boolean destroyCategory(int id) {
 		InterestCategory iC = (em.find(InterestCategory.class, id));
-		
+
 		try{
 			em.remove(iC);
 			em.flush();
@@ -137,7 +150,7 @@ public class InterestDAOImpl implements InterestDAO {
 		}
 		catch(Exception e){
 			return false;
-			
+
 		}
 	}
 
@@ -164,7 +177,7 @@ public class InterestDAOImpl implements InterestDAO {
 		}
 		return results;
 	}
-	
+
 	@Override
 	public List<Interest> indexByContainsText(String text) {
 		List<Interest> results = null;

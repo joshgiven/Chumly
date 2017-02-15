@@ -18,7 +18,7 @@ public interface InterestDAO {
 	public List<Interest> indexBy(Predicate<Interest> filter);
 	public List<Interest> indexByContainsText(String text);
 
-	public Map<InterestCategory, Interest> mapByCategory();
+	public Map<String, List<Interest>> mapByCategory();
 	
 	// category-specific
 	public InterestCategory showCategory(int id);
