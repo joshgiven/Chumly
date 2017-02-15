@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,11 +78,11 @@ public class UserController {
 
 		if (u != null) {
 			if (u.getPassword().equals(user.getPassword())) {
-				if(u.getRole() == Role.ADMIN){
+				if (u.getRole() == Role.ADMIN) {
 					model.addAttribute("sessionUser", u);
 					model.addAttribute("categories", idao.indexCategories());
 					model.addAttribute("users", udao.index());
-					return "adminhome";					
+					return "adminhome";
 				}
 				model.addAttribute("sessionUser", u);
 				return "profile";
@@ -140,6 +141,9 @@ public class UserController {
 
 		User user = udao.show(id);
 		model.addAttribute("user", user);
+		// if(sessionUser.getRole() == Role.ADMIN){
+		// return "profile";
+		// }
 		return "otheruser";
 	}
 
@@ -236,7 +240,8 @@ public class UserController {
 		Profile profile = new Profile();
 		User sessionUser = udao.create(user);
 		sessionUser.setProfile(profile);
-		//sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
+		// sessionUser = udao.updateUserProfile(sessionUser.getId(),
+		// sessionUser);
 
 		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
@@ -279,20 +284,23 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "deleteUser.do")
-	public String deleteUser(Integer id) {
-		
-		System.out.println(id);
-		if(udao.destroy(id)){
+	public String deleteUser(Integer id, Integer sessionId, Model model) {
+		System.out.println("sessoion id in delete user: " + sessionId);
+		if (udao.destroy(id)) {
 			System.out.println("deleted");
 		}
-		
+		if (sessionId != null) {
+			model.addAttribute("categories", idao.indexCategories());
+			model.addAttribute("users", udao.index());
+			return "adminhome";
+		}
 		return "index";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, path = "createInterest.do")
 	public String createInterest(Integer id, String interest, Model model) {
 		idao.create(id, interest);
-		
+
 		model.addAttribute("categories", idao.indexCategories());
 		model.addAttribute("users", udao.index());
 		return "adminhome";
