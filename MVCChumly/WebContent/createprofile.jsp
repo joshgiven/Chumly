@@ -37,7 +37,7 @@
 		<form:errors path="lastName" />
 		<br />
 		<form:label path="description">Description:</form:label>
-		<form:input path="description" />
+		<form:textarea rows="4" cols="50" path="description" />
 		<form:errors path="description" />
 		<br />
 		<form:label path="imageURL">Image URL:</form:label>
