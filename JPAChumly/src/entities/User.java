@@ -48,6 +48,7 @@ public class User {
 	@JoinColumn(name="id", referencedColumnName="user_id")
 	private Profile profile;
 
+
 	// would this delete other Users, or the just the row in the
 	//  connection table???
 	@OneToMany(/*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/)

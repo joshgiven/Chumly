@@ -33,7 +33,6 @@ public class Message {
 	@Column(name="timestamp")
 	//@Past(message="Past.message.timeStamp")
 	private Date timeStamp;
-
 	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE})
 	@JoinColumn(name="sender_id")
 	private User sender;

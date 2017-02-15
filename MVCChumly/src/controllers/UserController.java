@@ -23,6 +23,7 @@ import entities.Interest;
 import entities.Message;
 import entities.Profile;
 import entities.User;
+import entities.User.Role;
 
 @Controller
 @SessionAttributes(names = { "sessionUser" })
@@ -76,6 +77,12 @@ public class UserController {
 
 		if (u != null) {
 			if (u.getPassword().equals(user.getPassword())) {
+				if(u.getRole() == Role.ADMIN){
+					model.addAttribute("sessionUser", u);
+					model.addAttribute("categories", idao.indexCategories());
+					model.addAttribute("users", udao.index());
+					return "adminhome";					
+				}
 				model.addAttribute("sessionUser", u);
 				return "profile";
 			} else {
@@ -280,5 +287,14 @@ public class UserController {
 		}
 		
 		return "index";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "createInterest.do")
+	public String createInterest(Integer id, String interest, Model model) {
+		idao.create(id, interest);
+		
+		model.addAttribute("categories", idao.indexCategories());
+		model.addAttribute("users", udao.index());
+		return "adminhome";
 	}
 }
