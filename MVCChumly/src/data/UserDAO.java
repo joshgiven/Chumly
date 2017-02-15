@@ -25,6 +25,8 @@ public interface UserDAO {
 	public List<User> indexByRole(Role role);
 	public List<User> indexByLocation(Location location);
 	public List<User> indexByConnection(User connection);
+	public List<User> indexByInterestId(int id);
+	public List<User> indexByInterest(Interest interest);
 	public List<User> indexByInterest(String interestName);
 	public List<User> indexByInterestCategory(InterestCategory category);
 	public List<User> indexByAvailability(Availability availability);

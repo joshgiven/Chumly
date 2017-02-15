@@ -151,6 +151,20 @@ public class UserDAOImpl implements UserDAO {
 		return results;
 	}
 
+
+	@Override
+	public List<User> indexByInterestId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> indexByInterest(Interest interest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	@Override
 	public List<User> indexByInterest(String interestName) {
 		// List<User> results = interest.getUsers();

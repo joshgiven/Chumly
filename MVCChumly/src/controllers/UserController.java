@@ -45,6 +45,29 @@ public class UserController {
 	// how to get session scope user
 	// User sessionUser = (User)model.asMap().get("sessionUser");
 
+
+	/*
+	private static String VIEW_ADMIN_HOME     = "adminhome";
+	private static String VIEW_CREATE_PROFILE = "createprofile";
+	private static String VIEW_INDEX          = "index";
+	private static String VIEW_MESSAGE        = "message";
+	private static String VIEW_NEW_USER       = "newuser";
+	private static String VIEW_OTHER_USER     = "otheruser";
+	private static String VIEW_PROFILE        = "profile";
+	private static String VIEW_RESULTS        = "results";
+	private static String VIEW_UPDATE_PROFILE = "updateprofile";
+	 */
+	private static String VIEW_ADMIN_HOME     = "adminhome";
+	private static String VIEW_CREATE_PROFILE = "createprofile";
+	private static String VIEW_INDEX          = "index";
+	private static String VIEW_MESSAGE        = "message";
+	private static String VIEW_NEW_USER       = "newuser";
+	private static String VIEW_OTHER_USER     = "otheruser";
+	private static String VIEW_PROFILE        = "profile";
+	private static String VIEW_RESULTS        = "results";
+	private static String VIEW_UPDATE_PROFILE = "updateprofile";
+
+
 	@ModelAttribute(name = "sessionUser")
 	public User sessionUserFactory() {
 		return new User();
@@ -62,31 +85,31 @@ public class UserController {
 
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
 	public String welcome(Model model) {
-		
+
 		if(model.containsAttribute("sessionUser")) {
 			User u = (User) model.asMap().get("sessionUser");
 			if(u != null && u.getUsername() != null) {
 				System.out.println(u);
-				return "profile";
+				return VIEW_PROFILE;
 			}
 		}
-		
-		return "index";
+
+		return VIEW_INDEX;
 	}
 
-	
-	
+
+
 	@RequestMapping(method = RequestMethod.GET, path = "logout.do")
 	public String logout(Model model) {
 		model.asMap().remove("sessionUser");
-		return "index";
+		return VIEW_INDEX;
 	}
-	
-	
+
+
 	@RequestMapping(method = RequestMethod.POST, path = "login.do")
 	public String login(@Valid User user, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-			return "index";
+			return VIEW_INDEX;
 		}
 
 		User u = udao.getUserByUsername(user.getUsername());
@@ -100,15 +123,23 @@ public class UserController {
 					model.addAttribute("sessionUser", u);
 					model.addAttribute("categories", idao.indexCategories());
 					model.addAttribute("users", udao.index());
-					return "adminhome";
+					return VIEW_ADMIN_HOME;
 				}
 				model.addAttribute("sessionUser", u);
-				return "profile";
+				return VIEW_PROFILE;
 			} else {
-				return "index";
+				errors.rejectValue("password", "error.password",
+						"Invalid password");
+
+				// bad passwd
+				return VIEW_INDEX;
 			}
-		} else {
-			return "index";
+		}
+		else {
+			// bad username
+			errors.rejectValue("username", "error.username",
+					"The username you entered is not associated with an account, please try another");
+			return VIEW_INDEX;
 		}
 
 		// if (u.getUsername() == user.getUsername() && u.getPassword() ==
@@ -134,7 +165,7 @@ public class UserController {
 		model.addAttribute("interests", interests);
 		// User sessionUser = (User)model.asMap().get("sessionUser");
 		// model.addAttribute("user", sessionUser);
-		return "updateprofile";
+		return VIEW_UPDATE_PROFILE;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getUsersByInterest.do")
@@ -142,16 +173,17 @@ public class UserController {
 
 		List<User> users = udao.indexByInterest(interest);
 
+		model.addAttribute("interest", interest);
 		model.addAttribute("users", users);
 
-		return "results";
+		return VIEW_RESULTS;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "deleteProfile.do")
 	public String deleteProfile(Model model) {
 		User sessionUser = (User) model.asMap().get("sessionUser");
 		udao.destroy(sessionUser.getId());
-		return "index";
+		return VIEW_INDEX;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")
@@ -159,10 +191,7 @@ public class UserController {
 
 		User user = udao.show(id);
 		model.addAttribute("user", user);
-		// if(sessionUser.getRole() == Role.ADMIN){
-		// return "profile";
-		// }
-		return "otheruser";
+		return VIEW_OTHER_USER;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "messageUser.do")
@@ -180,7 +209,7 @@ public class UserController {
 		model.addAttribute("recipient", recipient);
 		model.addAttribute("messages", messages);
 
-		return "message";
+		return VIEW_MESSAGE;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfileDescription.do")
@@ -188,7 +217,7 @@ public class UserController {
 		User sessionUser = udao.updateUserProfileDescription(description, id);
 		model.addAttribute("sessionUser", sessionUser);
 
-		return "profile";
+		return VIEW_PROFILE;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "addMessage.do")
@@ -216,7 +245,7 @@ public class UserController {
 		model.addAttribute("recipient", recipient);
 		model.addAttribute("messages", messages);
 
-		return "message";
+		return VIEW_MESSAGE;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "connectToUser.do")
@@ -242,7 +271,7 @@ public class UserController {
 
 		model.addAttribute("user", friend);
 
-		return "otheruser";
+		return VIEW_OTHER_USER;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "createUser.do")
@@ -250,7 +279,7 @@ public class UserController {
 
 		model.addAttribute("", idao.mapByCategory());
 
-		return "newuser";
+		return VIEW_NEW_USER;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
@@ -264,7 +293,7 @@ public class UserController {
 		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
 
-		return "createprofile";
+		return VIEW_CREATE_PROFILE;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
@@ -277,7 +306,7 @@ public class UserController {
 
 		model.addAttribute("sessionUser", sessionUser);
 
-		return "profile";
+		return VIEW_PROFILE;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "searchInterest.do")
@@ -286,7 +315,7 @@ public class UserController {
 		List<Interest> interests = idao.indexByContainsText(name);
 		model.addAttribute("interests", interests);
 
-		return "profile";
+		return VIEW_PROFILE;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
@@ -298,7 +327,7 @@ public class UserController {
 		sessionUser = udao.updateInterest(userId, sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
 
-		return "profile";
+		return VIEW_PROFILE;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "deleteUser.do")
@@ -307,12 +336,13 @@ public class UserController {
 		if (udao.destroy(id)) {
 			System.out.println("deleted");
 		}
+
 		if (sessionId != null) {
 			model.addAttribute("categories", idao.indexCategories());
 			model.addAttribute("users", udao.index());
 			return "adminhome";
 		}
-		return "index";
+		return VIEW_INDEX;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "createInterest.do")
@@ -321,6 +351,6 @@ public class UserController {
 
 		model.addAttribute("categories", idao.indexCategories());
 		model.addAttribute("users", udao.index());
-		return "adminhome";
+		return VIEW_ADMIN_HOME;
 	}
 }
