@@ -73,13 +73,7 @@ public class UserDAOImpl implements UserDAO {
 		User u = em.find(User.class, id);
 
 		Profile p = user.getProfile();
-		System.out.println(user.getProfile().getFirstName());
 		u.setProfile(p);
-//		.setDescription(user.getProfile().getDescription());
-//		p.setFirstName(user.getProfile().getFirstName());
-//		p.setImageURL(user.getProfile().getImageURL());
-//		p.setLastName(user.getProfile().getLastName());
-//		p.setLocation(user.getProfile().getLocation());
 
 		return u;
 	}
@@ -111,7 +105,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u FROM User u";
 			results = em.createQuery(queryString, User.class).getResultList();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -124,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u FROM User u WHERE u.role = :role";
 			results = em.createQuery(queryString, User.class).setParameter("role", role).getResultList();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -134,18 +128,15 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> indexByLocation(Location location) {
 		List<User> results = null;
 		try {
-			// String queryString = "SELECT u FROM User u WHERE
-			// u.profile.location.id = :id";
 			String queryString = "SELECT u " + "FROM User u "
 					+ "WHERE u.profile.location.city = :city AND u.profile.location.state = :state";
 
 			results = em.createQuery(queryString, User.class)
-					// .setParameter("id", location.getId())
 					.setParameter("city", location.getCity()).setParameter("state", location.getState())
 					.getResultList();
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -195,7 +186,7 @@ public class UserDAOImpl implements UserDAO {
 			//results = i.getUsers();
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -222,7 +213,7 @@ public class UserDAOImpl implements UserDAO {
 
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 
@@ -244,7 +235,7 @@ public class UserDAOImpl implements UserDAO {
 					.getResultList();
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -290,7 +281,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u.connections FROM User u JOIN u.connections WHERE u.id = :id";
 			results = em.createQuery(queryString, User.class).setParameter("id", connection.getId()).getResultList();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -302,7 +293,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u FROM User u WHERE u.username = :username";
 			result = em.createQuery(queryString, User.class).setParameter("username", username).getSingleResult();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return result;
 		}
 		return result;

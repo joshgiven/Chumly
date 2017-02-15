@@ -1,3 +1,5 @@
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ 
  <div>
         <nav class="navbar navbar-default navigation-clean">
             <div class="container">
@@ -9,9 +11,11 @@
                         <li role="presentation">
                             <a href="/MVCChumly/">Home</a>
                         </li>
+    	<c:if test="${sessionUser.role == 'ADMIN'}">
                         <li role="presentation">
-                            <a href="#"> </a>
+                            <a href="/MVCChumly/admin.do">Admin</a>
                         </li>
+                        </c:if>
                         <li role="presentation">
                             <a href="/MVCChumly/logout.do">Logout</a>
                         </li>

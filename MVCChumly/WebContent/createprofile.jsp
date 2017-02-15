@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(function() {
 
 		var $cat = $("#state"), $subcat = $("#city");
@@ -23,7 +23,7 @@
 		});
 
 	});
-</script>
+</script> -->
 <link rel="styleSheet" type="text/css" href="/style.css">
 </head>
 <body>
@@ -44,7 +44,10 @@
 		<form:input path="imageURL" />
 		<form:errors path="imageURL" />
 		<br />
-		<select name="state" id="state">
+		<form:select path="location"/>
+		<c:forEach var="loc" items=${locations}></c:forEach>
+		<form:option value="${loc.id}" name="locationId">${loc.city}, ${loc.state}</form:option>
+		<%-- <select name="state" id="state">
 			<option value="">Select State</option>
 			<c:forEach var="s" items="${location}">
 				<option value="state">${s.key}</option>
@@ -58,7 +61,7 @@
 				<option rel="${c.key}" value="${loc.id}">${loc.city}</option>
 			</c:forEach>
 			</c:forEach>
-		</select>
+		</select> --%>
 		<input type="hidden" value="${sessionUser.id}" name="id">
 		<input type="submit" value="Create Profile" />
 	</form:form>
