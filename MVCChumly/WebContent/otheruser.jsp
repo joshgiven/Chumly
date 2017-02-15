@@ -14,6 +14,16 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
+
+    <img alt="Profile Picture" src="${user.profile.imageURL}">
+    <h3>${user.profile.firstName} ${user.profile.lastName}</h3>
+    <h4>${user.profile.location.city}, ${user.profile.location.state}</h4>
+    <h4>Interests</h4>
+	<ul>
+	<c:forEach var="i" items="${user.interests}">
+	<li> ${i.name}</li>
+	</c:forEach>
+	</ul>
 	<%--<c:forEach var ="c" items="${sessionUser.connections}">
 	<c:set var="name" value="${c.username}"/>
 	<c:if test="${!fn:contains(name, '${user.username}'">--%>
