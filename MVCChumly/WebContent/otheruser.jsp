@@ -26,5 +26,10 @@
 	<li> ${c.profile.firstName} ${c.profile.lastName}</li>
 	</c:forEach>
 	</ul>
+	
+	<ul>
+	<li><a href="/MVCChumly/">home</a></li>
+	<li><a href="/MVCChumly/logout.do">logout</a></li>
+	</ul>
 </body>
 </html>

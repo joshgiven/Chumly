@@ -43,5 +43,11 @@
 	<input type="submit" value="Delete User">
 	</form>
 	
+	
+	<ul>
+	<li><a href="/MVCChumly/">home</a></li>
+	<li><a href="/MVCChumly/logout.do">logout</a></li>
+	</ul>
+	
 </body>
 </html>
