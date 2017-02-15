@@ -158,10 +158,28 @@ public class UserDAOImpl implements UserDAO {
 
 		List<User> results = null;
 		try {
-			String queryString = "SELECT i FROM Interest i JOIN FETCH i.users WHERE i.name = :name";
-			Interest i = em.createQuery(queryString, Interest.class).setParameter("name", interestName)
-					.getSingleResult();
-			results = i.getUsers();
+//			String queryString = 
+//					"SELECT i " +
+//			        "FROM Interest i JOIN FETCH i.users " +
+//					"WHERE i.name = :name";
+//			
+//			Interest i = em.createQuery(queryString, Interest.class)
+//			               .setParameter("name", interestName)
+//			               .getSingleResult();
+//			
+//			results = i.getUsers();
+			
+			String queryString = 
+					"SELECT u " +
+			        "FROM User u JOIN u.interests i " +
+					"WHERE i.name = :name";
+			
+			results = em.createQuery(queryString, User.class)
+			            .setParameter("name", interestName)
+			            .getResultList();
+			
+			//results = i.getUsers();
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return results;

@@ -101,12 +101,12 @@ public class UserDaoTest {
 		List<Availability> availabilities = user.getAvailabilities();
 		List<User>         connections    = user.getConnections();
 		List<Interest>     interests      = user.getInterests();
-		List<Message>      messages       = user.getMessages();
+		//List<Message>      messages       = user.getMessages();
 
 		int profileID = profile.getId();
 		int availID   = availabilities.get(0).getId();
 		int intID     = interests.get(0).getId();
-		int msgID     = messages.get(0).getId();
+		//int msgID     = messages.get(0).getId();
 		//int connID    = connections.get(0).getId();
 
 		dao.destroy(2);
@@ -114,7 +114,7 @@ public class UserDaoTest {
 		assertNull(user);
 		
 		assertNull(em.find(Profile.class,      profileID));
-		assertNull(em.find(Message.class,      msgID));
+		//assertNull(em.find(Message.class,      msgID));
 		assertNull(em.find(Interest.class,     intID));
 		assertNull(em.find(Availability.class, availID));
 		//assertNull(em.find(User.class,         connID));

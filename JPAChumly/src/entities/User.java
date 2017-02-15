@@ -44,29 +44,18 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne( mappedBy="user",
-			   cascade={CascadeType.PERSIST, CascadeType.REMOVE}
-	)
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinColumn(name="id", referencedColumnName="user_id")
 	private Profile profile;
 
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	// would this delete other Users, or the just the row in the
+	//  connection table???
+	@OneToMany(/*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable( name="connection",
 	            joinColumns=@JoinColumn(name="user_id"),
 	            inverseJoinColumns=@JoinColumn(name="chum_id") )
 	private List<User> connections;
-
-//	@OneToMany
-//	@JoinTable(name="message_chum",
-//	joinColumns=@JoinColumn(name="message_id"),
-//	inverseJoinColumns=@JoinColumn(name="chum_id"))
-//	private List<Message> chumMessages;
-//
-	@OneToMany(mappedBy="recipients" , cascade={CascadeType.REMOVE})
-	private List<Message> messages;
-
-
-//	private List<Group> groups;
 
 	@ManyToMany( fetch=FetchType.EAGER, cascade={CascadeType.REMOVE} )
 	@JoinTable( name="user_interest",
@@ -74,8 +63,8 @@ public class User {
 	            inverseJoinColumns=@JoinColumn(name="interest_id") )
 	private List<Interest> interests;
 
-	@OneToMany( mappedBy="user",
-	            cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinColumn(name="user_id", referencedColumnName="id")
 	private List<Availability> availabilities;
 
 	public User() { }
@@ -132,8 +121,8 @@ public class User {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 
-		if(profile != null)
-			profile.setUser(this);
+//		if(profile != null)
+//			profile.setUser(this);
 	}
 
 	public int getId() {
@@ -155,14 +144,14 @@ public class User {
 //	public void setChumMessages(List<Message> chumMessages) {
 //		this.chumMessages = chumMessages;
 //	}
-//
-	public List<Message> getMessages() {
-		return messages;
-	}
 
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
-	}
+//	public List<Message> getMessages() {
+//		return messages;
+//	}
+//
+//	public void setMessages(List<Message> messages) {
+//		this.messages = messages;
+//	}
 
 	public List<Interest> getInterests() {
 		return interests;
@@ -180,9 +169,8 @@ public class User {
 		this.availabilities = availabilities;
 	}
 
-	public Boolean hasConnection(Integer id){
-
-		return true;
-	}
+//	public Boolean hasConnection(Integer id){
+//		return true;
+//	}
 
 }
