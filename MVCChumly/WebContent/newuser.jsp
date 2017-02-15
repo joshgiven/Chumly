@@ -20,7 +20,7 @@
 		<form:errors path="username" />
 		<br />
 		<form:label path="password">Password:</form:label>
-		<form:input path="password" />
+		<form:password path="password" />
 		<form:errors path="password" />
 		<br />
 		<%-- <form:label path="user.profile.firstName">First Name:</form:label>
