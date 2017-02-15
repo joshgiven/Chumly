@@ -36,7 +36,6 @@
   	</select>
 	<input type="hidden" value="${sessionUser.id}" name="userId">
 	<input type="submit" value="Add Interest">
-	
 	</form>
 	
 	<form action="deleteUser.do" method=POST>	

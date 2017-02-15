@@ -78,6 +78,7 @@ public class UserController {
 		if (u != null) {
 			if (u.getPassword().equals(user.getPassword())) {
 				if(u.getRole() == Role.ADMIN){
+					
 					model.addAttribute("sessionUser", u);
 					model.addAttribute("categories", idao.indexCategories());
 					model.addAttribute("users", udao.index());
