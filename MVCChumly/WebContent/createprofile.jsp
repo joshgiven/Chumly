@@ -44,9 +44,9 @@
 		<form:input path="imageURL" />
 		<form:errors path="imageURL" />
 		<br />
-		<form:select path="location"/>
-		<c:forEach var="loc" items=${locations}></c:forEach>
-		<form:option value="${loc.id}" name="locationId">${loc.city}, ${loc.state}</form:option>
+		<select name="locationId">
+		<c:forEach var="loc" items="${locations}">
+		<option value="${loc.id}">${loc.city}, ${loc.state}</option></c:forEach></select>
 		<%-- <select name="state" id="state">
 			<option value="">Select State</option>
 			<c:forEach var="s" items="${location}">
