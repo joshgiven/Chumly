@@ -9,6 +9,26 @@
 <title>Search Results</title>
 </head>
 <body>
+	<h2>People interested in <c:out value="${interest}"/></h2>
+	
+	<table>
+	<c:forEach var="u" items="${users}">
+	<tr>
+		<td>
+			<a href ="getOtherUserProfileInformation.do?id=${u.id}">
+			<img src="${u.profile.imageURL}" alt="Profile Picture">
+			</a>
+		</td>
+		<td>
+			<a href ="getOtherUserProfileInformation.do?id=${u.id}">
+			${u.profile.firstName} ${u.profile.lastName}
+			</a>
+		</td>
+	</tr>
+	</c:forEach>
+	</table>
+	
+<%-- 
 	<table>
 	<c:forEach var="u" items="${users}">
 	<tr>
@@ -17,6 +37,12 @@
 	</tr>
 	</c:forEach>
 	</table>
+	 --%>
+	
+	<ul>
+	<li><a href="/MVCChumly/">home</a></li>
+	<li><a href="/MVCChumly/logout.do">logout</a></li>
+	</ul>
 	
 </body>
 </html>
