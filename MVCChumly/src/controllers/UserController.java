@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserController {
 	// how to get session scope user
 	// User sessionUser = (User)model.asMap().get("sessionUser");
 
-	
+
 	/*
 	private static String VIEW_ADMIN_HOME     = "adminhome";
 	private static String VIEW_CREATE_PROFILE = "createprofile";
@@ -65,8 +66,8 @@ public class UserController {
 	private static String VIEW_PROFILE        = "profile";
 	private static String VIEW_RESULTS        = "results";
 	private static String VIEW_UPDATE_PROFILE = "updateprofile";
-	
-	
+
+
 	@ModelAttribute(name = "sessionUser")
 	public User sessionUserFactory() {
 		return new User();
@@ -84,7 +85,7 @@ public class UserController {
 
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
 	public String welcome(Model model) {
-		
+
 		if(model.containsAttribute("sessionUser")) {
 			User u = (User) model.asMap().get("sessionUser");
 			if(u != null && u.getUsername() != null) {
@@ -92,19 +93,19 @@ public class UserController {
 				return VIEW_PROFILE;
 			}
 		}
-		
+
 		return VIEW_INDEX;
 	}
 
-	
-	
+
+
 	@RequestMapping(method = RequestMethod.GET, path = "logout.do")
 	public String logout(Model model) {
 		model.asMap().remove("sessionUser");
 		return VIEW_INDEX;
 	}
-	
-	
+
+
 	@RequestMapping(method = RequestMethod.POST, path = "login.do")
 	public String login(@Valid User user, Errors errors, Model model) {
 		if (errors.hasErrors()) {
@@ -118,26 +119,25 @@ public class UserController {
 
 		if (u != null) {
 			if (u.getPassword().equals(user.getPassword())) {
-				if(u.getRole() == Role.ADMIN){
-					
+				if (u.getRole() == Role.ADMIN) {
 					model.addAttribute("sessionUser", u);
 					model.addAttribute("categories", idao.indexCategories());
 					model.addAttribute("users", udao.index());
-					return VIEW_ADMIN_HOME;					
+					return VIEW_ADMIN_HOME;
 				}
 				model.addAttribute("sessionUser", u);
 				return VIEW_PROFILE;
 			} else {
-				errors.rejectValue("password", "error.password", 
+				errors.rejectValue("password", "error.password",
 						"Invalid password");
 
 				// bad passwd
 				return VIEW_INDEX;
 			}
-		} 
+		}
 		else {
 			// bad username
-			errors.rejectValue("username", "error.username", 
+			errors.rejectValue("username", "error.username",
 					"The username you entered is not associated with an account, please try another");
 			return VIEW_INDEX;
 		}
@@ -287,7 +287,8 @@ public class UserController {
 		Profile profile = new Profile();
 		User sessionUser = udao.create(user);
 		sessionUser.setProfile(profile);
-		//sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
+		// sessionUser = udao.updateUserProfile(sessionUser.getId(),
+		// sessionUser);
 
 		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
@@ -330,20 +331,24 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "deleteUser.do")
-	public String deleteUser(Integer id) {
-		
-		System.out.println(id);
-		if(udao.destroy(id)){
+	public String deleteUser(Integer id, Integer sessionId, Model model) {
+		System.out.println("sessoion id in delete user: " + sessionId);
+		if (udao.destroy(id)) {
 			System.out.println("deleted");
 		}
-		
+
+		if (sessionId != null) {
+			model.addAttribute("categories", idao.indexCategories());
+			model.addAttribute("users", udao.index());
+			return "adminhome";
+		}
 		return VIEW_INDEX;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, path = "createInterest.do")
 	public String createInterest(Integer id, String interest, Model model) {
 		idao.create(id, interest);
-		
+
 		model.addAttribute("categories", idao.indexCategories());
 		model.addAttribute("users", udao.index());
 		return VIEW_ADMIN_HOME;

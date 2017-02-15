@@ -9,6 +9,7 @@
 <title>Admin Home</title>
 </head>
 <body>
+
 	<form action="createInterest.do" method=POST>
 		<select name="id">
 			<c:forEach var="cat" items="${categories}">
@@ -24,9 +25,9 @@
 				<option value="${user.id}">${user.profile.firstName} ${user.profile.lastName}</option>
 				<%-- <input type="hidden" value="${user.id}" name="id"> --%>
 			</c:forEach>
-		</select> 
-			<input type="hidden" value="${sessionUser.id}" name="sessionId">
-		<input type="submit" value="Go to User">
+		</select>
+		<input type="hidden" value="${user.id}" name="id">
+		 <input type="submit" value="Go to User">
 	</form>
 	
 </body>

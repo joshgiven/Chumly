@@ -26,7 +26,13 @@
 	<li> ${c.profile.firstName} ${c.profile.lastName}</li>
 	</c:forEach>
 	</ul>
-	
+	<c:if test="${sessionUser.role == 'ADMIN'}">
+	<form action="deleteUser.do" method="POST">
+		<input type="hidden" value="${user.id}" name="id"> <br />
+		<input type="hidden" value="${sessionUser.id}" name="sessionId"> <br />
+		<input type="submit" value="Delete" />
+	</form>	
+	</c:if>	
 	<ul>
 	<li><a href="/MVCChumly/">home</a></li>
 	<li><a href="/MVCChumly/logout.do">logout</a></li>
