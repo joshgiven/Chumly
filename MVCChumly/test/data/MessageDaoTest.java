@@ -233,4 +233,16 @@ public class MessageDaoTest {
 
 	}
 	
+	@Test
+	public void test_indexByMessageHistory() {
+		User user = em.find(User.class, 2);
+		assertNotNull(user);
+		
+		List<User> corres = dao.indexByMessageHistory(user);
+		
+		assertNotNull(corres);
+		assertEquals(3, corres.size());
+		
+	}
+	
 }

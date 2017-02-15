@@ -17,4 +17,6 @@ public interface MessageDAO {
 	public List<Message> indexByRecipient(User recipient);
 	public List<Message> indexByDateRange(Date beginDate, Date endDate);
 	public List<Message> indexByContainsText(String text);
+	
+	public List<User> indexByMessageHistory(User user);
 }
