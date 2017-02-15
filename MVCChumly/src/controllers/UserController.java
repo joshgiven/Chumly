@@ -252,7 +252,7 @@ public class UserController {
 		User sessionUser = udao.create(user);
 		sessionUser.setProfile(profile);
 		
-		model.addAttribute("states", ldao.index());
+		model.addAttribute("locations", ldao.index());
 		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
 
@@ -260,11 +260,9 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
-	public String updateProfile(Integer id, Profile profile, Model model, Location location) {
-		System.out.println("location city" + location.getCity());
-		System.out.println("location state" + location.getState());
-		System.out.println("location id" + location.getId());
-		
+	public String updateProfile(Integer id, Profile profile, Model model, Integer locationId) {
+		System.out.println("locationId: " + locationId);
+		Location location = ldao.show(locationId);	
 		profile.setLocation(location);
 		User sessionUser = udao.show(id);
 		sessionUser.setProfile(profile);
