@@ -49,7 +49,7 @@ public class User {
 	)
 	private Profile profile;
 
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(cascade={CascadeType.REMOVE})
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable( name="connection",
 	            joinColumns=@JoinColumn(name="user_id"),
