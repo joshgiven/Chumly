@@ -13,28 +13,7 @@
 <title></title>
 </head>
 <body>
-    <div>
-        <nav class="navbar navbar-default navigation-clean">
-            <div class="container">
-                <div class="navbar-header"><strong>Chumly </strong></a>
-                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                </div>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li role="presentation">
-                            <a href="/MVCChumly/">Home</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#"> </a>
-                        </li>
-                        <li role="presentation">
-                            <a href="/MVCChumly/logout.do">Logout </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
+
     <img alt="Profile Picture" src="${user.profile.imageURL}">
     <h3>${user.profile.firstName} ${user.profile.lastName}</h3>
     <h4>${user.profile.location.city}, ${user.profile.location.state}</h4>
