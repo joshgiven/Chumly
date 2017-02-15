@@ -39,5 +39,10 @@
 	
 	</form>
 	
+	<form action="deleteUser.do" method=POST>	
+	<input type="hidden" value="${sessionUser.id}" name="id">
+	<input type="submit" value="Delete User">
+	</form>
+	
 </body>
 </html>

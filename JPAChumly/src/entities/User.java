@@ -34,7 +34,7 @@ public class User {
 
 	@Size(min=2, max=20, message="Size.user.username")
 	private String username;
-	
+
 	@Size(min=2, max=20, message="Size.user.password")
 	private String password;
 
@@ -44,12 +44,12 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne( mappedBy="user", 
-			   cascade={CascadeType.PERSIST, CascadeType.REMOVE} 
+	@OneToOne( mappedBy="user",
+			   cascade={CascadeType.PERSIST, CascadeType.REMOVE}
 	)
 	private Profile profile;
 
-	@OneToMany(/*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable( name="connection",
 	            joinColumns=@JoinColumn(name="user_id"),
@@ -62,19 +62,19 @@ public class User {
 //	inverseJoinColumns=@JoinColumn(name="chum_id"))
 //	private List<Message> chumMessages;
 //
-	@OneToMany(mappedBy="recipients")
+	@OneToMany(mappedBy="recipients" , cascade={CascadeType.REMOVE})
 	private List<Message> messages;
 
 
 //	private List<Group> groups;
 
-	@ManyToMany( fetch=FetchType.EAGER /*cascade={CascadeType.PERSIST, CascadeType.REMOVE}*/ )
+	@ManyToMany( fetch=FetchType.EAGER, cascade={CascadeType.REMOVE} )
 	@JoinTable( name="user_interest",
 	            joinColumns=@JoinColumn(name="user_id"),
 	            inverseJoinColumns=@JoinColumn(name="interest_id") )
 	private List<Interest> interests;
 
-	@OneToMany( mappedBy="user", 
+	@OneToMany( mappedBy="user",
 	            cascade={CascadeType.PERSIST, CascadeType.REMOVE} )
 	private List<Availability> availabilities;
 
@@ -116,7 +116,7 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -131,7 +131,7 @@ public class User {
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
-		
+
 		if(profile != null)
 			profile.setUser(this);
 	}
@@ -179,9 +179,9 @@ public class User {
 	public void setAvailabilities(List<Availability> availabilities) {
 		this.availabilities = availabilities;
 	}
-	
+
 	public Boolean hasConnection(Integer id){
-		
+
 		return true;
 	}
 
