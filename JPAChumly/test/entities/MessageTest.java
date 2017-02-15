@@ -38,7 +38,7 @@ public class MessageTest {
 	}
 	
 	@Test
-	public void test_interest_mapping() {
+	public void test_message_mapping() {
 		int id = 1;
 		Message msg = em.find(Message.class, id);
 		

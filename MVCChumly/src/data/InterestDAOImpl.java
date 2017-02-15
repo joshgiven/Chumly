@@ -45,7 +45,7 @@ public class InterestDAOImpl implements InterestDAO {
 		Interest i =em.find(Interest.class, id);
 		i.setCategory(interest.getCategory());
 		i.setName(interest.getName());
-		i.setUsers(interest.getUsers());
+		//i.setUsers(interest.getUsers());
 
 		return i;
 	}
