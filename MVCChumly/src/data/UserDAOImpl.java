@@ -79,7 +79,18 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User updateUserProfile(int id, User user) {
 		User u = em.find(User.class, id);
-		u.setProfile(user.getProfile());
+		
+		if(u.getProfile() == null) {
+			u.setProfile(user.getProfile());
+		}
+		
+		Profile p = user.getProfile();
+		u.getProfile().setDescription(p.getDescription());
+		u.getProfile().setFirstName(p.getFirstName());
+		u.getProfile().setLastName(p.getFirstName());
+		u.getProfile().setImageURL(p.getImageURL());
+		u.getProfile().setLocation(p.getLocation());
+		
 		return u;
 	}
 
