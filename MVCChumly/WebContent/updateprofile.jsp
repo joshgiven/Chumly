@@ -9,6 +9,7 @@
 <title>Update</title>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 
 	<form action="updateProfileDescription.do" method="POST">
 		<textarea rows="4" cols="50" name="description">${sessionUser.profile.description}

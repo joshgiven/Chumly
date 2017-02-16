@@ -33,7 +33,7 @@
 	<div class="container">
 
 		<h2>
-			<img alt="${sessionUser.username}"
+			<img class="profilePicture" alt="${sessionUser.username}"
 				src="${sessionUser.profile.imageURL}"> ${sessionUser.username}
 		</h2>
 		<ul class="nav nav-tabs">
