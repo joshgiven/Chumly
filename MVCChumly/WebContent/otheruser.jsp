@@ -34,7 +34,7 @@
 
 		<div class="connect-message">
 			<h2>
-				<img alt="${user.username}" src="${user.profile.imageURL}">
+				<img class="profilePicture" alt="${user.username}" src="${user.profile.imageURL}">
 				${user.username}
 			</h2>
 			<div class="connect-message-button">
@@ -59,7 +59,6 @@
 			<li class="active"><a data-toggle="tab" href="#vitals">Vitals</a></li>
 			<li><a data-toggle="tab" href="#interests">Interests</a></li>
 			<li><a data-toggle="tab" href="#connections">Connections</a></li>
-			<li><a data-toggle="tab" href="#messages">Messages</a></li>
 		</ul>
 
 
@@ -133,8 +132,6 @@
 
 				});
 	</script>
-
-
 	<jsp:include page="footer.jsp" />
 </body>
 </html>
