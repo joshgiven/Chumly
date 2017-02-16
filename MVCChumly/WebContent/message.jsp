@@ -38,7 +38,7 @@
 			<form action="addMessage.do" method="POST">
 				<label for="comment">Send a Message to
 					${recipient.profile.firstName} ${recipient.profile.lastName}
-					(${recipient.username}):</label>
+					(<a href="getOtherUserProfileInformation.do?id=${recipient.id}">${recipient.username}</a>):</label>
 				<textarea class="form-control" rows="5" name="message"></textarea>
 				<input type="hidden" value="${sender.id}" name="sessionId">
 				<input type="hidden" value="${recipient.id}" name="recipientId">

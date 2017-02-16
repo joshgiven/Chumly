@@ -43,7 +43,7 @@ public class User {
 	private String email;
 
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role = Role.USER;
 
 	@OneToOne(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	//@JoinColumn(name="id", referencedColumnName="user_id")

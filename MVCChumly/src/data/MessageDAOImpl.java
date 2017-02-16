@@ -185,12 +185,18 @@ public class MessageDAOImpl implements MessageDAO {
 		           .getResultList();
 		
 		s =		"SELECT m.sender "+
-				"FROM Message m "+
-				"WHERE m.sender.id = :recipId";
+				"FROM Message m JOIN m.recipients r "+
+				"WHERE r.id = :recipId";
 		
 		recvFrom = em.createQuery(s, User.class)
 		          .setParameter("recipId", user.getId())
 		          .getResultList();
+		
+		
+System.out.println(sentTo);
+System.out.println(recvFrom);
+		
+
 		
 		Set<User> retSet = new HashSet<>();
 		retSet.addAll(sentTo);
