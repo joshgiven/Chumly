@@ -21,6 +21,7 @@
 		});
 	</script>
  -->
+<link rel="stylesheet" href="assets/css/Navigation-Clean1.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" />
