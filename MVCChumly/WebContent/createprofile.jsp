@@ -41,7 +41,7 @@
 		<form:errors path="description" />
 		<br />
 		<form:label path="imageURL">Image URL:</form:label>
-		<form:input path="imageURL" />
+		<form:input path="imageURL" value="https://robohash.org/default.jpg?size=50x50&set=set1" />
 		<form:errors path="imageURL" />
 		<br />
 		<select name="locationId">

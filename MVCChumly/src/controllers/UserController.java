@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import data.InterestDAO;
 import data.LocationDAO;
@@ -42,17 +43,6 @@ public class UserController {
 	@Autowired
 	LocationDAO ldao;
 
-	/*
-	private static String VIEW_ADMIN_HOME     = "adminhome";
-	private static String VIEW_CREATE_PROFILE = "createprofile";
-	private static String VIEW_INDEX          = "index";
-	private static String VIEW_MESSAGE        = "message";
-	private static String VIEW_NEW_USER       = "newuser";
-	private static String VIEW_OTHER_USER     = "otheruser";
-	private static String VIEW_PROFILE        = "profile";
-	private static String VIEW_RESULTS        = "results";
-	private static String VIEW_UPDATE_PROFILE = "updateprofile";
-	 */
 	private static String VIEW_ADMIN_HOME     = "adminhome";
 	private static String VIEW_CREATE_PROFILE = "createprofile";
 	private static String VIEW_INDEX          = "index";
@@ -96,8 +86,14 @@ public class UserController {
 		model.asMap().remove("sessionUser");
 		return VIEW_INDEX;
 	}
+	
 	@RequestMapping(method = RequestMethod.GET, path = "admin.do")
 	public String adminHome(Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+		if(sessionUser == null || sessionUser.getRole() != Role.ADMIN ) {
+			return "redirect:home.do";
+		}
+		
 		model.addAttribute("categories", idao.indexCategories());
 		model.addAttribute("users", udao.index());
 		
@@ -117,14 +113,16 @@ public class UserController {
 					model.addAttribute("sessionUser", u);
 					model.addAttribute("categories", idao.indexCategories());
 					model.addAttribute("users", udao.index());
-					return VIEW_ADMIN_HOME;
+					return "redirect:admin.do";
 				}
+
 				model.addAttribute("sessionUser", u);
-				return VIEW_PROFILE;
-			} else {
+				return "redirect:home.do";
+			} 
+			else {
+				// bad password
 				errors.rejectValue("password", "error.password",
 						"Invalid password");
-				// bad password
 				return VIEW_INDEX;
 			}
 		}
@@ -158,7 +156,8 @@ public class UserController {
 	public String deleteProfile(Model model) {
 		User sessionUser = (User) model.asMap().get("sessionUser");
 		udao.destroy(sessionUser.getId());
-		return VIEW_INDEX;
+		//return VIEW_INDEX;
+		return "redirect:home.do";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")
@@ -189,9 +188,23 @@ public class UserController {
 		User sessionUser = udao.updateUserProfileDescription(description, id);
 		model.addAttribute("sessionUser", sessionUser);
 
-		return VIEW_PROFILE;
+		return "redirect:home.do#tab_update";
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "updateCorrespondence.do")
+	public String updateCorrespondence(
+			@ModelAttribute(name="sessionUser") User sessionUser, 
+			RedirectAttributes redirectAttributes) {
+		//User sessionUser = mdao.updateUserProfileDescription(description, id);
+		//model.addAttribute("sessionUser", sessionUser);
+		List<User> corres = mdao.indexByMessageHistory(sessionUser);
+		redirectAttributes.addFlashAttribute("correspondents", corres);
+
+		return "redirect:home.do#tab_messages";
+	}
+	
+	
+	
 	@RequestMapping(method = RequestMethod.POST, path = "addMessage.do")
 	public String addMessage(Integer sessionId, Integer recipientId, String message, Model model) {
 		User sessionUser = udao.show(sessionId);
@@ -211,13 +224,7 @@ public class UserController {
 
 		newMessage = mdao.create(newMessage);
 
-		List<Message> messages = mdao.indexByConversation(recipient, sessionUser);
-
-		model.addAttribute("sender", sessionUser);
-		model.addAttribute("recipient", recipient);
-		model.addAttribute("messages", messages);
-
-		return VIEW_MESSAGE;
+		return "redirect:messageUser.do?id=" + recipientId;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "connectToUser.do")
@@ -269,27 +276,39 @@ public class UserController {
 		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
 
-		return VIEW_PROFILE;
+		return "redirect:home.do";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "searchInterest.do")
-	public String searchInterest(String name, Model model) {
+	public String searchInterest(String name, Model model, RedirectAttributes redirectAttributes) {
 
 		List<Interest> interests = idao.indexByContainsText(name);
-		model.addAttribute("interests", interests);
+		//model.addAttribute("interests", interests);
+		//return VIEW_PROFILE;
 
-		return VIEW_PROFILE;
+		redirectAttributes.addFlashAttribute("interests", interests);
+		return "redirect:home.do#tab_interests";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "addInterest.do")
 	public String addInterest(Integer id, Model model, Integer userId) {
+		if(id == null || userId == null) {
+			// dunno what to do here...
+			return "redirect:home.do#tab_interests";
+		}
+		
 		User sessionUser = udao.show(userId);
 		Interest interest = idao.show(id);
+		
+		if(sessionUser.getInterests() == null) {
+			sessionUser.setInterests(new ArrayList<>());
+		}
 		sessionUser.getInterests().add(interest);
+		
 		sessionUser = udao.updateInterest(userId, sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
 
-		return VIEW_PROFILE;
+		return "redirect:home.do#tab_interests";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "deleteUser.do")
@@ -300,15 +319,20 @@ public class UserController {
 			model.addAttribute("users", udao.index());
 			return "adminhome";
 		}
-		return VIEW_INDEX;
+		return "redirect:home.do";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "createInterest.do")
 	public String createInterest(Integer id, String interest, Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+		if(sessionUser == null || sessionUser.getRole() != Role.ADMIN ) {
+			return "redirect:home.do";
+		}
+		
 		idao.create(id, interest);
 
 		model.addAttribute("categories", idao.indexCategories());
 		model.addAttribute("users", udao.index());
-		return VIEW_ADMIN_HOME;
+		return "redirect:admin.do";
 	}
 }
