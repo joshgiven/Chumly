@@ -58,13 +58,13 @@
 			</div>
 			<div class="form-group">
 				<form:input class="form-control" path="username"
-					placeholder="UserName" />
+					placeholder="username" />
 			</div>
 			<form:errors path="username" />
 			<br />
 			<div class="form-group">
 				<form:input class="form-control" type="password" path="password"
-					placeholder="Password" />
+					placeholder="password" />
 			</div>
 			<form:errors path="password" />
 			<br />
