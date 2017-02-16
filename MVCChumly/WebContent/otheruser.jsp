@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="assets/css/styles.min.css">
+<link rel="stylesheet" href="profileAssets/css/Team-Grid.css">
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -34,11 +35,13 @@
 				${user.username}
 			</h2>
 			<div class="connect-message-button">
+				<c:if test="${sessionUser.doesNotHaveConnection(user)}">
 				<form action="connectToUser.do">
 					<input type="hidden" value="${sessionUser.id}" name="sessionId">
 					<input type="hidden" value="${user.id}" name="userId"> <br />
 					<input type="submit" value="Connect" />
 				</form>
+				</c:if>
 				<form action="messageUser.do">
 					<input type="hidden" value="${sessionUser.id}" name="sessionId">
 					<input type="hidden" value="${user.id}" name="id"> <br />
