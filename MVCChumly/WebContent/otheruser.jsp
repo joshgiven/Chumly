@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="assets/css/styles.min.css">
+
+<link rel="stylesheet" href="assets/css/Navigation-Clean1.css">
 <link rel="stylesheet" href="profileAssets/css/Team-Grid.css">
 
 <script
