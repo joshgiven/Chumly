@@ -27,7 +27,7 @@
 		<h2>Create a new User</h2>
 		<form:form class="form-horizontal" action="makeUser.do" method="POST" modelAttribute="user">
 			<div class="form-group">
-				<form:label class="control-label col-sm-2" path="email" for="email">Email:</form:label>
+				<form:label class="control-label col-sm-2" path="email" for="email">email:</form:label>
 				<div class="col-sm-10">
 					<form:input type="email" class="form-control" path="email" id="email" placeholder="Enter email" />
 				</div>
@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<form:label class="control-label col-sm-2" path="username" for="username">Username:</form:label>
+				<form:label class="control-label col-sm-2" path="username" for="username">username:</form:label>
 				<div class="col-sm-10">
 					<form:input type="text" class="form-control" path="username"
 						id="username" placeholder="Enter username" />
@@ -48,7 +48,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<form:label class="control-label col-sm-2" path="password" for="password">Password:</form:label>
+				<form:label class="control-label col-sm-2" path="password" for="password">password:</form:label>
 				<div class="col-sm-10">
 					<form:input type="password" class="form-control" path="password"
 						id="password" placeholder="Enter password" />
@@ -63,6 +63,8 @@
 					<button type="submit" class="btn btn-default">Submit</button>
 				</div>
 			</div>
+			
+			<input type="hidden" name="id" value="${sessionUser.id}">
 		</form:form>
 	</div>
 

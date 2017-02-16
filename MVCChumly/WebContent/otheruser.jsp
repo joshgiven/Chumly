@@ -67,7 +67,7 @@
 			<!-- <div id="vitals" class="tab-pane fade in active"> -->
 			<div id="vitals" class="tab-pane active">
 				<h3>Vitals</h3>
-				<h3>${user.profile.firstName}${user.profile.lastName}</h3>
+				<h3>${user.profile.firstName} ${user.profile.lastName}</h3>
 				<h4>${user.profile.location.city},
 					${user.profile.location.state}</h4>
 				<p>${user.profile.description}</p>

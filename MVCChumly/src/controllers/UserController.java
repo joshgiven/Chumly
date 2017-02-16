@@ -174,9 +174,13 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "messageUser.do")
 	public String getUserMessage(Integer id, Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+		if(sessionUser == null) {
+			return "redirect:home.do";
+		}
 
 		User recipient = udao.show(id);
-		User sessionUser = (User) model.asMap().get("sessionUser");
+		//User sessionUser = (User) model.asMap().get("sessionUser");
 
 		List<Message> messages = null;
 		messages = mdao.indexByConversation(recipient, sessionUser);
@@ -236,19 +240,23 @@ public class UserController {
 	public String addInterest(Integer userId, Integer sessionId, Model model) {
 		User sessionUser = udao.show(sessionId);
 		User friend = udao.show(userId);
-		List<User> connections = null;
+		//List<User> connections = null;
 
-		if (sessionUser.getConnections().isEmpty()) {
-			connections = new ArrayList<>();
-			sessionUser.setConnections(connections);
+		if(sessionUser.getConnections() == null) {
+			sessionUser.setConnections(new ArrayList<>());
 		}
-
 		sessionUser.getConnections().add(friend);
+
+		if(friend.getConnections() == null) {
+			friend.setConnections(new ArrayList<>());
+		}
 		friend.getConnections().add(sessionUser);
+		
 		udao.updateConnection(sessionId, sessionUser);
 		udao.updateConnection(userId, friend);
 
 		model.addAttribute("user", friend);
+		model.addAttribute("sessionUser", sessionUser);
 
 		return VIEW_OTHER_USER;
 	}
@@ -281,24 +289,65 @@ public class UserController {
 		user.setProfile(profile);
 		User sessionUser = udao.create(user);
 		
-		model.addAttribute("locations", ldao.index());
-		model.addAttribute("location", ldao.mapByState());
 		model.addAttribute("sessionUser", sessionUser);
+		//model.addAttribute("locations", ldao.index());
+		//model.addAttribute("location", ldao.mapByState());
 
-		return VIEW_CREATE_PROFILE;
+		//return VIEW_CREATE_PROFILE;
+		return "redirect:editProfile.do";
 	}
 
+	@RequestMapping(method = RequestMethod.GET, path = "editProfile.do")
+	public String editProfileForm(/*Integer id, */ Model model) {
+		User sessionUser = (User) model.asMap().get("sessionUser");
+		if(sessionUser == null) {
+			return "redirect:home.do";
+		}
+		
+		model.addAttribute("locations", ldao.index());
+		model.addAttribute("location", ldao.mapByState());
+		//model.addAttribute("sessionUser", sessionUser);
+		return VIEW_CREATE_PROFILE;
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
-	public String updateProfile(Integer id, Profile profile, Model model, Integer locationId) {
+	public String updateProfile(Integer id, Integer locationId, @Valid Profile profile, Errors errors, Model model) {
+		if(id == null) {
+			User sessionUser = (User) model.asMap().get("sessionUser");
+			if(sessionUser != null) {
+				id = sessionUser.getId();
+			}
+		}
+		
+		if(id == null || locationId == null || profile == null) {
+			// ???
+			return "redirect:home.do";
+		}
+		
+//		System.out.println(id);
+//		System.out.println(profile);
+//		System.out.println(locationId);
+		
+		if(errors.hasErrors()) {
+			return VIEW_CREATE_PROFILE;
+		}
+		
 		Location location = ldao.show(locationId);
+		if(location == null) {
+			errors.rejectValue("locationId", "locationId", "invalid location");
+			return VIEW_CREATE_PROFILE;
+		}
+		
 		profile.setLocation(location);
 		profile.setUser(udao.show(id));
+		
 		User sessionUser = udao.show(id);
 		sessionUser.setProfile(profile);
 		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
 		model.addAttribute("sessionUser", sessionUser);
 
 		return "redirect:home.do";
+		//return "redirect:editProfile.do";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "searchInterest.do")
