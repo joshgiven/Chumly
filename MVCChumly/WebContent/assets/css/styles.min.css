@@ -247,3 +247,15 @@
 		color: #fff
 	}
 }
+
+.connect-message{
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+}
+.messagebutton{
+	margin-left:5px;
+}
+.connect-message-button{
+	display:flex;
+}
