@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -170,8 +171,22 @@ public class User {
 		this.availabilities = availabilities;
 	}
 
-//	public Boolean hasConnection(Integer id){
-//		return true;
-//	}
+	public Boolean hasConnection(Integer id){
+		return connections.contains(id);
+	}
+	public Boolean doesNotHaveConnection(User user){
+		List<User> test = new ArrayList<>();
+		for (User u : connections) {
+			if(u.username.equalsIgnoreCase(user.username)){
+				test.add(u);
+			}
+		}
+		if(test.size() == 1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
 
 }
