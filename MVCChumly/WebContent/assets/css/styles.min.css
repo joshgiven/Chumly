@@ -259,3 +259,11 @@
 .connect-message-button{
 	display:flex;
 }
+
+footer{
+	background-color:#32363d;
+	color:white;
+	   position:fixed;
+   bottom:0;
+   width:100%;
+}

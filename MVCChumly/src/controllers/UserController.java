@@ -244,6 +244,7 @@ public class UserController {
 		udao.updateConnection(userId, friend);
 
 		model.addAttribute("user", friend);
+		model.addAttribute("sessionUser", sessionUser);
 
 		return VIEW_OTHER_USER;
 	}
