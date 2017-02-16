@@ -295,12 +295,45 @@ public class UserDAOImpl implements UserDAO {
 	public User getUserByUsername(String username) {
 		User result = null;
 		try {
-			String queryString = "SELECT u FROM User u WHERE u.username = :username";
-			result = em.createQuery(queryString, User.class).setParameter("username", username).getSingleResult();
-		} catch (Exception e) {
+			
+			String queryString = 
+					"SELECT u "+
+			        "FROM User u "+
+			        "WHERE u.username = :username";
+			
+			result = em.createQuery(queryString, User.class)
+			           .setParameter("username", username)
+			           .getSingleResult();
+			
+		} 
+		catch (Exception e) {
 			System.err.println(e.getMessage());
 			return result;
 		}
+		
+		return result;
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		User result = null;
+		try {
+			
+			String queryString = 
+					"SELECT u "+
+			        "FROM User u "+
+			        "WHERE u.email = :email";
+			
+			result = em.createQuery(queryString, User.class)
+			           .setParameter("email", email)
+			           .getSingleResult();
+			
+		} 
+		catch (Exception e) {
+			System.err.println(e.getMessage());
+			return result;
+		}
+		
 		return result;
 	}
 }

@@ -6,55 +6,67 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="assets/css/styles.min.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <title>New User</title>
 
 </head>
 <body>
-	<form:form action="makeUser.do" method="POST" modelAttribute="user">
-		<form:label path="email">Email:</form:label>
-		<form:input path="email" />
-		<form:errors path="email" />
-		<br>
-		<form:label path="username">UserName:</form:label>
-		<form:input path="username" />
-		<form:errors path="username" />
-		<br />
-		<form:label path="password">Password:</form:label>
-		<form:password path="password" />
-		<form:errors path="password" />
-		<br />
-		<%-- <form:label path="user.profile.firstName">First Name:</form:label>
-		<form:input path="user.profile.firstName" />
-		<form:errors path="user.profile.firstName" />
-		<br />
-		<form:label path="user.profile.lastName">Last Name:</form:label>
-		<form:input path="user.profile.lastName" />
-		<form:errors path="user.profile.lastName" />
-		<br />
-		<form:label path="user.profile.description">Description:</form:label>
-		<form:input path="user.profile.description" />
-		<form:errors path="user.profile.description" />
-		<br />
-		<form:label path="user.profile.imageURL">Image URL:</form:label>
-		<form:input path="user.profile.imageURL" />
-		<form:errors path="user.profile.imageURL" />
-		<br />
-		<select name="state" id="state">
-			<option value="">Select State</option>
-			<c:forEach var="s" items="${location}">
-				<option value="state">${s.key}</option>
-		</c:forEach>
-		</select>
-		<select name="city" id="city">
-			<option value="">Select City</option>
-		<c:forEach var="c" items="${location}">
-			<c:set var="st" value="${c.key}"></c:set>
-			<c:forEach var="loc" items= "${c.value}">
-				<option rel="${c.key}" value="${loc.id}">${loc.city}</option>
-			</c:forEach>
-			</c:forEach>
-		</select> --%>
-		<input type="submit" value="Create User" />
-	</form:form>
-</body>
+
+	<jsp:include page="header.jsp" />
+
+
+	<div class="container">
+		<h2>Create a new User</h2>
+		<form:form class="form-horizontal" action="makeUser.do" method="POST" modelAttribute="user">
+			<div class="form-group">
+				<form:label class="control-label col-sm-2" path="email" for="email">Email:</form:label>
+				<div class="col-sm-10">
+					<form:input type="email" class="form-control" path="email" id="email" placeholder="Enter email" />
+				</div>
+				<form:label class="control-label col-sm-2" path="email" for="email"></form:label>
+				<div class="col-sm-10">
+					<form:errors class="form-control alert alert-danger" path="email" />
+				</div>
+			</div>
+			<div class="form-group">
+				<form:label class="control-label col-sm-2" path="username" for="username">Username:</form:label>
+				<div class="col-sm-10">
+					<form:input type="text" class="form-control" path="username"
+						id="username" placeholder="Enter username" />
+				</div>
+				<form:label class="control-label col-sm-2" path="username" for="username"></form:label>
+				<div class="col-sm-10">
+					<form:errors class="form-control alert alert-danger" path="username" />
+				</div>
+			</div>
+			<div class="form-group">
+				<form:label class="control-label col-sm-2" path="password" for="password">Password:</form:label>
+				<div class="col-sm-10">
+					<form:input type="password" class="form-control" path="password"
+						id="password" placeholder="Enter password" />
+				</div>
+				<form:label class="control-label col-sm-2" path="password" for="password"></form:label>
+				<div class="col-sm-10">
+					<form:errors class="form-control alert alert-danger" path="password" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</div>
+		</form:form>
+	</div>
+
+
+
+ </body>
 </html>

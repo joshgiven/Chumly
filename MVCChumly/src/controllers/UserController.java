@@ -250,14 +250,31 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "createUser.do")
 	public String createUser(Model model) {
+		model.addAttribute("sessionUser", new User());
 		return VIEW_NEW_USER;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "makeUser.do")
-	public String makeUser(User user, Model model) {
+	public String makeUser(@Valid User user, Errors errors, Model model) {
+		if(errors.hasErrors()) {
+			return VIEW_NEW_USER;
+		}
+		
+		if(udao.getUserByEmail(user.getEmail()) != null) {
+			errors.rejectValue("email", "error.email",
+					"A user with this email address already exists");
+			return VIEW_NEW_USER;
+		}
+		
+		if(udao.getUserByUsername(user.getUsername()) != null) {
+			errors.rejectValue("username", "error.username",
+					"A user with this username already exists");
+			return VIEW_NEW_USER;
+		}
+		
 		Profile profile = new Profile();
+		user.setProfile(profile);
 		User sessionUser = udao.create(user);
-		sessionUser.setProfile(profile);
 		
 		model.addAttribute("locations", ldao.index());
 		model.addAttribute("location", ldao.mapByState());
