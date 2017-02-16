@@ -9,7 +9,7 @@ import entities.InterestCategory;
 
 public interface InterestDAO {
 	public Interest show(int id);
-	public Interest create(Interest interest);
+	public Interest create(Integer id, String interest);
 	public Interest update(int id, Interest interest);
 	public boolean destroy(int id);
 

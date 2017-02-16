@@ -35,6 +35,14 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User create(User user) {
+		
+		user.setProfile(new Profile());
+		user.getProfile().setDescription("  ");
+		user.getProfile().setFirstName("  ");
+		user.getProfile().setLastName("  ");
+		user.getProfile().setImageURL("  ");
+		user.getProfile().setLocation(null);
+		
 		em.persist(user);
 		em.flush();
 		return user;
@@ -71,16 +79,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User updateUserProfile(int id, User user) {
 		User u = em.find(User.class, id);
-
-		Profile p = user.getProfile();
-		System.out.println(user.getProfile().getFirstName());
-		u.setProfile(p);
-//		.setDescription(user.getProfile().getDescription());
-//		p.setFirstName(user.getProfile().getFirstName());
-//		p.setImageURL(user.getProfile().getImageURL());
-//		p.setLastName(user.getProfile().getLastName());
-//		p.setLocation(user.getProfile().getLocation());
-
+		u.setProfile(user.getProfile());
 		return u;
 	}
 
@@ -111,7 +110,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u FROM User u";
 			results = em.createQuery(queryString, User.class).getResultList();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -124,7 +123,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u FROM User u WHERE u.role = :role";
 			results = em.createQuery(queryString, User.class).setParameter("role", role).getResultList();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -134,23 +133,34 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> indexByLocation(Location location) {
 		List<User> results = null;
 		try {
-			// String queryString = "SELECT u FROM User u WHERE
-			// u.profile.location.id = :id";
 			String queryString = "SELECT u " + "FROM User u "
 					+ "WHERE u.profile.location.city = :city AND u.profile.location.state = :state";
 
 			results = em.createQuery(queryString, User.class)
-					// .setParameter("id", location.getId())
 					.setParameter("city", location.getCity()).setParameter("state", location.getState())
 					.getResultList();
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
 	}
 
+
+	@Override
+	public List<User> indexByInterestId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> indexByInterest(Interest interest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	@Override
 	public List<User> indexByInterest(String interestName) {
 		// List<User> results = interest.getUsers();
@@ -181,7 +191,7 @@ public class UserDAOImpl implements UserDAO {
 			//results = i.getUsers();
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -208,7 +218,7 @@ public class UserDAOImpl implements UserDAO {
 
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 
@@ -230,7 +240,7 @@ public class UserDAOImpl implements UserDAO {
 					.getResultList();
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -276,7 +286,7 @@ public class UserDAOImpl implements UserDAO {
 			String queryString = "SELECT u.connections FROM User u JOIN u.connections WHERE u.id = :id";
 			results = em.createQuery(queryString, User.class).setParameter("id", connection.getId()).getResultList();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return results;
 		}
 		return results;
@@ -285,12 +295,45 @@ public class UserDAOImpl implements UserDAO {
 	public User getUserByUsername(String username) {
 		User result = null;
 		try {
-			String queryString = "SELECT u FROM User u WHERE u.username = :username";
-			result = em.createQuery(queryString, User.class).setParameter("username", username).getSingleResult();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+			String queryString = 
+					"SELECT u "+
+			        "FROM User u "+
+			        "WHERE u.username = :username";
+			
+			result = em.createQuery(queryString, User.class)
+			           .setParameter("username", username)
+			           .getSingleResult();
+			
+		} 
+		catch (Exception e) {
+			System.err.println(e.getMessage());
 			return result;
 		}
+		
+		return result;
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		User result = null;
+		try {
+			
+			String queryString = 
+					"SELECT u "+
+			        "FROM User u "+
+			        "WHERE u.email = :email";
+			
+			result = em.createQuery(queryString, User.class)
+			           .setParameter("email", email)
+			           .getSingleResult();
+			
+		} 
+		catch (Exception e) {
+			System.err.println(e.getMessage());
+			return result;
+		}
+		
 		return result;
 	}
 }

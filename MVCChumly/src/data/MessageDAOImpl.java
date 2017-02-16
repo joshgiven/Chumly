@@ -1,7 +1,11 @@
 package data;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -125,6 +129,7 @@ public class MessageDAOImpl implements MessageDAO {
 			return results;
 		}
 		
+		Collections.reverse(results);
 		return results;
 	}
 	
@@ -165,6 +170,35 @@ public class MessageDAOImpl implements MessageDAO {
 			return results;
 		}
 		return results;
+	}
+
+	@Override
+	public List<User> indexByMessageHistory(User user) {
+		List<User> sentTo = null;
+		List<User> recvFrom  = null;
+		
+		String s = 
+				"SELECT r "+
+		        "FROM Message m JOIN m.recipients r "+
+		        "WHERE m.sender.id = :senderId";
+		
+		sentTo = em.createQuery(s, User.class)
+		           .setParameter("senderId", user.getId())
+		           .getResultList();
+		
+		s =		"SELECT m.sender "+
+				"FROM Message m JOIN m.recipients r "+
+				"WHERE r.id = :recipId";
+		
+		recvFrom = em.createQuery(s, User.class)
+		          .setParameter("recipId", user.getId())
+		          .getResultList();
+				
+		Set<User> retSet = new HashSet<>();
+		retSet.addAll(sentTo);
+		retSet.addAll(recvFrom);
+		
+		return new ArrayList<>(retSet);
 	}
 
 }

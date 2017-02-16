@@ -1,11 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 
+
 /* 
 name your project's dependency group and give it an initial version.
 the 'artifactId' is assigned automatically based on the project's name.
 */
-group = 'com.videostore'
+group = 'com.chumly'
 version = '0.0.1-SNAPSHOT'
 
 sourceSets {
