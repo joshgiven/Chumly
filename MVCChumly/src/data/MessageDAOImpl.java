@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -128,6 +129,7 @@ public class MessageDAOImpl implements MessageDAO {
 			return results;
 		}
 		
+		Collections.reverse(results);
 		return results;
 	}
 	
@@ -191,13 +193,7 @@ public class MessageDAOImpl implements MessageDAO {
 		recvFrom = em.createQuery(s, User.class)
 		          .setParameter("recipId", user.getId())
 		          .getResultList();
-		
-		
-System.out.println(sentTo);
-System.out.println(recvFrom);
-		
-
-		
+				
 		Set<User> retSet = new HashSet<>();
 		retSet.addAll(sentTo);
 		retSet.addAll(recvFrom);
