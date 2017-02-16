@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="assets/css/styles.min.css">
 <link rel="stylesheet" href="assets/css/Navigation-Clean1.css">
+<link rel="stylesheet" href="profileAssets/css/Team-Grid.css">
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
