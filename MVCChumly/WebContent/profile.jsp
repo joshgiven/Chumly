@@ -111,7 +111,7 @@
 				<h4>Messages</h4>
 				<ul>
 					<c:forEach var="corres" items="${correspondents}">
-						<li><a href="messageUser.do?id=${corres.id}"> <img
+						<li><a href="messageUser.do?id=${corres.id}"> <img class="resultsPicture"
 								src="${corres.profile.imageURL}" alt="${corres.username}" />
 								${corres.profile.firstName} ${corres.profile.lastName}
 						</a></li>

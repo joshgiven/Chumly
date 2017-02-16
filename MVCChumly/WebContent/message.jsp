@@ -88,7 +88,7 @@
 
 					<div class="media well">
 						<div class="media-left">
-							<img src="${sendUser.profile.imageURL}" />
+							<img class="resultsPicture" src="${sendUser.profile.imageURL}" />
 						</div>
 						<div class="media-body">
 							<!-- <h4 class="media-heading">Left-aligned</h4> -->
