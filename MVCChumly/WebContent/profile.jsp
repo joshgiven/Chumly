@@ -184,5 +184,6 @@
 	</script>
 	<script src="profileAssets/js/jquery.min.js"></script>
 	<script src="profileAssets/bootstrap/js/bootstrap.min.js"></script>
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

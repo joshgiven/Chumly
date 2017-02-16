@@ -56,5 +56,6 @@
 		</select> --%>
 		<input type="submit" value="Create User" />
 	</form:form>
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -65,6 +65,6 @@
 		<input type="hidden" value="${sessionUser.id}" name="id">
 		<input type="submit" value="Create Profile" />
 	</form:form>
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>

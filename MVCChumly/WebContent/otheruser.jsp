@@ -28,25 +28,27 @@
 
 	<div class="container">
 
-						<div class="connect-message">			
-		<h2>
-			<img alt="${user.username}" src="${user.profile.imageURL}">
-			${user.username}
-		</h2>
-		<div class="connect-message-button">
+		<div class="connect-message">
+			<h2>
+				<img alt="${user.username}" src="${user.profile.imageURL}">
+				${user.username}
+			</h2>
+			<div class="connect-message-button">
 				<form action="connectToUser.do">
 					<input type="hidden" value="${sessionUser.id}" name="sessionId">
 					<input type="hidden" value="${user.id}" name="userId"> <br />
 					<input type="submit" value="Connect" />
 				</form>
 				<form action="messageUser.do">
-						<input type="hidden" value="${sessionUser.id}" name="sessionId">
-						<input type="hidden" value="${user.id}" name="id"> <br />
-						<div class="messagebutton"><input type="submit" value="Message" /></div>
+					<input type="hidden" value="${sessionUser.id}" name="sessionId">
+					<input type="hidden" value="${user.id}" name="id"> <br />
+					<div class="messagebutton">
+						<input type="submit" value="Message" />
+					</div>
 				</form>
-				</div>
-				</div>
-				
+			</div>
+		</div>
+
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#vitals">Vitals</a></li>
 			<li><a data-toggle="tab" href="#interests">Interests</a></li>
@@ -73,36 +75,27 @@
 				</ul>
 			</div>
 			<div id="connections" class="tab-pane">
-				<h3>Connections</h3>
-				<h4>Connections</h4>
-				<ul>
-					<!-- class="hide-bullets" -->
-					<c:forEach var="c" items="${user.connections}">
-						<li><a href="getOtherUserProfileInformation.do?id=${c.id}">
-								<%-- <img class="thumbnail" src="${c.profile.imageURL}" alt="${c.username}"> --%>
-								<img src="${c.profile.imageURL}" alt="${c.username}">
-								${c.profile.firstName} ${c.profile.lastName}
-						</a></li>
-					</c:forEach>
-				</ul>
-
-			</div>
-			<div id="messages" class="tab-pane">
-				<h3>Messages</h3>
-				<h4>Messages</h4>
-				<ul>
-					<c:forEach var="corres" items="${correspondents}">
-						<li><a href="messageUser.do?id=${corres.id}"> <img
-								src="${corres.profile.imageURL}" alt="${corres.username}" />
-								${corres.profile.firstName} ${corres.profile.lastName}
-						</a></li>
-					</c:forEach>
-				</ul>
-
-				<form action="updateCorrespondence.do" method=POST>
-					<input type="submit" value="Update List">
-				</form>
-
+				<div class="team-grid">
+					<div class="container">
+						<div class="row people">
+							<c:forEach var="c" items="${user.connections}">
+								<div class="col-md-3 col-sm-4 item">
+									<a href="getOtherUserProfileInformation.do?id=${c.id}">
+										<div class="box"
+											style="background-image:url(${c.profile.imageURL})">
+											<div class="cover">
+												<h3 class="name">${c.profile.firstName}
+													${c.profile.lastName}</h3>
+												<p class="title">${c.profile.location.city},
+													${c.profile.location.state}</p>
+											</div>
+										</div>
+									</a>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
