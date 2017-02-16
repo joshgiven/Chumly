@@ -24,6 +24,6 @@
 			</c:forEach>
 		</select><br> <input type="submit" value="Add Interest" />
 	</form>
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>

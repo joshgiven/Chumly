@@ -1,41 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="styleSheet" type="text/css" href="/style.css">
-<title>Welcome</title>
-</head>
-<body>
 
-<h1>Chumly</h1>
-	<form:form action="login.do" method="POST" modelAttribute="user">
-		<form:label path="username">UserName:</form:label>
-		<form:input path="username" />
-		<form:errors path="username" />
-		<br />
-		<form:label path="password">Password:</form:label>
-		<form:input path="password" />
-		<form:errors path="password" /><br/>
-		<input type="submit" value="Login" />
-	</form:form> 
-	<a href="createUser.do">Create User</a>
-
-
-</body>
-</html> --%>
 <!DOCTYPE html>
 <html>
 
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-<link rel="stylesheet" href="assets/css/styles.min.css">
-<title>Chumly</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chumly</title>
+
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean1.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
 </head>
 
 <body>
@@ -91,18 +72,7 @@
 				In</button>
 			<a href="createUser.do" class="forgot">Create User</a>
 		</form:form>
-		<%--<form method="post">
-            <h2 class="sr-only">Login Form</h2>
-            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-            <div class="form-group">
-                <input class="form-control" type="email" name="email" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" name="password" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">Log In</button>
-            </div><a href="#" class="forgot">Create Account</a></form> --%>
+
 	</div>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>

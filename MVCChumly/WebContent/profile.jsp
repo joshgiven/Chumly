@@ -5,15 +5,19 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-	<link rel="stylesheet" href="assets/css/styles.min.css">
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-	<title>Profile</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="assets/css/styles.min.css">
+<link rel="stylesheet" href="assets/css/Navigation-Clean1.css">
+<link rel="stylesheet" href="profileAssets/css/Team-Grid.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<title>Profile</title>
 <!-- 	<script>
 	$(function () {
 		   var activeTab = $('[href=' + location.hash + ']');
@@ -28,7 +32,9 @@
 	<div class="container">
 
 		<h2>
-		<img alt="${sessionUser.username}" src="${sessionUser.profile.imageURL}"> ${sessionUser.username}</h2>
+			<img alt="${sessionUser.username}"
+				src="${sessionUser.profile.imageURL}"> ${sessionUser.username}
+		</h2>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#vitals">Vitals</a></li>
 			<li><a data-toggle="tab" href="#interests">Interests</a></li>
@@ -43,8 +49,10 @@
 			<!-- <div id="vitals" class="tab-pane fade in active"> -->
 			<div id="vitals" class="tab-pane active">
 				<h3>Vitals</h3>
-				<h3>${sessionUser.profile.firstName} ${sessionUser.profile.lastName}</h3>
-				<h4>${sessionUser.profile.location.city}, ${sessionUser.profile.location.state}</h4>
+				<h3>${sessionUser.profile.firstName}
+					${sessionUser.profile.lastName}</h3>
+				<h4>${sessionUser.profile.location.city},
+					${sessionUser.profile.location.state}</h4>
 				<p>${sessionUser.profile.description}</p>
 			</div>
 			<div id="interests" class="tab-pane">
@@ -55,7 +63,7 @@
 						<li><a href="getUsersByInterest.do?interest=${interest.name}">${interest.name}</a></li>
 					</c:forEach>
 				</ul>
-				
+
 				<h4>Add Interest</h4>
 				<form action="searchInterest.do" method=GET>
 					<input type="text" name="name" placeholder="Interest Keyword">
@@ -70,37 +78,45 @@
 					</select> <input type="hidden" value="${sessionUser.id}" name="userId">
 					<input type="submit" value="Add Interest">
 				</form>
-				
-			</div>
-			<div id="connections" class="tab-pane">
-				<h3>Connections</h3>
-				<h4>Connections</h4>
-				<ul>
-					<!-- class="hide-bullets" -->
-					<c:forEach var="c" items="${sessionUser.connections}">
-						<li><a href="getOtherUserProfileInformation.do?id=${c.id}">
-								<%-- <img class="thumbnail" src="${c.profile.imageURL}" alt="${c.username}"> --%>
-								<img src="${c.profile.imageURL}" alt="${c.username}">
-								${c.profile.firstName} ${c.profile.lastName}
-						</a></li>
-					</c:forEach>
-				</ul>
 
 			</div>
+			<div id="connections" class="tab-pane">
+				<div class="team-grid">
+					<div class="container">
+						<div class="row people">
+							<c:forEach var="c" items="${sessionUser.connections}">
+								<div class="col-md-3 col-sm-4 item">
+									<a href="getOtherUserProfileInformation.do?id=${c.id}">
+										<div class="box"
+											style="background-image:url(${c.profile.imageURL})">
+											<div class="cover">
+												<h3 class="name">${c.profile.firstName}
+													${c.profile.lastName}</h3>
+												<p class="title">${c.profile.location.city},
+													${c.profile.location.state}</p>
+											</div>
+										</div>
+									</a>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
 			<div id="messages" class="tab-pane">
 				<h3>Messages</h3>
 				<h4>Messages</h4>
 				<ul>
-				<c:forEach var="corres" items="${correspondents}">
-					<li>
-						<a href="messageUser.do?id=${corres.id}">
-							<img src="${corres.profile.imageURL}" alt="${corres.username}" />
-							${corres.profile.firstName} ${corres.profile.lastName}
-						</a>
-					</li>
-				</c:forEach>
+					<c:forEach var="corres" items="${correspondents}">
+						<li><a href="messageUser.do?id=${corres.id}"> <img
+								src="${corres.profile.imageURL}" alt="${corres.username}" />
+								${corres.profile.firstName} ${corres.profile.lastName}
+						</a></li>
+					</c:forEach>
 				</ul>
-				
+
 				<form action="updateCorrespondence.do" method=POST>
 					<input type="submit" value="Update List">
 				</form>
@@ -136,8 +152,11 @@
 			</div>
 		</div>
 
-		<p/><p/><p/>
+		<p />
+		<p />
+		<p />
 	</div>
+	<!-- </div> -->
 
 
 	<script type='text/javascript'>
@@ -148,8 +167,9 @@
 					var hash = document.location.hash;
 					var prefix = "tab_";
 					if (hash) {
-						$(".nav-tabs a[href='" + hash.replace(prefix, "") + "']")
-								.tab('show');
+						$(
+								".nav-tabs a[href='" + hash.replace(prefix, "")
+										+ "']").tab('show');
 					}
 
 					// Change hash for page-reload
@@ -162,7 +182,8 @@
 
 				});
 	</script>
-
-
+	<script src="profileAssets/js/jquery.min.js"></script>
+	<script src="profileAssets/bootstrap/js/bootstrap.min.js"></script>
+	<jsp:include page="footer.jsp" />
 </body>
 </html>
