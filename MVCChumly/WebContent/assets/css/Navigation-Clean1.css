@@ -8,6 +8,7 @@
   box-shadow:none;
   border:none;
   margin-bottom:0;
+  font-family: 'Mystery Quest', cursive;
 }
 
 @media (max-width:767px) {
@@ -83,6 +84,7 @@
   box-shadow:none;
   background:none;
   pointer-events:none;
+  
 }
 
 .navigation-clean.navbar .navbar-nav > li > a {
@@ -170,4 +172,5 @@
     color:#fff;
   }
 }
+
 

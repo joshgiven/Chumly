@@ -71,7 +71,8 @@ public class UserController {
 
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
 	public String welcome(Model model) {
-
+		String quote = addQuote();
+		model.addAttribute("quote", quote);
 		if(model.containsAttribute("sessionUser")) {
 			User u = (User) model.asMap().get("sessionUser");
 			if(u != null && u.getUsername() != null) {
@@ -83,6 +84,8 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "logout.do")
 	public String logout(Model model) {
+		String quote = addQuote();
+		model.addAttribute("quote", quote);
 		model.asMap().remove("sessionUser");
 		return VIEW_INDEX;
 	}
@@ -102,6 +105,8 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "login.do")
 	public String login(@Valid User user, Errors errors, Model model) {
+		String quote = addQuote();
+		model.addAttribute("quote", quote);
 		if (errors.hasErrors()) {
 			return VIEW_INDEX;
 		}
@@ -351,5 +356,40 @@ public class UserController {
 		model.addAttribute("categories", idao.indexCategories());
 		model.addAttribute("users", udao.index());
 		return "redirect:admin.do";
+	}
+	
+	public String addQuote(){
+		List<String> quotes = new ArrayList<>();
+		quotes.add("There is nothing better than a friend, unless it is a friend with chocolate.-Linda Grayson");
+		quotes.add("It is one of the blessings of old friends that you can afford to be stupid with them.-Ralph Waldo Emerson");
+		quotes.add("It is more fun to talk with someone who doesn’t use long, difficult words but rather short, easy words like ‘What about lunch?’-A.A. Milne, Winnie-the-Pooh.");
+		quotes.add("Friends are people who know you really well and like you anyway.-Greg Tamblyn");
+		quotes.add("It’s the friends you can call up at 4 a.m. that matter.-Marlene Dietrich");
+		quotes.add("A true friend sticks with you through thick and thin no matter what.");
+		quotes.add("Friends give you a shoulder to cry on. But best friends are ready with a shovel to hurt the person that made you cry.");
+		quotes.add("Friends are like snowflakes, none of them are the same!");
+		quotes.add("Lots of people want to ride with you in the limo, but what you want is someone who will take the bus with you when the limo breaks down.-Oprah Winfrey");
+		quotes.add("When a friend is in trouble, don’t annoy him by asking if there is anything you can do. Think up something appropriate and do it.");
+		quotes.add("A friend is someone who is there for you when she would rather be somewhere else.");
+		quotes.add("Friends never make assumptions about you. They never expect a reason to go out with you. In fact friends only expect you to be you.");
+		quotes.add("A friend knows the song in my heart and sings it to me when my memory fails.");
+		quotes.add("Sometimes me think, ‘What is friend?’ Then me say, ‘Friend is someone to share the last cookie with.’-Cookie Monster");
+		quotes.add("A road to a friend’s house is never long.");
+		quotes.add("One measure of friendship consists not in the number of things friends can discuss, but in the number of things they need no longer mention.-Clifton Fadiman");
+		quotes.add("Friends are the most important ingredient in this recipe of life.");
+		quotes.add("Some people come into our lives and quickly go. Some stay for awhile and leave footprints on our hearts. And we are never, ever the same.");
+		quotes.add("A friend will bail you out of jail a best friend will be sitting next to you saying “that was great”!");
+		quotes.add("Only your real friends tell you when your face is dirty.");
+		quotes.add("Your friend is the person who knows all about you, and still likes you.");
+		quotes.add("Who finds a faithful friend, finds a treasure.");
+		quotes.add("True friendship is when two friends can walk in opposite directions, yet remain side by side.");
+		quotes.add("Side by side or miles apart, dear friends are always close to the heart.");
+		quotes.add("A real friend is one who walks in when the rest of the world walks out.");
+		quotes.add("There are big ships and small ships. But the best ship of all is friendship.");
+		quotes.add("Friendship doubles your joys, and divides your sorrows.");
+		int i = (int) Math.floor(Math.random() * (quotes.size()));
+		String quote = quotes.get(i);
+		
+		return quote;
 	}
 }

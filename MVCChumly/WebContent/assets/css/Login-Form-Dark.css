@@ -70,3 +70,14 @@
   transform:translateY(1px);
 }
 
+p{
+	float: right;
+	top:50%;
+	 padding:100px;
+	 font-size:35px;
+	 color: white;
+	 width: 65%;
+	 padding-top: 10%;
+	 
+}
+

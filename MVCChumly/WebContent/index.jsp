@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean1.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+   <link href="https://fonts.googleapis.com/css?family=Finger+Paint|Fontdiner+Swanky|Irish+Grover|Mystery+Quest" rel="stylesheet">
 
 </head>
 
@@ -50,6 +51,7 @@
 			</div>
 		</nav>
 	</div>
+	
 	<div class="login-dark">
 		<form:form action="login.do" method="POST" modelAttribute="user">
 			<h2 class="sr-only">Login Form</h2>
@@ -73,7 +75,9 @@
 			<a href="createUser.do" class="forgot">Create User</a>
 		</form:form>
 
+	<p>${quote}</p>
 	</div>
+	
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
