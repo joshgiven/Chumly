@@ -44,8 +44,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name="id", referencedColumnName="user_id")
+	@OneToOne(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	//@JoinColumn(name="id", referencedColumnName="user_id")
 	private Profile profile;
 
 

@@ -261,13 +261,12 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "updateProfile.do")
 	public String updateProfile(Integer id, Profile profile, Model model, Integer locationId) {
-		System.out.println("locationId: " + locationId);
-		Location location = ldao.show(locationId);	
+		Location location = ldao.show(locationId);
 		profile.setLocation(location);
+		profile.setUser(udao.show(id));
 		User sessionUser = udao.show(id);
 		sessionUser.setProfile(profile);
 		sessionUser = udao.updateUserProfile(sessionUser.getId(), sessionUser);
-
 		model.addAttribute("sessionUser", sessionUser);
 
 		return VIEW_PROFILE;
