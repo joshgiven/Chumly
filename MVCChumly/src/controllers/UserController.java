@@ -161,8 +161,8 @@ public class UserController {
 	public String deleteProfile(Model model) {
 		User sessionUser = (User) model.asMap().get("sessionUser");
 		udao.destroy(sessionUser.getId());
-		//return VIEW_INDEX;
-		return "redirect:home.do";
+		return VIEW_INDEX;
+		//return "redirect:home.do";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "getOtherUserProfileInformation.do")

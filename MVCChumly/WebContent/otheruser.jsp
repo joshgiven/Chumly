@@ -38,11 +38,20 @@
 				${user.username}
 			</h2>
 			<div class="connect-message-button">
+				<c:if test="${sessionUser.role == 'ADMIN'}">
+				<form action="deleteUser.do" method=POST>
+					<input type="hidden" value="${sessionUser.id}" name="sessionId">
+					<input type="hidden" value="${user.id}" name="id"> <br />
+					<input type="submit" value="Delete User" />
+				</form>
+				</c:if>
 				<c:if test="${sessionUser.doesNotHaveConnection(user)}">
 				<form action="connectToUser.do">
 					<input type="hidden" value="${sessionUser.id}" name="sessionId">
 					<input type="hidden" value="${user.id}" name="userId"> <br />
+					<div class="messagebutton">
 					<input type="submit" value="Connect" />
+					</div>
 				</form>
 				</c:if>
 				<form action="messageUser.do">
