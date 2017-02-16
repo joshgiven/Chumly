@@ -390,7 +390,7 @@ public class UserController {
 			model.addAttribute("users", udao.index());
 			return "adminhome";
 		}
-		return "redirect:home.do";
+		return "redirect:logout.do";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "createInterest.do")

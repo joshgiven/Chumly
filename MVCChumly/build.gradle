@@ -11,6 +11,10 @@ ext {
   springVersion = "4.3.2.RELEASE"
 }
 
+war {
+  archiveName = "${baseName}.war"
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
