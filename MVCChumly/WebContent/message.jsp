@@ -109,7 +109,7 @@
 							<p><label>Text:</label><p>${m.text}</p>
 						</div>
 						<div class="media-right">
-							<img src="${sendUser.profile.imageURL}" />
+							<img class="resultsPicture" src="${sendUser.profile.imageURL}" />
 						</div>
 					</div>
 					
