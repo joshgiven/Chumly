@@ -87,7 +87,7 @@ public class UserDAOImpl implements UserDAO {
 		Profile p = user.getProfile();
 		u.getProfile().setDescription(p.getDescription());
 		u.getProfile().setFirstName(p.getFirstName());
-		u.getProfile().setLastName(p.getFirstName());
+		u.getProfile().setLastName(p.getLastName());
 		u.getProfile().setImageURL(p.getImageURL());
 		u.getProfile().setLocation(p.getLocation());
 		
